@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>PageSentinel - ウェブページ監視アプリ</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        /* ページ全体 */
+        body {
+            margin: 0;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            background: #f4f6f8;
+            color: #333;
+        }
+        a { text-decoration: none; color: inherit; }
+        /* ヘッダー */
+        header {
+            background: linear-gradient(135deg, #007AFF, #0051A8);
+            color: white;
+            text-align: center;
+            padding: 3rem 1rem 2rem;
+            position: relative;
+        }
+        header img.icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 20%;
+            background: white;
+            padding: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            margin-bottom: 1rem;
+        }
+        header h1 {
+            margin: 0;
+            font-size: 2.5rem;
+            letter-spacing: 1px;
+        }
+        header p {
+            margin: 0.5rem 0 0;
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        /* セクション */
+        section {
+            max-width: 900px;
+            margin: 2.5rem auto;
+            padding: 0 1rem;
+        }
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.5rem;
+        }
+        .feature {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            transition: transform 0.3s;
+        }
+        .feature:hover { transform: translateY(-4px); }
+        .feature h3 {
+            margin-top: 0;
+            color: #007AFF;
+        }
+        .feature p { margin: 0.5rem 0 0; line-height: 1.5; }
+        /* 使い方 */
+        .hero img,
+        .usage img {
+            display: block;
+            max-width: 280px;
+            width: 100%;
+            margin: 1rem auto;
+            border-radius: 12px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+        }
+        /* CTA */
+        .cta {
+            text-align: center;
+            margin: 3rem auto;
+        }
+        .cta a {
+            background: #FF9500;
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 30px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            box-shadow: 0 4px 12px rgba(255,149,0,0.4);
+            transition: background 0.3s;
+        }
+        .cta a:hover { background: #E08A00; }
+        /* フッター */
+        footer {
+            text-align: center;
+            padding: 1.5rem 1rem;
+            background: #fff;
+            font-size: 0.9rem;
+            color: #666;
+        }
+        footer a { color: #007AFF; }
+        .appstore-link {
+  text-align: center;
+  margin: 20px 0;
+}
+
+    </style>
+</head>
+<body>
+    <header>
+        <img src="PageSentinel.png" alt="PageSentinel Icon" class="icon">
+        <h1>PageSentinel</h1>
+        <p>大事なウェブページの更新を自動でキャッチ</p>
+    </header>
+
+    <!--section class="hero">
+        <img src="screenshot-hero.png" alt="PageSentinel 設定画面" class="screenshot">
+    </section-->
+
+    <section>
+        <h2>主な機能</h2>
+        <div class="features">
+            <div class="feature">
+                <h3>自動リロード</h3>
+                <p>30秒〜1時間の間隔でページを自動でリロードし、最新情報を見逃しません。</p>
+            </div>
+            <div class="feature">
+                <h3>キーワード検知</h3>
+                <p>指定したキーワードの出現・消失を検知して自動でリロードを停止。予約サイトの空きや在庫復活を即座にお知らせ。</p>
+            </div>
+            <div class="feature">
+                <h3>アンチフリッカー</h3>
+                <p>スナップショット表示と遅延スクロールでチラつきを大幅に軽減し、スムーズな監視を提供。</p>
+            </div>
+            <div class="feature">
+                <h3>シンプル管理</h3>
+                <p>URLの追加・削除はタップだけ。選択履歴は自動保存で、次回起動からすぐに利用可能。</p>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <h2>使い方は簡単</h2>
+        <p>設定画面で監視したいURL、キーワード、再読み込み間隔を選択し、「ページを開く」をタップするだけ。</p>
+        <!--img src="screenshot-usage.png" alt="使い方イメージ" class="screenshot"-->
+    </section>
+
+        <div class="appstore-link">
+            <a href="https://apps.apple.com/jp/app/id6746980444" target="_blank" rel="noopener">
+              <img src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg" 
+                   alt="Download on the App Store" 
+                   style="height: 50px;">
+            </a>
+          </div>
+
+    <footer>
+        <p>© 2025 PageSentinel</p>
+        <p><a href="https://nori319.github.io/legal-docs/PageSentinel/" target="_blank">公式サイト</a></p>
+    </footer>
+</body>
+</html>
