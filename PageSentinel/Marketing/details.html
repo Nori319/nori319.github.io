@@ -1,0 +1,56 @@
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>AutoPilot 設定ガイド - PageSentinel</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body { font-family: 'Helvetica Neue', Arial, sans-serif; margin:0; padding:1rem; background:#fff; color:#333; }
+        h1 { color:#007AFF; }
+        a { color:#007AFF; text-decoration:none; }
+        .sample { margin:1rem 0; padding:1rem; background:#f4f6f8; border-radius:8px; }
+        .config { margin:1rem 0; }
+        .config dt { font-weight:bold; margin-top:0.5rem; }
+        .config dd { margin:0 0 0.5rem 1rem; }
+        code {color: red;}
+    </style>
+</head>
+<body>
+    <h1>AutoPilot 設定ガイド</h1>
+
+    <section class="sample">
+        <h2>サンプルページ</h2>
+        <p>以下のリンクから動作確認用のデモページを開けます。</p>
+        <p><a href="https://nori319.github.io/PageSentinel/sample/dummy_news2.html" target="_blank">デモページを開く</a></p>
+    </section>
+
+    <section class="config">
+        <h2>デモページのAutoPilot の設定例</h2>
+        <dl>
+            <dt>1. ボタン1 の CSS セレクタ</dt>
+            <dd>最初にクリックする要素を指定します。<code>#fetchBtn</code></dd>
+
+            <dt>2. ボタン1 の待機時間 (秒)</dt>
+            <dd>クリック後に次のステップまで待機する時間を設定します。<code>1.0</code></dd>
+
+            <dt>3. ボタン2 の有効/無効</dt>
+            <dd>2 つ目の自動クリックを使用するチェックを入れます。</dd>
+
+            <dt>4. ボタン2 の CSS セレクタ</dt>
+            <dd>2 つ目にクリックする要素を指定します。 <code>#yesBtn</code></dd>
+
+            <dt>5. ボタン2 の待機時間 (秒)</dt>
+            <dd>2 回目のクリック後にサーバ応答を待つ時間を設定します。 <code>1.0</code></dd>
+
+            <dt>6. 判定文字列</dt>
+            <dd>繰り返し続行か終了かを判定するため、継続する場合のキーワードを指定します。<code>最新データを取得しました。</code></dd>
+
+            <dt>7. クローズボタンの CSS セレクタ</dt>
+            <dd>判定文字列が見つかった場合に閉じる要素を指定します。<code>#okBtn</code></dd>
+
+            <dt>8. クローズ後の再待機時間 (秒)</dt>
+            <dd>判定後に再試行まで待機する時間を設定します。<code>3.0</code></dd>
+        </dl>
+    </section>
+</body>
+</html>
+
