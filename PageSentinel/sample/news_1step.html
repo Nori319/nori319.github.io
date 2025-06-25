@@ -2,7 +2,7 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <title>ダミーニュース</title>
+  <title>ダミーニュース AUTO PILOT test</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
     body { font-family: sans-serif; margin:0; padding:0; background:#fff; }
@@ -18,6 +18,26 @@
     .article h3 { margin:0 0 8px; font-size:1.1rem; color:#111827; }
     .article p { margin:0 0 4px; color:#4b5563; font-size:0.95rem; }
     .article .meta { font-size:0.85rem; color:#9ca3af; }
+    .toolbar {
+      display: flex;
+      align-items: center;
+      padding: 16px;
+      gap: 16px;
+    }
+    .toolbar button { padding: 10px 20px; font-size:1rem; }
+    .dialog {
+      position: fixed;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      background: #fff;
+      border: 1px solid #333;
+      padding: 20px;
+      display: none;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+      z-index: 1000;
+    }
+    .dialog button { margin: 5px; }
+    #lastUpdated { font-weight: bold; }
   </style>
 </head>
 <body>
@@ -29,13 +49,17 @@
     <a href="#">経済</a>
     <a href="#">エンタメ</a>
   </nav>
+  <div class="toolbar">
+    <button id="fetchBtn">Fetch Latest News</button>
+    <p id="lastUpdated">Last Updated: —</p>
+  </div>
   <main>
     <div class="article">
       <h3>新型スマホ、AI機能を大幅強化</h3>
       <p>AIを活用した次世代スマートフォンが発表されました。</p>
       <p class="meta">2025/06/09 11:00</p>
     </div>
-    <div class="article">
+<div class="article">
       <h3>宇宙探査ミッション、月面着陸成功</h3>
       <p>民間プロジェクトによる月面着陸が世界初で達成。</p>
       <p class="meta">2025/06/09 09:45</p>
@@ -81,5 +105,34 @@
       <p class="meta">2025/06/09 03:45</p>
     </div>
   </main>
+
+  <div id="confirmDialog" class="dialog">
+    <p>最新情報を取得しますか？</p>
+    <button id="yesBtn">はい</button>
+    <button id="noBtn">いいえ</button>
+  </div>
+
+  <div id="resultDialog" class="dialog">
+    <p>最新データを取得しました。</p>
+    <button id="okBtn">OK</button>
+  </div>
+
+  <script>
+    const fetchBtn = document.querySelector('#fetchBtn');
+    const confirmDialog = document.querySelector('#confirmDialog');
+    const resultDialog = document.querySelector('#resultDialog');
+    const yesBtn = document.querySelector('#yesBtn');
+    const noBtn = document.querySelector('#noBtn');
+    const okBtn = document.querySelector('#okBtn');
+    const lastUpdated = document.querySelector('#lastUpdated');
+
+    fetchBtn.addEventListener('click', () => {
+      setTimeout(() => {
+        const now = new Date();
+        lastUpdated.textContent = 'Last Updated: ' + now.toLocaleString();
+      }, 500);
+    });
+  </script>
 </body>
 </html>
+
