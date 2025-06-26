@@ -1,16 +1,146 @@
-<html>
+<!DOCTYPE html>
+<html lang="ja">
 <head>
+  <meta charset="UTF-8">
+  <title>PageSentinel Sample Page</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif;
+      background: #f9fafb;
+      margin: 0;
+      padding: 40px 20px;
+      color: #1f2937;
+    }
+    h1 {
+      text-align: center;
+      color: #111827;
+      font-size: 2rem;
+      margin-bottom: 32px;
+    }
+    h3 {
+      color: #1d4ed8;
+      margin-top: 40px;
+      border-left: 6px solid #3b82f6;
+      padding-left: 12px;
+    }
+    .section {
+      background: #ffffff;
+      border-radius: 12px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+      padding: 20px;
+      margin: 20px auto;
+      max-width: 600px;
+    }
+    a {
+      display: inline-block;
+      background: #3b82f6;
+      color: #ffffff;
+      padding: 10px 16px;
+      margin: 6px 0;
+      border-radius: 6px;
+      text-decoration: none;
+      transition: background 0.3s;
+    }
+    a:hover {
+      background: #2563eb;
+    }
+    .info {
+      margin-top: 12px;
+      color: #374151;
+      font-size: 0.95rem;
+      background: #e5e7eb;
+      padding: 12px;
+      border-radius: 6px;
+    }
+    .copy-line {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin: 6px 0;
+    }
+    code {
+      background: #f3f4f6;
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-family: monospace;
+    }
+    button.copy-btn {
+      background: #d1d5db;
+      border: none;
+      padding: 4px 8px;
+      font-size: 0.8rem;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    button.copy-btn:hover {
+      background: #9ca3af;
+      color: white;
+    }
+  </style>
 </head>
 <body>
-<h1>PageSentinel Sampe Page</h1>
-<a href="./news_1step.html">News 1 step</a> <br>
-<a href="./news_2step.html">News 2 step</a> <br>
-<a href="./news_3step.html">News 3 step</a> <br>
-<br>
-<a href="./hospital.html">hospital 1</a> <br>
-<a href="./hospital2.html">hospital 2</a> <br>
-<br>
-<a href="./attraction.html">attraction</a> <br>
+
+  <h1>PageSentinel Sample Page</h1>
+
+  <div class="section">
+    <h3>キーワード検知テスト</h3>
+    <a href="./hospital.html">hospital 1</a><br>
+    <a href="./hospital2.html">hospital 2</a>
+  </div>
+
+  <div class="section">
+    <h3>Auto Pilot</h3>
+    <a href="./news_1step.html">News 1 step</a><br>
+    <a href="./news_2step.html">News 2 step</a><br>
+    <a href="./news_3step.html">News 3 step</a>
+    <div class="info">
+  <div class="copy-line">
+    <span class="label">Step1: ボタンID</span>
+    <code>#fetchBtn</code>
+    <button class="copy-btn">📋 Copy</button>
+  </div>
+  <div class="copy-line">
+    <span class="label">Step2: ボタンID</span>
+    <code>#yesBtn</code>
+    <button class="copy-btn">📋 Copy</button>
+  </div>
+  <div class="copy-line">
+    <span class="label">Step3: ボタンID</span>
+    <code>#okBtn</code>
+    <button class="copy-btn">📋 Copy</button>
+  </div>
+  <div class="copy-line">
+    <span class="label">繰り返し判定文字列</span>
+    <code>最新データを取得しました</code>
+    <button class="copy-btn">📋 Copy</button>
+  </div>
+  </div>
+  </div>
+
+  <div class="section">
+    <h3>キーワード検知＆Auto Pilot</h3>
+    <a href="./attraction.html">attraction</a>
+    <div class="info">
+      <div class="copy-line"><code>#reserveButton</code><button class="copy-btn">📋 Copy</button></div>
+      <div class="copy-line"><code>#confirmYes</code><button class="copy-btn">📋 Copy</button></div>
+      <div class="copy-line"><code>この時間帯に空きはありません</code><button class="copy-btn">📋 Copy</button></div>
+      <div class="copy-line"><code>#resultClose</code><button class="copy-btn">📋 Copy</button></div>
+    </div>
+  </div>
+
+  <script>
+    document.querySelectorAll('.copy-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const code = btn.previousElementSibling;
+        navigator.clipboard.writeText(code.textContent).then(() => {
+          const originalText = btn.textContent;
+          btn.textContent = '✅ Copied!';
+          setTimeout(() => btn.textContent = originalText, 2000);
+        });
+      });
+    });
+  </script>
 
 </body>
 </html>
