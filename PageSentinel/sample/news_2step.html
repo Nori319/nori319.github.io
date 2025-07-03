@@ -50,7 +50,7 @@
     <a href="#">エンタメ</a>
   </nav>
   <div class="toolbar">
-    <button id="fetchBtn">Fetch Latest News</button>
+    <button id="btn1">Fetch Latest News</button>
     <p id="lastUpdated">Last Updated: —</p>
   </div>
   <main>
@@ -108,7 +108,7 @@
 
   <div id="confirmDialog" class="dialog">
     <p>最新情報を取得しますか？</p>
-    <button id="yesBtn">はい</button>
+    <button id="btn2">はい</button>
     <button id="noBtn">いいえ</button>
   </div>
 
@@ -118,15 +118,15 @@
   </div>
 
   <script>
-    const fetchBtn = document.querySelector('#fetchBtn');
+    const btn1 = document.querySelector('#btn1');
     const confirmDialog = document.querySelector('#confirmDialog');
     const resultDialog = document.querySelector('#resultDialog');
-    const yesBtn = document.querySelector('#yesBtn');
+    const btn2 = document.querySelector('#btn2');
     const noBtn = document.querySelector('#noBtn');
     const okBtn = document.querySelector('#okBtn');
     const lastUpdated = document.querySelector('#lastUpdated');
 
-    fetchBtn.addEventListener('click', () => {
+    btn1.addEventListener('click', () => {
       confirmDialog.style.display = 'none';
       setTimeout(() => {
         const now = new Date();

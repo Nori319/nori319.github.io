@@ -77,37 +77,88 @@
       background: #9ca3af;
       color: white;
     }
+    /* ----- 既存の style { … } の中に追記 ----- */
+.site-header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+.logo {
+  display: inline-block;
+  max-width: 240px;
+  width: 100%;
+  height: auto;
+  margin-bottom: 16px;
+}
   </style>
 </head>
 <body>
-
-  <h1>PageSentinel Sample Page</h1>
+  <!-- ヘッダー部分：ロゴ＋タイトル -->
+  <header class="site-header">
+    <img
+      src="../PageSentinel-TextB.png"
+      alt="PageSentinel ロゴ"
+      class="logo"
+    >
+    <h1>PageSentinel Sample Page</h1>
+  </header>
 
   <div class="section">
     <h3>キーワード検知テスト</h3>
     <a href="./hospital.html">hospital 1</a><br>
     <a href="./hospital2.html">hospital 2</a>
+    <div class="info">
+      <div class="copy-line">URL：<code>https://nori319.github.io/PageSentinel/sample/hospital2.html</code><button class="copy-btn">📋 Copy</button></div>
+      <div class="copy-line">検知キーワード：<code>3番</code><button class="copy-btn">📋 Copy</button></div>
+      <div class="copy-line">検知モード：出現時</div>
+    </div>
+
   </div>
 
   <div class="section">
-    <h3>Auto Pilot</h3>
+    <h3>Autopilotテスト</h3>
     <a href="./news_1step.html">News 1 step</a><br>
-    <a href="./news_2step.html">News 2 step</a><br>
-    <a href="./news_3step.html">News 3 step</a>
     <div class="info">
+      <div class="copy-line">URL：<code>https://nori319.github.io/PageSentinel/sample/news_1step.html</code><button class="copy-btn">📋 Copy</button></div>
+      <div>Autopilot設定</div>
+      <div class="copy-line">
+        <span class="label">Step1: ボタンID</span>
+        <code>#btn1</code>
+        <button class="copy-btn">📋 Copy</button>
+      </div>
+    </div>
+    <a href="./news_2step.html">News 2 step</a><br>
+    <div class="info">
+      <div class="copy-line">URL：<code>https://nori319.github.io/PageSentinel/sample/news_2step.html</code><button class="copy-btn">📋 Copy</button></div>
+      <div>Autopilot設定</div>
   <div class="copy-line">
     <span class="label">Step1: ボタンID</span>
-    <code>#fetchBtn</code>
+    <code>#btn1</code>
     <button class="copy-btn">📋 Copy</button>
   </div>
   <div class="copy-line">
     <span class="label">Step2: ボタンID</span>
-    <code>#yesBtn</code>
+    <code>#btn2</code>
+    <button class="copy-btn">📋 Copy</button>
+  </div>
+  </div>
+
+  <a href="./news_3step.html">News 3 step</a>
+    <div class="info">
+      <div class="copy-line">URL：<code>https://nori319.github.io/PageSentinel/sample/news_3step.html</code><button class="copy-btn">📋 Copy</button></div>
+      <div>Autopilot設定</div>
+  <div class="copy-line">
+    <span class="label">Step1: ボタンID</span>
+    <code>#btn1</code>
+    <button class="copy-btn">📋 Copy</button>
+  </div>
+  <div class="copy-line">
+    <span class="label">Step2: ボタンID</span>
+    <code>#btn2</code>
     <button class="copy-btn">📋 Copy</button>
   </div>
   <div class="copy-line">
     <span class="label">Step3: ボタンID</span>
-    <code>#okBtn</code>
+    <code>#btn3</code>
     <button class="copy-btn">📋 Copy</button>
   </div>
   <div class="copy-line">
@@ -119,13 +170,18 @@
   </div>
 
   <div class="section">
-    <h3>キーワード検知＆Auto Pilot</h3>
+    <h3>キーワード検知＆Autopilotテスト</h3>
     <a href="./attraction.html">attraction</a>
     <div class="info">
-      <div class="copy-line"><code>#reserveButton</code><button class="copy-btn">📋 Copy</button></div>
-      <div class="copy-line"><code>#confirmYes</code><button class="copy-btn">📋 Copy</button></div>
-      <div class="copy-line"><code>この時間帯に空きはありません</code><button class="copy-btn">📋 Copy</button></div>
-      <div class="copy-line"><code>#resultClose</code><button class="copy-btn">📋 Copy</button></div>
+      <div class="copy-line">URL：<code>https://nori319.github.io/PageSentinel/sample/attraction.html</code><button class="copy-btn">📋 Copy</button></div>
+      <div class="copy-line">検知キーワード：<code>予約したい時間帯を選択してください</code><button class="copy-btn">📋 Copy</button></div>
+      <div class="copy-line">検知時の動作：<code>+Autopilot</code></div>
+      <div>Autopilot設定</div>
+      <div class="copy-line">Step1：<code>#btn1</code><button class="copy-btn">📋 Copy</button></div>
+      <div class="copy-line">Step2：<code>#btn2</code><button class="copy-btn">📋 Copy</button></div>
+      <div class="copy-line">Step3：<code>#btn3</code><button class="copy-btn">📋 Copy</button></div>
+      <div class="copy-line">キーワード：<code>この時間帯に空きはありません</code><button class="copy-btn">📋 Copy</button></div>
+      <div class="copy-line">検知時の動作：<code>繰り返す</code></div>
     </div>
   </div>
 
