@@ -1,506 +1,120 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-<meta charset="UTF-8">
-<title>PageSentinel プレミアム機能のご案内</title>
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="description" content="PageSentinel プレミアムで高度な自動監視・自動操作・高速検知を実現。比較・機能一覧・導入メリットをチェック。">
-<style>
-:root {
-  --c-bg: #0f1115;
-  --c-surface: #161b22;
-  --c-accent: #3d82ff;
-  --c-accent-grad: linear-gradient(90deg,#3d82ff,#6a5cff 60%,#9b45ff);
-  --c-text: #f5f7fa;
-  --c-text-dim: #a4afbd;
-  --c-danger: #ff4d5b;
-  --radius: 14px;
-  --shadow: 0 6px 18px -6px rgba(0,0,0,.45),0 2px 4px -1px rgba(0,0,0,.4);
-  font-family: -apple-system,BlinkMacSystemFont,"Helvetica Neue","Hiragino Sans","Noto Sans JP",Arial,sans-serif;
-}
-*{box-sizing:border-box;}
-body {
-  margin:0;
-  background:var(--c-bg);
-  color:var(--c-text);
-  line-height:1.6;
-  -webkit-font-smoothing: antialiased;
-}
-h1,h2,h3 { line-height:1.25; font-weight:600; }
-p { margin:0 0 1.1em; }
-a { color: var(--c-accent); text-decoration:none; }
-a:hover { text-decoration:underline; }
-.wrapper { max-width:1080px; margin:0 auto; padding: clamp(1.2rem,2.5vw,2.2rem); }
-
-.hero {
-  display:grid;
-  gap:2.2rem;
-  align-items:center;
-  padding: clamp(1rem,3vw,3rem) 0 2rem;
-}
-.hero__text h1 {
-  font-size: clamp(1.9rem,4.5vw,3.2rem);
-  background: var(--c-accent-grad);
-  -webkit-background-clip:text;
-  color:transparent;
-  margin:0 0 .8rem;
-}
-.badge {
-  display:inline-block;
-  font-size:.75rem;
-  letter-spacing:.05em;
-  padding:.35rem .65rem;
-  background:rgba(255,255,255,.07);
-  border:1px solid rgba(255,255,255,.12);
-  border-radius:999px;
-  margin-bottom:.9rem;
-}
-.lead {
-  font-size: clamp(1.05rem,1.4vw,1.25rem);
-  font-weight:400;
-  color:var(--c-text-dim);
-  max-width:640px;
-}
-
-.cta-row {
-  display:flex;
-  flex-wrap:wrap;
-  gap:.9rem;
-  margin-top:1.2rem;
-}
-.btn {
-  --btn-bg: var(--c-accent-grad);
-  position:relative;
-  border:none;
-  padding:.95rem 1.35rem;
-  font-size:.95rem;
-  font-weight:600;
-  letter-spacing:.03em;
-  border-radius:10px;
-  color:#fff;
-  background:var(--btn-bg);
-  cursor:pointer;
-  box-shadow: var(--shadow);
-  transition:.25s cubic-bezier(.4,.4,0,1);
-}
-.btn:hover { transform:translateY(-3px); box-shadow:0 10px 24px -6px rgba(0,0,0,.55); }
-.btn.outline {
-  background:rgba(255,255,255,.04);
-  border:1px solid rgba(255,255,255,.2);
-  color: #fff;
-  box-shadow:none;
-}
-.btn.outline:hover { background:rgba(255,255,255,.08); }
-
-.mock {
-  width:100%;
-  aspect-ratio: 16/9;
-  background:
-    radial-gradient(circle at 30% 30%,rgba(255,255,255,.15),transparent 60%),
-    linear-gradient(145deg,#1e2530,#101419);
-  border:1px solid #27313f;
-  border-radius:18px;
-  box-shadow: var(--shadow);
-  position:relative;
-  overflow:hidden;
-}
-.mock:before {
-  content:"PREMIUM PREVIEW";
-  position:absolute;
-  top:8px; left:12px;
-  font-size:.65rem;
-  letter-spacing:.15em;
-  color:rgba(255,255,255,.35);
-}
-
-.grid {
-  display:grid;
-  gap:1.6rem;
-}
-@media (min-width:860px){
-  .hero { grid-template-columns: 1fr 1fr; }
-  .grid-3 { grid-template-columns:repeat(3,1fr); }
-  .grid-2 { grid-template-columns:repeat(2,1fr); }
-}
-
-.card {
-  background: var(--c-surface);
-  border:1px solid #222b35;
-  border-radius: var(--radius);
-  padding:1.15rem 1.15rem 1.2rem;
-  position:relative;
-  overflow:hidden;
-  display:flex;
-  flex-direction:column;
-  gap:.6rem;
-  min-height:100%;
-  transition:.35s;
-}
-.card:hover { border-color:#2f4155; box-shadow:0 8px 26px -10px rgba(0,0,0,.55); }
-.card h3 { margin:.2rem 0 .2rem; font-size:1.05rem; }
-.card p { font-size:.85rem; color:var(--c-text-dim); margin:0; }
-.card .tag {
-  font-size:.6rem;
-  letter-spacing:.12em;
-  background:#223043;
-  color:#9fbde2;
-  padding:.35rem .55rem;
-  border-radius:999px;
-  align-self:flex-start;
-  margin-bottom:.2rem;
-}
-
-.section-title {
-  font-size: clamp(1.5rem,3vw,2.2rem);
-  margin:0 0 1.3rem;
-  background: var(--c-accent-grad);
-  -webkit-background-clip:text;
-  color:transparent;
-}
-
-.compare-table {
-  width:100%;
-  border-collapse:collapse;
-  font-size:.85rem;
-  overflow:hidden;
-  border:1px solid #27313f;
-  border-radius:14px;
-  background:var(--c-surface);
-}
-.compare-table th,
-.compare-table td {
-  padding:.75rem .85rem;
-  border-bottom:1px solid #27313f;
-  vertical-align:top;
-}
-.compare-table th {
-  text-align:left;
-  background:#1c242e;
-  font-weight:600;
-  font-size:.8rem;
-  letter-spacing:.04em;
-}
-.compare-table tr:last-child td { border-bottom:none; }
-.compare-table td.center { text-align:center; }
-.badge-pro {
-  display:inline-block;
-  background:var(--c-accent-grad);
-  padding:.35rem .55rem;
-  border-radius:6px;
-  font-size:.65rem;
-  font-weight:600;
-}
-
-.inline-icon { filter:drop-shadow(0 0 2px rgba(0,0,0,.4)); }
-
-.highlight {
-  background: linear-gradient(90deg,#213346,#1b2733);
-  border:1px solid #2d3d4c;
-  padding:1.2rem 1.3rem;
-  border-radius: var(--radius);
-  position:relative;
-  overflow:hidden;
-}
-
-.highlight:before {
-  content:"";
-  position:absolute;
-  inset:0;
-  background:
-    radial-gradient(circle at 85% 25%,rgba(93,140,255,.25),transparent 55%),
-    radial-gradient(circle at 10% 80%,rgba(158,104,255,.18),transparent 60%);
-  pointer-events:none;
-}
-
-.steps {
-  counter-reset: step;
-  display:grid;
-  gap:1.2rem;
-}
-.step {
-  background:var(--c-surface);
-  border:1px solid #27313f;
-  padding:1rem 1.1rem .95rem;
-  border-radius:12px;
-  position:relative;
-  font-size:.9rem;
-}
-.step:before {
-  counter-increment: step;
-  content: counter(step);
-  position:absolute;
-  top:-10px; left:-10px;
-  width:34px; height:34px;
-  border-radius:12px;
-  background:var(--c-accent-grad);
-  color:#fff;
-  font-weight:600;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:.85rem;
-  box-shadow:0 4px 14px -4px rgba(0,0,0,.6);
-}
-
-.faq-item {
-  margin:0 0 1.2rem;
-  background:var(--c-surface);
-  padding:1rem 1rem .9rem;
-  border:1px solid #27313f;
-  border-radius:14px;
-}
-.faq-item h3 {
-  margin:.1rem 0 .6rem;
-  font-size:.95rem;
-}
-.faq-item p { margin:0; font-size:.85rem; color:var(--c-text-dim); }
-
-.footer {
-  margin-top:3rem;
-  padding:2.2rem 0 3.2rem;
-  font-size:.7rem;
-  text-align:center;
-  color:#6f7b87;
-}
-
-.notice { color:#9fbde2; font-size:.7rem; margin-top:.8rem; line-height:1.4; }
-.del { text-decoration:line-through; opacity:.65; }
-
-.emph { color:#fff; font-weight:600; }
-
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>PageSentinel プレミアム機能</title>
+  <style>
+    /* ベースリセット */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background-color: #f4f6f8;
+      color: #333;
+      line-height: 1.6;
+    }
+    /* ヘッダー */
+    header {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: #fff;
+      padding: 4rem 2rem;
+      text-align: center;
+    }
+    header h1 {
+      font-size: 2.75rem;
+      margin-bottom: 0.5rem;
+      letter-spacing: -1px;
+    }
+    header p {
+      font-size: 1.2rem;
+      opacity: 0.9;
+    }
+    /* 機能リスト */
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 2rem;
+      max-width: 960px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+    }
+    .feature-card {
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+      padding: 1.5rem;
+      text-align: center;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .feature-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+    }
+    .feature-card i {
+      font-size: 2.25rem;
+      color: #764ba2;
+      margin-bottom: 0.75rem;
+    }
+    .feature-card h3 {
+      font-size: 1.25rem;
+      margin-bottom: 0.5rem;
+    }
+    .feature-card p {
+      font-size: 0.95rem;
+      color: #555;
+    }
+    @media (max-width: 600px) {
+      header h1 { font-size: 2rem; }
+      header p  { font-size: 1rem; }
+    }
+  </style>
+  <!-- FontAwesome アイコン（必要に応じてKit IDを設定） -->
+  <script src="https://kit.fontawesome.com/your-kit-id.js" crossorigin="anonymous"></script>
 </head>
 <body>
 
-<header class="wrapper hero">
-  <div class="hero__text">
-    <div class="badge">PREMIUM</div>
-    <h1>PageSentinel プレミアム</h1>
-    <p class="lead">
-      “監視するだけ” から “待たせない自動化アシスタント” へ。  
-      プレミアムは <strong>高速・安定・自動操作</strong> を統合し、あなたのリロード地獄と手動クリックを最小化します。
-      大事な更新や空き枠を取り逃さない ― これが最速の体験です。
-    </p>
-    <div class="cta-row">
-      <!-- アプリ内部からは課金処理をフック -->
-      <button class="btn" onclick="purchasePremium()">今すぐ有効化する</button>
-      <a href="#compare" class="btn outline">無料版との違いを見る</a>
+  <header>
+    <h1>PageSentinel プレミアム機能</h1>
+    <p>より強力に、より柔軟にページ監視をカスタマイズ</p>
+  </header>
+
+  <section class="features">
+    <div class="feature-card">
+      <i class="fas fa-history"></i>
+      <h3>前回ページを表示</h3>
+      <p>最後に見たページをワンタップで再表示。中断からの復帰がスムーズに。</p>
     </div>
-    <p class="notice">※ 本ページの購入ボタンはアプリ内課金の疑似例です。実際の実装ではネイティブ側ハンドラに接続してください。</p>
-  </div>
-  <div class="mock">
-    <!-- スクリーンショット挿入例 -->
-    <!-- <img src="images/premium-dashboard.png" alt="プレミアム機能プレビュー" style="width:100%;height:100%;object-fit:cover;"> -->
-  </div>
-</header>
 
-<main class="wrapper">
+    <div class="feature-card">
+      <i class="fas fa-redo-alt"></i>
+      <h3>リロード間隔 1秒〜</h3>
+      <p>リロード間隔を最小1秒に設定可能。リアルタイム更新もお任せ。</p>
+    </div>
 
-  <!-- Problem / Pain Point -->
-  <section class="highlight">
-    <h2 class="section-title" style="margin-top:0;">なぜプレミアムが必要なのか</h2>
-    <p style="margin-top:-.4rem;">
-      予約サイト・在庫ページ・更新待ちのポータル……  
-      手動で開き直し → スクロール → 目視確認 → ボタン押下。  
-      このループが <span class="emph">1日数十回</span> にも及ぶと、集中は切れ、機会は流れ、結果的に本来のタスクが後回しになります。
-    </p>
-    <p>
-      PageSentinel プレミアムは「検知精度」「即応アクション」「安定レンダリング」「多段オート操作」を組み合わせて、
-      単なる更新チェックを“成果獲得ワークフロー”へ昇格させます。
-    </p>
-  </section>
+    <div class="feature-card">
+      <i class="fas fa-stopwatch"></i>
+      <h3>検知ディレイ 1秒刻み</h3>
+      <p>キーワード検知の遅延設定を1秒単位で自在に調整。</p>
+    </div>
 
-  <!-- Core Value Cards -->
-  <section style="margin-top:3rem;">
-    <h2 class="section-title">主なプレミアム価値</h2>
-    <div class="grid grid-3">
-      <div class="card">
-        <span class="tag">高速 & 精度</span>
-        <h3>アンチフリッカー最適化</h3>
-        <p>複数段階のスクロール／スナップショット遅延プリセットを保存。DOM変化の瞬間を安定撮影し、誤検知や見逃しを減らします。</p>
-      </div>
-      <div class="card">
-        <span class="tag">自動操作</span>
-        <h3>マルチステップ Autopilot</h3>
-        <p>最大 3 ステップの「ボタン押下 + 待機 + 条件判定」をチェーン化。空き枠表示 → 即クリック → 後処理 までを自動完了。</p>
-      </div>
-      <div class="card">
-        <span class="tag">インテリジェンス</span>
-        <h3>条件文字列 & アクション分岐</h3>
-        <p>指定キーワード出現/消失をトリガーに <em>停止 / 継続 / 別ボタン実行</em> を分岐。過剰ループや無駄クリックを抑制。</p>
-      </div>
-      <div class="card">
-        <span class="tag">柔軟性</span>
-        <h3>カスタム CSS 注入</h3>
-        <p>不要要素を非表示・配色調整・重要要素を強調し、検知成功率と視認性を一気に向上。</p>
-      </div>
-      <div class="card">
-        <span class="tag">再現性</span>
-        <h3>プロファイル保存 & 復元</h3>
-        <p>URL一覧・遅延・検知モード・Autopilot・CSS 等フルセットを名前付きで管理。案件ごとの切替を秒で。</p>
-      </div>
-      <div class="card">
-        <span class="tag">集中力</span>
-        <h3>“張り付き” から解放</h3>
-        <p>待ち時間を自動化し、あなたは成果が出る瞬間のみ判断すればOK。生産性と精神的余白を同時に回復。</p>
-      </div>
+    <div class="feature-card">
+      <i class="fas fa-th-large"></i>
+      <h3>検知時の処理 3パターン</h3>
+      <p>出現時・消失時・カスタム操作から選べる3つのモード。</p>
+    </div>
+
+    <div class="feature-card">
+      <i class="fas fa-robot"></i>
+      <h3>オートパイロット待機 0秒〜</h3>
+      <p>自動タップ後の待機時間を0秒から設定可能。超高速操作にも対応。</p>
+    </div>
+
+    <div class="feature-card">
+      <i class="fas fa-save"></i>
+      <h3>設定保存機能</h3>
+      <p>お気に入りの設定をプロファイルに保存＆呼び出し。一括管理も簡単。</p>
     </div>
   </section>
 
-  <!-- Comparison -->
-  <section id="compare" style="margin-top:3.5rem;">
-    <h2 class="section-title">無料版との比較</h2>
-    <div style="overflow-x:auto;">
-      <table class="compare-table">
-        <thead>
-          <tr>
-            <th style="width:38%;">機能</th>
-            <th style="width:31%;">無料版</th>
-            <th style="width:31%;">プレミアム <span class="badge-pro">推奨</span></th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>URL 監視数 / 管理</td>
-            <td>基本登録と手動切替</td>
-            <td>プロファイルで複数セット一括切替</td>
-          </tr>
-          <tr>
-            <td>アンチフリッカー制御</td>
-            <td>固定プリセット (中程度)</td>
-            <td>4段階切替 + プロファイル保存</td>
-          </tr>
-          <tr>
-            <td>検知モード (出現 / 消失)</td>
-            <td>○</td>
-            <td>○ + 遅延カスタム最適化</td>
-          </tr>
-          <tr>
-            <td>検知後アクション</td>
-            <td>停止のみ</td>
-            <td>停止 / 指定ボタン / Autopilot 分岐</td>
-          </tr>
-          <tr>
-            <td>Autopilot ステップ数</td>
-            <td>—</td>
-            <td>最大 3 ステップ + 条件文字列判定</td>
-          </tr>
-          <tr>
-            <td>カスタム CSS 注入</td>
-            <td>—</td>
-            <td>○ （不要要素排除・強調表示）</td>
-          </tr>
-          <tr>
-            <td>キーワード後処理アクション</td>
-            <td>—</td>
-            <td>○ （継続 / 停止 / 別ボタン）</td>
-          </tr>
-          <tr>
-            <td>プロファイル保存数</td>
-            <td>—</td>
-            <td>実質無制限*</td>
-          </tr>
-          <tr>
-            <td>手動操作時間削減</td>
-            <td>△</td>
-            <td>◎ （クリック + 待機自動化）</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    <p class="notice">* 常識的範囲での利用を想定しています。極端に大量の保存はパフォーマンスに影響する可能性があります。</p>
-  </section>
-
-  <!-- Workflow / Steps -->
-  <section style="margin-top:3.5rem;">
-    <h2 class="section-title">導入～成果獲得 3 ステップ</h2>
-    <div class="steps">
-      <div class="step">
-        <strong>設定を取り込む</strong><br>
-        監視したい URL とキーワードを登録し、必要ならカスタムCSSでノイズ要素を除去。
-      </div>
-      <div class="step">
-        <strong>Autopilot を組む</strong><br>
-        ステップ1～3 の CSS セレクタと待機秒を入力。条件文字列で継続/停止/派生アクションを定義。
-      </div>
-      <div class="step">
-        <strong>プロファイル保存 & 運用</strong><br>
-        案件ごとにプロファイル化。別案件 → クリック一発切替で即再現、切替ロスをゼロへ。
-      </div>
-    </div>
-  </section>
-
-  <!-- Persuasive CTA -->
-  <section style="margin-top:3.5rem;">
-    <h2 class="section-title">“今 取れない” が “今 取れる” に変わる瞬間へ</h2>
-    <p>
-      ページの更新はあなたの都合を待ってくれません。  
-      <strong>PageSentinel プレミアム</strong> は「張り付き」「見逃し」「ワンテンポ遅れ」を削り、
-      チャンス発生 → 確保 までの摩擦を最小化します。
-    </p>
-    <p style="margin-top:-.4rem;">
-      毎回の手作業 30秒 × 1日 40回 = 1日 20分超。  
-      月間にすると<strong>約10時間</strong>。  
-      それ、別の価値ある作業に置き換えませんか？
-    </p>
-    <div class="cta-row" style="margin-top:1.4rem;">
-      <button class="btn" onclick="purchasePremium()">プレミアムを有効化する</button>
-      <a href="#faq" class="btn outline">FAQ を見る</a>
-    </div>
-  </section>
-
-  <!-- FAQ -->
-  <section id="faq" style="margin-top:3.5rem;">
-    <h2 class="section-title">よくある質問</h2>
-    <div class="grid grid-2">
-      <div class="faq-item">
-        <h3>Q. 無料版から設定は引き継げますか？</h3>
-        <p>はい。既存の URL やキーワードはそのまま利用でき、追加要素（Autopilot / CSS / プロファイル）が解放されます。</p>
-      </div>
-      <div class="faq-item">
-        <h3>Q. Autopilot の CSS セレクタはどう作ればいい？</h3>
-        <p>対象ボタンをブラウザ検証等で特定し、一意になるセレクタ (id / data-* 属性など) を設定してください。後からプロファイルに保存できます。</p>
-      </div>
-      <div class="faq-item">
-        <h3>Q. 間違った自動クリックが心配です</h3>
-        <p>条件文字列やアンチフリッカーレベルを調整し、テストプロファイルで挙動を確認してから本番に適用してください。</p>
-      </div>
-      <div class="faq-item">
-        <h3>Q. 端末を閉じていても動作しますか？</h3>
-        <p>アプリが OS によりサスペンドされると処理は停止します。長時間運用時は画面ロック・省電力設定を調整してください。</p>
-      </div>
-      <div class="faq-item">
-        <h3>Q. プレミアム解約後はどうなりますか？</h3>
-        <p>無料版機能は継続使用可能。プレミアム固有設定は保持されますが、再有効化まで編集・実行は制限されます。</p>
-      </div>
-      <div class="faq-item">
-        <h3>Q. サポートはありますか？</h3>
-        <p>[サポート窓口メール] へご連絡ください。優先サポートはプレミアム期間中に適用されます。</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- Final CTA -->
-  <section style="margin-top:4rem; text-align:center;">
-    <h2 class="section-title" style="display:inline-block;">今すぐ時間の浪費を止めよう</h2>
-    <p style="max-width:700px;margin:0 auto 1.6rem;color:var(--c-text-dim);">
-      クリックと待機を自動化し、確実に結果を掴む最短ルートを手に入れましょう。
-    </p>
-    <button class="btn" onclick="purchasePremium()">プレミアムを有効化する</button>
-    <p class="notice" style="margin-top:1rem;">アプリ内課金ポップアップが表示されない場合は最新バージョンへアップデートしてください。</p>
-  </section>
-
-</main>
-
-<footer class="footer">
-  © 2025 PageSentinel. All rights reserved.
-</footer>
-
-<script>
-/* アプリ組み込み時はネイティブブリッジに差し替え */
-function purchasePremium() {
-  alert("ここでアプリ内課金処理を呼び出します。");
-}
-</script>
 </body>
 </html>
