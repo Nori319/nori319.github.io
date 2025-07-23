@@ -1,72 +1,75 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5879758729873663"
-     crossorigin="anonymous"></script>
-  <meta charset="UTF-8">
-  <title>利用規約・プライバシーポリシー</title>
+  <meta charset="UTF-8" />
+  <!-- ★ スマホ対応必須 -->
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <title>利用規約・プライバシーポリシー | PageSentinel</title>
+
   <link href="https://fonts.googleapis.com/css2?family=Yomogi&display=swap" rel="stylesheet">
   <style>
     :root{
       --blue:#007aff;
+      --blue2:#5ac8fa;
       --bg:#f9f9f9;
       --card:#fff;
       --shadow:0 0 10px rgba(0,0,0,0.05);
-      --radius:8px;
-      --grad:linear-gradient(135deg,#007aff 0%,#5ac8fa 100%);
+      --radius:12px;
+      --grad:linear-gradient(135deg,var(--blue) 0%,var(--blue2) 100%);
     }
+    *{box-sizing:border-box;}
     body{
       font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
-      background:var(--bg);margin:0;
+      background:var(--bg);margin:0;color:#333;line-height:1.6;
     }
+
     .container{
-      max-width:600px;margin:80px auto 40px;padding:0 20px 40px;
-      background:var(--card);box-shadow:var(--shadow);border-radius:var(--radius);
+      max-width:640px;
+      margin:64px auto 48px;
+      padding:0 20px 48px;
+      background:var(--card);
+      box-shadow:var(--shadow);
+      border-radius:var(--radius);
       position:relative;
     }
 
     /* タイトル右上の丸ボタン */
     .feature-fab{
       position:absolute;top:-28px;right:-28px;
-      width:64px;height:64px;border-radius:50%;
+      width:70px;height:70px;border-radius:50%;
       background:var(--grad);color:#fff;
       display:flex;justify-content:center;align-items:center;
       box-shadow:0 8px 16px rgba(0,0,0,.18);
-      text-decoration:none;font-size:.8rem;font-weight:600;
+      text-decoration:none;font-size:.78rem;font-weight:700;line-height:1.2;
       transform:rotate(10deg);
-      transition:transform .2s ease, box-shadow .2s ease;
+      transition:transform .2s, box-shadow .2s;
     }
     .feature-fab:hover{
       transform:rotate(0deg) scale(1.05);
-      box-shadow:0 10px 18px rgba(0,0,0,.22);
-      text-decoration:none;
+      box-shadow:0 10px 20px rgba(0,0,0,.22);
     }
 
     h1{
-      font-size:1.5em;margin:1.2em 0 .6em;color:#222;
-      border-bottom:1px solid #ddd;padding-bottom:.3em;
-      text-align:center;
+      font-size:1.6rem;margin:1.6em 0 .8em;color:#222;
+      border-bottom:1px solid #ddd;padding-bottom:.35em;text-align:center;
     }
     h1 a{color:inherit;text-decoration:none;}
-    h2{font-size:1.2em;margin-top:1.5em;color:#333;}
-    ul{padding-left:1.2em;margin:0;}
-    li{margin-bottom:.5em;}
+    h2{font-size:1.2rem;margin-top:1.8rem;color:#333;}
+
+    ul{padding-left:1.2em;margin:.3rem 0 0;}
+    li{margin-bottom:.55em;}
     a{color:var(--blue);text-decoration:none;}
     a:hover{text-decoration:underline;}
-    .timestamp{
-      text-align:center;font-size:.8em;color:#666;margin-top:40px;padding-bottom:20px;
-    }
 
-    .speech-bubble2{
-      position:relative;background:#f0f8ff;border:2px solid var(--blue);
-      border-radius:15px;padding:12px 18px;width:fit-content;margin:0 auto 20px;
-      font-weight:bold;font-size:1em;color:#333;
-    }
+    .appstore-link{text-align:center;margin:28px 0;}
+    .timestamp{text-align:center;font-size:.8em;color:#666;margin-top:40px;padding-bottom:20px;}
+
     .speech-bubble{
       font-family:'Yomogi',cursive;
       position:relative;background:#f0f8ff;border:2px solid var(--blue);
-      border-radius:20px;padding:16px;width:fit-content;max-width:80%;
-      margin:0 auto 30px;font-size:1em;line-height:1.5;color:#333;font-weight:bold;
+      border-radius:20px;padding:16px;max-width:90%;
+      margin:0 auto 30px;font-size:1em;line-height:1.6;color:#333;font-weight:bold;
       box-shadow:0 4px 6px rgba(0,0,0,.1);
     }
     .speech-bubble::after{
@@ -74,47 +77,62 @@
       border:10px solid transparent;border-top-color:var(--blue);
     }
 
-    .appstore-link{text-align:center;margin:20px 0;}
+    /* 画像をスマホに合わせる */
+    .hero-icon{
+      display:block;margin:1.2em auto;
+      width:280px;max-width:85%;height:auto;
+      border-radius:24px;
+      box-shadow:0 12px 24px rgba(0,0,0,.12);
+    }
 
-    /* 真ん中の大きいCTA */
+    /* コードブロック横スクロール */
+    pre{
+      overflow-x:auto;
+      background:#f5f5f5;
+      padding:12px;
+      border-radius:8px;
+      font-size:.85rem;
+    }
+
+    /* 中央の大きいCTA */
     .feature-cta{
-      margin:40px auto 10px;
-      text-align:center;
+      margin:36px auto 16px;text-align:center;
     }
     .feature-cta a{
-      display:inline-block;
-      background:var(--grad);
-      color:#fff;
-      padding:14px 28px;
-      border-radius:32px;
-      font-size:1rem;
-      font-weight:600;
-      text-decoration:none;
+      display:inline-block;background:var(--grad);color:#fff;padding:14px 32px;
+      border-radius:32px;font-size:1rem;font-weight:600;text-decoration:none;
       box-shadow:0 6px 14px rgba(0,0,0,.15);
-      transition:transform .2s ease, box-shadow .2s ease;
+      transition:transform .2s, box-shadow .2s;
     }
     .feature-cta a:hover{
       transform:translateY(-2px);
       box-shadow:0 8px 18px rgba(0,0,0,.2);
-      text-decoration:none;
+    }
+
+    @media (max-width:480px){
+      .container{
+        margin:48px 12px 32px;
+        padding:0 16px 40px;
+        border-radius:10px;
+      }
+      .feature-fab{
+        top:-24px;right:-24px;width:60px;height:60px;font-size:.72rem;
+      }
+      h1{font-size:1.4rem;}
+      .hero-icon{width:220px;border-radius:18px;}
+      .feature-cta a{padding:12px 26px;font-size:.95rem;}
     }
   </style>
 </head>
 <body>
   <div class="container">
 
-    <!-- タイトル右上の丸ボタン -->
-    <a class="feature-fab" href="Marketing/index.html">機能<br>紹介</a>
+    <a class="feature-fab" href="Marketing/index.html" aria-label="機能紹介ページへ">機能<br>紹介</a>
 
-    <h1>Page Sentinel</h1>
+    <h1><a href="./">Page Sentinel</a></h1>
 
-    <img src="PageSentinel.png" alt="Page Sentinel Mascot" width="300" height="300"
-         style="display:block;margin:1em auto;">
+    <img src="PageSentinel.png" alt="Page Sentinel ロゴ" class="hero-icon">
 
-    <!-- 中央の吹き出しなど既存装飾を活かすならここに置く -->
-    <!-- <div class="speech-bubble">Page Sentinelへようこそ！</div> -->
-
-    <!-- 中央の大きなCTA -->
     <div class="feature-cta">
       <a href="Marketing/index.html">▶ 機能紹介ページを見る</a>
     </div>
@@ -132,10 +150,14 @@
       </a>
     </div>
 
-    <div class="timestamp">
-      <!-- 最終更新日などあればここに -->
-    </div>
-
+    <div class="timestamp" id="updatedAt"></div>
   </div>
+
+  <script>
+    // 最終更新日表示（不要なら削除）
+    const d = new Date(document.lastModified);
+    document.getElementById('updatedAt').textContent =
+      `最終更新日: ${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+  </script>
 </body>
 </html>
