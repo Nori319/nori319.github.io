@@ -107,6 +107,62 @@
   margin: 20px 0;
 }
 
+.faq-section {
+    max-width: 900px;
+    margin: 3rem auto;
+    padding: 0 1rem;
+}
+
+.faq-section h2 {
+    font-size: 1.8rem;
+    text-align: center;
+    margin-bottom: 2rem;
+    color: #0051A8;
+}
+
+.faq-item {
+    margin-bottom: 1rem;
+    border-radius: 8px;
+    background: white;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    overflow: hidden;
+}
+
+.faq-question {
+    width: 100%;
+    text-align: left;
+    background: #f0f4fb;
+    border: none;
+    padding: 1rem;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.faq-question:hover {
+    background: #e1ecf9;
+}
+
+.faq-answer {
+    display: none;
+    padding: 1rem;
+    border-top: 1px solid #ddd;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: #444;
+}
+pre code {
+  background-color: #f6f8fa;
+  color: #2d2d2d;
+  padding: 1rem;
+  display: block;
+  border-radius: 8px;
+  overflow-x: auto;
+  font-family: Consolas, Menlo, Monaco, "Courier New", monospace;
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
     </style>
 </head>
 <body>
@@ -124,8 +180,12 @@
         <h2>主な機能</h2>
         <div class="features">
             <div class="feature">
+                <h3>シンプル管理</h3>
+                <p>URLの追加・削除はタップだけ。選択履歴は自動保存で、次回起動からすぐに利用可能。</p>
+            </div>
+            <div class="feature">
                 <h3>自動リロード</h3>
-                <p>30秒〜1時間の間隔でページを自動でリロードし、最新情報を見逃しません。</p>
+                <p>指定した間隔でページを自動でリロードし、最新情報を見逃しません。</p>
             </div>
             <div class="feature">
                 <h3>キーワード検知</h3>
@@ -140,8 +200,8 @@
                 <p>最新情報の取得にボタン操作が必要な場合でも、設定した順番にボタン操作を自動で繰り返します。</p>
             </div>
             <div class="feature">
-                <h3>シンプル管理</h3>
-                <p>URLの追加・削除はタップだけ。選択履歴は自動保存で、次回起動からすぐに利用可能。</p>
+                <h3>カスタムCSS</h3>
+                <p>ユーザーが指定したCSSを適用し、ページの見た目をカスタマイズできます。</p>
             </div>
         </div>
     </section>
@@ -150,6 +210,48 @@
         <p>設定画面で監視したいURL、キーワード、再読み込み間隔を選択し、「ページを開く」をタップするだけ。</p>
         <!--img src="screenshot-usage.png" alt="使い方イメージ" class="screenshot"-->
     </section>
+
+    <section class="faq-section">
+  <h2>よくあるご質問（FAQ）</h2>
+  <div class="faq-item">
+    <button class="faq-question">PageSentinelはどのようなページを監視できますか？</button>
+    <div class="faq-answer">
+      <p>基本的にはインターネット上で公開されているすべてのWebページが対象です。ただし、ログインが必要なページや動的に内容が変わるページでは、監視に制限がある場合があります。大阪・関西万博（EXPO 2025）Webページの監視も可能ですが、ログイン手順に制約がありますので本ページに掲載している操作手順の動画をご確認ください。</p>
+    </div>
+  </div>
+  <div class="faq-item">
+    <button class="faq-question">キーワード検知はどのように機能しますか？</button>
+    <div class="faq-answer">
+      <p>指定したキーワードがページ内に出現または消失した場合に、自動的にリロードを停止し、音とバイブレーションでお知らせします。予約サイトや販売サイトなどでの活用に便利です。
+        例えば、大阪・関西万博（EXPO 2025）のパビリオン予約ページでは「予約可能な時間帯がありません」のメッセージが消えた場合に自動リロードを停止するよう設定できます。</p>
+      </p>
+    </div>
+  </div>
+  <div class="faq-item">
+    <button class="faq-question">アプリは無料で利用できますか？</button>
+    <div class="faq-answer">
+      <p>基本機能は無料で利用できますが、<a href="../premium.html" style="color: #007AFF; font-weight: bold;">プレミアム機能</a>もご用意していますのでお使い頂けますと幸いです。</a></p>
+    </div>
+  </div>
+    <div class="faq-item">
+    <button class="faq-question">カスタムCSSはどのように利用できますか？</button>
+    <div class="faq-answer">
+      <p>Webページの表示をカスタマイズするために、ユーザーが独自のCSSを指定できます。これにより、ページの見た目を変更したり、特定の要素を非表示にすることが可能です。
+        例えば、大阪・関西万博（EXPO 2025）Webページでは以下の設定を行うことで、満員の予約を表示させないようにする事ができます。</p>
+      <pre>
+        <code>
+/* 満員の予約を非表示にするCSS */
+.style_search_item_note__vExQQ,
+.style_event_links__jS3Q_,
+.style_search_item_row__moqWC:has(img[src*="calendar_none.svg"]),
+.style_time_picker__wrap__UBImr:has(img[src*="ico_ng.svg"]) {
+  display: none !important;
+}
+      </code></pre>
+    </div>
+  </div>
+</section>
+
     <!-- section>
         <h2>詳細情報</h2>
         <p>オートパイロットの設定やサンプルページは　<a href="details.html">こちら</a>　をご覧ください。</p>
@@ -200,5 +302,16 @@
         <p>© 2025 PageSentinel</p>
         <p><a href="https://nori319.github.io/legal-docs/PageSentinel/" target="_blank">公式サイト</a></p>
     </footer>
+
+    <script>
+  document.querySelectorAll('.faq-question').forEach(button => {
+    button.addEventListener('click', () => {
+      const answer = button.nextElementSibling;
+      const isOpen = answer.style.display === 'block';
+      document.querySelectorAll('.faq-answer').forEach(a => a.style.display = 'none');
+      answer.style.display = isOpen ? 'none' : 'block';
+    });
+  });
+</script>
 </body>
 </html>
