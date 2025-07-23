@@ -216,7 +216,20 @@ pre code {
   <div class="faq-item">
     <button class="faq-question">PageSentinelはどのようなページを監視できますか？</button>
     <div class="faq-answer">
-      <p>基本的にはインターネット上で公開されているすべてのWebページが対象です。ただし、ログインが必要なページや動的に内容が変わるページでは、監視に制限がある場合があります。大阪・関西万博（EXPO 2025）Webページの監視も可能ですが、ログイン手順に制約がありますので本ページに掲載している操作手順の動画をご確認ください。</p>
+      <p>基本的にはインターネット上で公開されているすべてのWebページが対象です。ただし、ログインが必要なページや動的に内容が変わるページでは、監視に制限がある場合があります。
+        大阪・関西万博（EXPO 2025）Webページの監視も可能ですが、ログイン手順に制約がありますので本ページに掲載している操作手順の動画をご確認ください。</p>
+<p>
+  マイチケットページ（監視URLに設定）<br>
+  <code id="url-ticket">https://ticket.expo2025.or.jp/myticket/</code>
+  <button class="copy-btn" data-target="url-ticket">コピー</button>
+  <span class="copy-feedback" aria-live="polite"></span>
+</p>
+<p>
+  万博IDページ（本人確認方法の変更）<br>
+  <code id="url-idmng">https://usrmng.accounts.expo2025.or.jp/idmng/users/screen/menuScreen</code>
+  <button class="copy-btn" data-target="url-idmng">コピー</button>
+  <span class="copy-feedback" aria-live="polite"></span>
+</p>
     </div>
   </div>
   <div class="faq-item">
@@ -239,7 +252,7 @@ pre code {
       <p>Webページの表示をカスタマイズするために、ユーザーが独自のCSSを指定できます。これにより、ページの見た目を変更したり、特定の要素を非表示にすることが可能です。
         例えば、大阪・関西万博（EXPO 2025）Webページでは以下の設定を行うことで、満員の予約を表示させないようにする事ができます。</p>
       <pre>
-        <code>
+<code id="css-ticket">
 /* 満員の予約を非表示にするCSS */
 .style_search_item_note__vExQQ,
 .style_event_links__jS3Q_,
@@ -247,7 +260,10 @@ pre code {
 .style_time_picker__wrap__UBImr:has(img[src*="ico_ng.svg"]) {
   display: none !important;
 }
-      </code></pre>
+</code>
+  <button class="copy-btn" data-target="css-ticket">コピー</button>
+  <span class="copy-feedback" aria-live="polite"></span>
+    </pre>
     </div>
   </div>
 </section>
@@ -312,6 +328,36 @@ pre code {
       answer.style.display = isOpen ? 'none' : 'block';
     });
   });
+
+document.querySelectorAll('.copy-btn').forEach(btn => {
+  btn.addEventListener('click', async () => {
+    const targetId = btn.dataset.target;
+    const code = document.getElementById(targetId);
+    const text = code.innerText.trim();
+    const feedback = btn.nextElementSibling;
+
+    try {
+      await navigator.clipboard.writeText(text);
+      if (feedback) {
+        feedback.textContent = 'コピーしました！';
+        setTimeout(() => feedback.textContent = '', 2000);
+      }
+    } catch (e) {
+      // フォールバック（古いブラウザ向け）
+      const textarea = document.createElement('textarea');
+      textarea.value = text;
+      document.body.appendChild(textarea);
+      textarea.select();
+      document.execCommand('copy');
+      document.body.removeChild(textarea);
+      if (feedback) {
+        feedback.textContent = 'コピーしました！';
+        setTimeout(() => feedback.textContent = '', 2000);
+      }
+    }
+  });
+});
+
 </script>
 </body>
 </html>
