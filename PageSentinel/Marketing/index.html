@@ -163,6 +163,18 @@ pre code {
   font-size: 0.9rem;
   line-height: 1.6;
 }
+
+.video-wrap{
+  width:100%;
+  max-width:560px;   /* 任意。中央寄せしたいなら */
+  margin:0 auto 16px;
+}
+.video-wrap iframe{
+  width:100%;
+  aspect-ratio:16/9;
+  height:auto;       /* aspect-ratio対応ブラウザなら高さ自動 */
+  border:0;
+}
     </style>
 </head>
 <body>
@@ -243,7 +255,7 @@ pre code {
   <div class="faq-item">
     <button class="faq-question">アプリは無料で利用できますか？</button>
     <div class="faq-answer">
-      <p>基本機能は無料で利用できますが、<a href="../premium.html" style="color: #007AFF; font-weight: bold;">プレミアム機能</a>もご用意していますのでお使い頂けますと幸いです。</a></p>
+      <p>基本機能は無料で利用できますが、<a href="../premium.html" style="color: #007AFF; font-weight: bold;">プレミアム機能</a>は買い切り型（継続して利用料は発生しません）のサービスになります。</a></p>
     </div>
   </div>
     <div class="faq-item">
@@ -273,38 +285,18 @@ pre code {
         <p>オートパイロットの設定やサンプルページは　<a href="details.html">こちら</a>　をご覧ください。</p>
     </section -->
 <!-- 幅560×高さ315 の埋め込み例 -->
-<div style="text-align: center;">
-  <iframe
-    width="560" height="315"
-    src="https://www.youtube.com/embed/RTfnuAr3iAE?feature=shared"
-    title="YouTube video player"
-    frameborder="0"
-    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-    allowfullscreen>
-  </iframe>
+ <div class="video-wrap">
+  <iframe src="https://www.youtube.com/embed/RTfnuAr3iAE" allowfullscreen
+          title="YouTube video player"></iframe>
 </div>
-<div style="text-align: center;">
-  <iframe
-    width="560" height="315"
-    src="https://www.youtube.com/embed/6X6FOzBekaM"
-    title="YouTube video player"
-    frameborder="0"
-    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-    allowfullscreen>
-  </iframe>
+<div class="video-wrap">
+  <iframe src="https://www.youtube.com/embed/6X6FOzBekaM" allowfullscreen
+          title="YouTube video player"></iframe>
 </div>
-<div style="text-align: center;">
-  <iframe
-    width="560" height="315"
-    src="https://www.youtube.com/embed/yMroWmzZKT8"
-    title="YouTube video player"
-    frameborder="0"
-    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-    allowfullscreen>
-  </iframe>
+<div class="video-wrap">
+  <iframe src="https://www.youtube.com/embed/yMroWmzZKT8" allowfullscreen
+          title="YouTube video player"></iframe>
 </div>
-
-
 
         <div class="appstore-link">
             <a href="https://apps.apple.com/jp/app/id6746980444" target="_blank" rel="noopener">
