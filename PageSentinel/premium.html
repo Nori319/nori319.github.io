@@ -182,6 +182,17 @@
   z-index: -1;
   filter: blur(4px);            /* ふんわり輝く感じ */
 }
+pre code {
+  background-color: #f6f8fa;
+  color: #2d2d2d;
+  padding: 1rem;
+  display: block;
+  border-radius: 8px;
+  overflow-x: auto;
+  font-family: Consolas, Menlo, Monaco, "Courier New", monospace;
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
   </style>
 </head>
 <body>
@@ -238,8 +249,70 @@
   <h2>FAQ</h2>
 
   <details>
+    <summary>検知ディレイ設定とは何ですか？</summary>
+    <p>Webサイトの作りやサーバの負荷状態により、画面表示に時間がかかる場合があります。検知モードが「消失」の場合、画面が表示される前にキーワードチェック処理が行われ誤検知に繋がる事があります。
+      検知ディレイ設定とは、画面読み込み後のキーワードチェック処理を遅らせる時間が設定できます。画面の表示速度に応じてプレミアム機能では1秒単位で細かく調整できます。</p>
+  </details>
+  <details>
+    <summary>検知時の処理 3パターンとは何ですか？</summary>
+    <p>キーワード検知（出現/消失）した後の動きを次の３パターンから選択する事ができます。</p>
+    <p>1.自動リロード停止のみ<br>
+    2.自動リロード停止後に指定したボタンをタップ<br>
+    3.自動リロード停止後にAutopilot機能を実行</p>
+    <p> 例えば、大阪・関西万博（EXPO 2025）のパビリオン予約ページでは「予約可能な時間帯がありません」のメッセージ消失を検知した時に自動リロード停止に加えて予約するボタンをタップするような設定が可能です。</p>
+
+    <table class="settings-table" style="width:100%; border-collapse: collapse;">
+  <thead>
+    <tr>
+      <th style="text-align:left; padding:8px; border-bottom:2px solid #ddd;">項目</th>
+      <th style="text-align:left; padding:8px; border-bottom:2px solid #ddd;">値</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="padding:8px; border-bottom:1px solid #eee;">検知キーワード</td>
+      <td style="padding:8px; border-bottom:1px solid #eee;">
+        <code id="keyword-ticket">予約可能な時間帯がありません</code>
+        <button class="copy-btn" data-target="keyword-ticket">コピー</button>
+        <span class="copy-feedback" aria-live="polite"></span>
+      </td>
+    </tr>
+    <tr>
+      <td style="padding:8px; border-bottom:1px solid #eee;">検知モード</td>
+      <td style="padding:8px; border-bottom:1px solid #eee;">消失時</td>
+    </tr>
+    <tr>
+      <td style="padding:8px; border-bottom:1px solid #eee;">検知ディレイ</td>
+      <td style="padding:8px; border-bottom:1px solid #eee;">3秒（誤検知する場合は値を大きくする）</td>
+    </tr>
+    <tr>
+      <td style="padding:8px; border-bottom:1px solid #eee;">検知時のアクション</td>
+      <td style="padding:8px; border-bottom:1px solid #eee;">＋ボタン</td>
+    </tr>
+    <tr>
+      <td style="padding:8px; border-bottom:1px solid #eee;">タップするボタンの CSS セレクタ</td>
+      <td style="padding:8px; border-bottom:1px solid #eee;">
+        <code id="css-ticket">[data-message-code=SW_GP_DL_124_0047]</code>
+        <button class="copy-btn" data-target="css-ticket">コピー</button>
+        <span class="copy-feedback" aria-live="polite"></span>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<p>※Autopilot機能と組み合わせると、さらに高度な処理を実現できます。</p>
+    <div class="detection-sample" style="text-align:center; margin-top:1rem;">
+      <img
+        src="Detection.PNG"
+        alt="検知設定サンプル"
+        style="max-width:100%; height:auto; border:1px solid #ddd; border-radius:4px; box-shadow:0 2px 6px rgba(0,0,0,0.1);"
+      >
+    </div>
+
+  </details>
+
+    <details>
     <summary>購入後に機能が反映されない場合は？</summary>
-    <p>アプリを再起動しても反映されない場合、「設定」内の「購入を復元」ボタンをタップしてください。</p>
+    <p>アプリを再起動しても反映されない場合、購入ボタンのそばにある「購入を復元」ボタンをタップしてください。</p>
   </details>
 
   <details>
@@ -256,7 +329,9 @@
     <summary>返金は可能ですか？</summary>
     <p>Appleの返金ポリシーに基づきます。詳細はApp Storeサポートにお問い合わせください。</p>
   </details>
+
 </section>
+
 
 
 <style>
@@ -391,6 +466,39 @@
 <footer>
   &copy; 2025 PageSentinel. All rights reserved.
 </footer>
+
+<script>
+  // コピー機能の実装
+document.querySelectorAll('.copy-btn').forEach(btn => {
+  btn.addEventListener('click', async () => {
+    const targetId = btn.dataset.target;
+    const code = document.getElementById(targetId);
+    const text = code.innerText.trim();
+    const feedback = btn.nextElementSibling;
+
+    try {
+      await navigator.clipboard.writeText(text);
+      if (feedback) {
+        feedback.textContent = 'コピーしました！';
+        setTimeout(() => feedback.textContent = '', 2000);
+      }
+    } catch (e) {
+      // フォールバック（古いブラウザ向け）
+      const textarea = document.createElement('textarea');
+      textarea.value = text;
+      document.body.appendChild(textarea);
+      textarea.select();
+      document.execCommand('copy');
+      document.body.removeChild(textarea);
+      if (feedback) {
+        feedback.textContent = 'コピーしました！';
+        setTimeout(() => feedback.textContent = '', 2000);
+      }
+    }
+  });
+});
+
+</script>
 
 </body>
 </html>

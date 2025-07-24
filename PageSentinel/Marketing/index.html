@@ -276,10 +276,10 @@ pre code {
     <button class="faq-question">カスタムCSSはどのように利用できますか？</button>
     <div class="faq-answer">
       <p>Webページの表示をカスタマイズするために、ユーザーが独自のCSSを指定できます。これにより、ページの見た目を変更したり、特定の要素を非表示にすることが可能です。
-        例えば、大阪・関西万博（EXPO 2025）Webページでは以下の設定を行うことで、満員の予約を表示させないようにする事ができます。</p>
+        例えば、大阪・関西万博（EXPO 2025）のパビリオン予約ページでは以下の設定を行うことで、満員の予約及び満員の時間帯を表示させないようにする事ができます。</p>
       <pre>
 <code id="css-ticket">
-/* 満員の予約を非表示にするCSS */
+/* 満員の予約を非表示にする */
 .style_search_item_note__vExQQ,
 .style_event_links__jS3Q_,
 .style_search_item_row__moqWC:has(img[src*="calendar_none.svg"]),
@@ -290,6 +290,13 @@ pre code {
   <button class="copy-btn" data-target="css-ticket">コピー</button>
   <span class="copy-feedback" aria-live="polite"></span>
     </pre>
+    <div class="customcss-sample" style="text-align:center; margin-top:1rem;">
+      <img
+        src="CustomCSS.PNG"
+        alt="CustomCSS サンプル"
+        style="max-width:100%; height:auto; border:1px solid #ddd; border-radius:4px; box-shadow:0 2px 6px rgba(0,0,0,0.1);"
+      >
+    </div>
     </div>
   </div>
 </section>
