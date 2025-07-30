@@ -197,11 +197,45 @@ pre code {
   font-size: 0.9rem;
   line-height: 1.6;
 }
+.badge-new {
+  display: inline-block;
+  background-color: red;
+  color: white;
+  font-size: 10px;
+  font-weight: bold;
+  padding: 2px 6px;
+  border-radius: 6px;
+  margin-left: 6px;
+  vertical-align: middle;
+}
+.last-updated {
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.85);
+  background: rgba(0, 0, 0, 0.2);
+  padding: 4px 8px;
+  border-radius: 6px;
+}
+.video-wrap{
+  width:100%;
+  max-width:560px;   /* 任意。中央寄せしたいなら */
+  margin:0 auto 16px;
+}
+.video-wrap iframe{
+  width:100%;
+  aspect-ratio:16/9;
+  height:auto;       /* aspect-ratio対応ブラウザなら高さ自動 */
+  border:0;
+}
+
   </style>
 </head>
 <body>
 
 <header>
+<div class="last-updated">最終更新日: <span id="last-modified"></span></div>
   <h1>PageSentinel Plus<br>プレミアム機能</h1>
   <p>より強力に、より柔軟にページ監視をカスタマイズ</p>
   <!-- プレミアム用ロゴ -->
@@ -257,6 +291,7 @@ pre code {
     <p>Webサイトの作りやサーバの負荷状態により、画面表示に時間がかかる場合があります。検知モードが「消失」の場合、画面が表示される前にキーワードチェック処理が行われ誤検知に繋がる事があります。
       検知ディレイ設定とは、画面読み込み後のキーワードチェック処理を遅らせる時間が設定できます。画面の表示速度に応じてプレミアム機能では1秒単位で細かく調整できます。</p>
   </details>
+
   <details>
     <summary>検知時の処理 3パターンとは何ですか？</summary>
     <p>キーワード検知（出現/消失）した後の動きを次の３パターンから選択する事ができます。</p>
@@ -313,6 +348,80 @@ pre code {
     </div>
 
   </details>
+  <details>
+    <summary>オートパイロット機能の使用例を教えてください。<span class="badge-new">NEW</span></summary>
+    <p>オートパイロットは予め設定した、ボタンのタップ操作を条件を満たすまで繰り返す機能となります。</p>
+    <p> 例えば、大阪・関西万博（EXPO 2025）の来場日時設定ページでは、来場希望時間を選択して来場日時を設定します。この時のボタンタップ操作を、予約が完了するまで繰り返す設定を行うことが可能です。
+      以下の設定で実際の動きを動画で撮影していますので参考にしてください。</p>
+    </p>
+
+    <table class="settings-table" style="width:100%; border-collapse: collapse;">
+  <thead>
+    <tr>
+      <th style="text-align:left; padding:8px; border-bottom:2px solid #ddd;">項目</th>
+      <th style="text-align:left; padding:8px; border-bottom:2px solid #ddd;">値</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="padding:8px; border-bottom:1px solid #eee;">STEP1：CSSセレクタ</td>
+      <td style="padding:8px; border-bottom:1px solid #eee;">
+        <code id="step1-ticket">[data-message-code=SW_GP_DL_101_0118]</code>
+        <button class="copy-btn" data-target="step1-ticket">コピー</button>
+        <span class="copy-feedback" aria-live="polite"></span>
+      </td>
+    </tr>
+    <tr>
+      <td style="padding:8px; border-bottom:1px solid #eee;">STEP1：タップ後の待機</td>
+      <td style="padding:8px; border-bottom:1px solid #eee;">0秒</td>
+    </tr>
+    <tr>
+      <td style="padding:8px; border-bottom:1px solid #eee;">STEP2を有効にする</td>
+      <td style="padding:8px; border-bottom:1px solid #eee;">ON</td>
+    </tr>
+    <tr>
+      <td style="padding:8px; border-bottom:1px solid #eee;">STEP2：CSSセレクタ</td>
+      <td style="padding:8px; border-bottom:1px solid #eee;">
+        <code id="step2-ticket">[data-message-code=SW_GP_DL_117_0413]</code>
+        <button class="copy-btn" data-target="step2-ticket">コピー</button>
+        <span class="copy-feedback" aria-live="polite"></span>
+      </td>
+    </tr>
+    <tr>
+      <td style="padding:8px; border-bottom:1px solid #eee;">STEP2：タップ後の待機</td>
+      <td style="padding:8px; border-bottom:1px solid #eee;">5秒(誤検知する場合は値を大きくする）</td>
+    </tr>
+    <tr>
+      <td style="padding:8px; border-bottom:1px solid #eee;">STEP3を有効にする</td>
+      <td style="padding:8px; border-bottom:1px solid #eee;">ON</td>
+    </tr>
+    <tr>
+      <td style="padding:8px; border-bottom:1px solid #eee;">STEP3：CSSセレクタ</td>
+      <td style="padding:8px; border-bottom:1px solid #eee;">
+        <code id="step3-ticket">[data-message-code=SW_GP_DL_101_0140]</code>
+        <button class="copy-btn" data-target="step3-ticket">コピー</button>
+        <span class="copy-feedback" aria-live="polite"></span>
+      </td>
+    </tr>
+    <tr>
+      <td style="padding:8px; border-bottom:1px solid #eee;">STEP3：タップ後の待機</td>
+      <td style="padding:8px; border-bottom:1px solid #eee;">0秒</td>
+    </tr>
+    <tr>
+      <td style="padding:8px; border-bottom:1px solid #eee;">検知キーワード</td>
+      <td style="padding:8px; border-bottom:1px solid #eee;">
+        <code id="keyword-ticket">設定されました</code>
+        <button class="copy-btn" data-target="keyword-ticket">コピー</button>
+        <span class="copy-feedback" aria-live="polite"></span>
+      </td>
+    </tr>
+    <tr>
+      <td style="padding:8px; border-bottom:1px solid #eee;">検知時の動作</td>
+      <td style="padding:8px; border-bottom:1px solid #eee;">停止する</td>
+    </tr>
+  </tbody>
+</table>
+  </details>
 
     <details>
     <summary>購入後に機能が反映されない場合は？</summary>
@@ -336,7 +445,10 @@ pre code {
 
 </section>
 
-
+ <div class="video-wrap">
+  <iframe src="https://www.youtube.com/embed/JUIcVOz-Ee8" allowfullscreen
+          title="YouTube video player"></iframe>
+</div>
 
 <style>
 .compare-wrap{
@@ -462,6 +574,11 @@ pre code {
           <td class="cross">×</td>
           <td class="check">○</td>
         </tr>
+        <tr>
+          <td>縦画面固定機能（iPhone端末のみ）</td>
+          <td class="cross">×</td>
+          <td class="check">○</td>
+        </tr>
       </tbody>
     </table>
   </div>
@@ -501,7 +618,14 @@ document.querySelectorAll('.copy-btn').forEach(btn => {
     }
   });
 });
-
+// 更新日を表示（HTMLファイルの最終更新日時）
+const lastMod = new Date(document.lastModified);
+document.getElementById("last-modified").textContent =
+  lastMod.toLocaleDateString("ja-JP", {
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit"
+  });
 </script>
 
 </body>

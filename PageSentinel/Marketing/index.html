@@ -189,11 +189,24 @@ pre code {
 }
 .subtle-premium a{ color:inherit; }
 .subtle-premium:hover{ opacity:1; text-decoration:underline; }
+.last-updated {
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.85);
+  background: rgba(0, 0, 0, 0.2);
+  padding: 4px 8px;
+  border-radius: 6px;
+}
 
     </style>
 </head>
 <body>
     <header>
+      <div class="last-updated">最終更新日: <span id="last-modified"></span></div>
+
+      
         <img src="PageSentinel.png" alt="PageSentinel Icon" class="icon">
         <h1>PageSentinel</h1>
         <p>大事なウェブページの更新を自動でキャッチ</p>
@@ -377,7 +390,14 @@ document.querySelectorAll('.copy-btn').forEach(btn => {
     }
   });
 });
-
+// 更新日を表示（HTMLファイルの最終更新日時）
+const lastMod = new Date(document.lastModified);
+document.getElementById("last-modified").textContent =
+  lastMod.toLocaleDateString("ja-JP", {
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit"
+  });
 </script>
 </body>
 </html>
