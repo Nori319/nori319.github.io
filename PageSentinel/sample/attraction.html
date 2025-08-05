@@ -12,6 +12,7 @@
     header { background:#005f99; color:white; padding:16px; text-align:center; font-size:1.4rem; }
     main { padding:16px; max-width:400px; margin:0 auto; }
     .message { text-align:center; margin:24px 0; font-size:1.1rem; color:#333; }
+    .style_book_now__wrap__time__UClVd { text-align:center; margin:24px 0; font-size:1.1rem; color:#333; }
     .slots { list-style:none; padding:0; margin:0; }
     .slots li { margin:8px 0; }
     .slots button {
@@ -113,6 +114,8 @@
         slots[idx].disabled = false;
         slots[idx].classList.add('available');
         status.textContent = '予約したい時間帯を選択してください。';
+        // 新規クラスを追加
+        status.className = 'style_book_now__wrap__time__UClVd';
         // 自動選択して予約ボタンを表示
         selectedIdx = idx;
         reserve.style.display = 'block';
@@ -151,6 +154,7 @@
         resBd.style.display = 'flex';
       });
 
+      
       // 結果ダイアログ: 閉じる
     closeBtn.addEventListener('click', () => {
       resBd.style.display = 'none';
@@ -161,8 +165,12 @@
           b.classList.remove('available');
         });
         reserve.style.display = 'none';
+        status.textContent = '予約可能な時間帯はありません。';
       }
-         });
+        // 失敗・成功に関わらずスタイルクラスを除去
+        status.classList.remove('style_book_now__wrap__time__UClVd');
+      });
+
     });
   </script>
 </body>

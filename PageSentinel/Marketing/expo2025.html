@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>EXPO2025予約を自動化｜PageSentinel Plus</title>
+<meta name="description" content="大阪・関西万博(EXPO2025)のパビリオン予約を自動で監視。空きが出た瞬間に検知、通知、さらにプレミアムではオートパイロットで自動予約。リロードと連打から解放され、万博を思い切り楽しめます。" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --gradient-bg: linear-gradient(135deg,#4f46e5 0%,#7c3aed 60%);
+    --radius: 14px;
+    --shadow: 0 18px 40px -10px rgba(124,58,237,0.35);
+    --card-shadow: 0 12px 32px rgba(0,0,0,0.08);
+    --blue:#6366f1;
+    --dark:#1f2d3a;
+    --radius-sm:8px;
+    font-synthesis: none;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:#0f111a;
+    color:#f0f5ff;
+    font-family: "Inter",system-ui,-apple-system,BlinkMacSystemFont,sans-serif;
+    line-height:1.45;
+  }
+  a{color:inherit;text-decoration:none;}
+  .container{
+    max-width:1100px;
+    margin:0 auto;
+    padding:0 16px;
+  }
+  header{
+    position:relative;
+    padding:80px 16px 60px;
+    text-align:center;
+    background: var(--gradient-bg);
+    clip-path: polygon(0 0,100% 0,100% 85%,0 100%);
+  }
+  header .badge{
+    display:inline-flex;
+    gap:6px;
+    align-items:center;
+    background:rgba(255,255,255,0.15);
+    padding:6px 14px;
+    border-radius:999px;
+    font-size:0.75rem;
+    margin-bottom:8px;
+    font-weight:600;
+  }
+  header h1{
+    margin:0;
+    font-size:2.8rem;
+    font-weight:700;
+    letter-spacing:-0.5px;
+    line-height:1.1;
+  }
+  header p{
+    margin:12px auto 0;
+    font-size:1.1rem;
+    max-width:720px;
+    opacity:0.95;
+  }
+  .hero-cta{
+    margin-top:30px;
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:12px;
+  }
+  .btn{
+    display:inline-block;
+    padding:14px 24px;
+    border-radius:999px;
+    font-weight:600;
+    cursor:pointer;
+    border:none;
+    transition:transform .2s,filter .2s;
+    text-decoration:none;
+  }
+  .btn-primary{
+    background: white;
+    color: #4f46e5;
+    box-shadow:0 18px 40px -10px rgba(124,58,237,0.35);
+  }
+  .btn-primary:hover{filter:brightness(1.05);transform:translateY(-1px);}
+  .btn-outline{
+    background: transparent;
+    color: #fff;
+    border:2px solid rgba(255,255,255,0.85);
+  }
+  .btn-outline:hover{background:rgba(255,255,255,0.08);}
+  .feature-grid{
+    display:grid;
+    gap:28px;
+    margin:60px 0 40px;
+    grid-template-columns: repeat(auto-fit,minmax(260px,1fr));
+  }
+  .card{
+    background:#1f2431;
+    border-radius:16px;
+    padding:24px;
+    position:relative;
+    overflow:hidden;
+    box-shadow: var(--card-shadow);
+    transition:transform .25s;
+  }
+  .card:hover{transform:translateY(-4px);}
+  .card h3{
+    margin:0 0 10px;
+    font-size:1.25rem;
+    display:flex;
+    align-items:center;
+    gap:10px;
+  }
+  .card p{
+    margin:0;
+    font-size:0.95rem;
+    color: #d8dce8;
+  }
+  .icon-wrapper{
+    width:48px;
+    height:48px;
+    flex-shrink:0;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    background:rgba(255,255,255,0.08);
+    border-radius:12px;
+    margin-right:10px;
+  }
+  .highlight{
+    background: rgba(99,102,241,0.1);
+    padding:4px 10px;
+    border-radius:6px;
+    display:inline-block;
+    font-size:0.8rem;
+    font-weight:600;
+    margin-bottom:6px;
+  }
+  .section{
+    padding:0;
+    margin-bottom:60px;
+  }
+  .split{
+    display:flex;
+    gap:40px;
+    align-items:flex-start;
+    flex-wrap:wrap;
+  }
+  .split .text{
+    flex:1 1 360px;
+    min-width:280px;
+  }
+  .split .media{
+    flex:1 1 360px;
+    min-width:280px;
+    position:relative;
+  }
+  .feature-hero{
+    background: #1f2431;
+    border-radius:16px;
+    padding:28px;
+    margin:40px 0 60px;
+    display:flex;
+    flex-wrap:wrap;
+    gap:32px;
+    align-items:center;
+  }
+  .feature-hero .left{
+    flex:1 1 320px;
+    min-width:280px;
+  }
+  .feature-hero .right{
+    flex:1 1 320px;
+    min-width:280px;
+    position:relative;
+  }
+  .badge-premium{
+    background: gold;
+    color: #1f2431;
+    padding:6px 14px;
+    border-radius:999px;
+    font-weight:700;
+    display:inline-block;
+    font-size:0.75rem;
+    margin-bottom:6px;
+  }
+  .usage-list{
+    list-style:none;
+    padding:0;
+    margin:16px 0 0;
+  }
+  .usage-list li{
+    display:flex;
+    gap:14px;
+    align-items:flex-start;
+    margin-bottom:20px;
+  }
+  .usage-list li .num{
+    flex-shrink:0;
+    font-size:1.5rem;
+    font-weight:700;
+    width:40px;
+    height:40px;
+    background: rgba(255,255,255,0.05);
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:#fff;
+  }
+  .testimonial{
+    background: linear-gradient(135deg,#6366f1 0%,#8b5cf6 70%);
+    padding:30px;
+    border-radius:16px;
+    color:#fff;
+    margin:60px 0;
+    position:relative;
+    overflow:hidden;
+  }
+  .testimonial:before{
+    content:"“";
+    position:absolute;
+    font-size:120px;
+    opacity:0.08;
+    top:10px;
+    left:10px;
+    font-weight:700;
+  }
+  .faq{
+    background:#0f111a;
+    padding:50px 0 80px;
+  }
+  .faq h2{
+    text-align:center;
+    font-size:2rem;
+    margin-bottom:16px;
+    position:relative;
+  }
+  .faq-item{
+    max-width:960px;
+    margin:0 auto 16px;
+    background:#1f2431;
+    border-radius:12px;
+    overflow:hidden;
+    border:1px solid rgba(255,255,255,0.08);
+  }
+  .faq-question{
+    width:100%;
+    background:#20253b;
+    border:none;
+    padding:16px 20px;
+    text-align:left;
+    font-size:1rem;
+    cursor:pointer;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    font-weight:600;
+    color:#e5e9ff;
+  }
+  .faq-answer{
+    display:none;
+    padding:18px 20px;
+    font-size:0.9rem;
+    line-height:1.5;
+    color:#d3d9ff;
+    border-top:1px solid rgba(255,255,255,0.08);
+  }
+  .small{
+    font-size:0.75rem;
+    opacity:0.8;
+  }
+  .badge-new{
+    background:#10b981;
+    padding:6px 12px;
+    border-radius:999px;
+    font-weight:600;
+    font-size:0.65rem;
+    display:inline-block;
+    margin-right:6px;
+  }
+  .logo{
+    width:120px;
+    display:block;
+    margin:0 auto 12px;
+  }
+  .footer{
+    padding:60px 16px 40px;
+    text-align:center;
+    font-size:0.85rem;
+    color:#999;
+  }
+  .pill{
+    display:inline-block;
+    background: rgba(255,255,255,0.08);
+    padding:6px 14px;
+    border-radius:999px;
+    font-size:0.7rem;
+    font-weight:600;
+    margin-right:6px;
+  }
+  @media (max-width:1080px){
+    header h1{font-size:2.3rem;}
+  }
+  @media (max-width:840px){
+    .split{flex-direction:column;}
+    .feature-hero{flex-direction:column;}
+  }
+</style>
+</head>
+<body>
+  <div class="container">
+    <!-- Hero -->
+    <header aria-label="EXPO2025向け予約自動化">
+      <img src="../PageSentinelPlus.png" alt="PageSentinel Plus ロゴ" class="logo" />
+      <div class="badge">EXPO2025徹底活用ガイド</div>
+      <h1>予約のリロードとボタンタップから解放。<br>空きを検知したら、即キャッチ＆自動アクション。</h1>
+      <p>大阪・関西万博（EXPO2025）のパビリオン予約で「満員」「タイミングが合わない」「スマホと睨めっこ」とのストレスを解消。あなたの代わりに空き検知、通知、プレミアムならボタンの自動タップまで。</p>
+      <div class="hero-cta">
+        <a href="premium.html" class="btn btn-primary">PageSentinel Plus を入手</a>
+        <a href="#how-it-works" class="btn btn-outline">仕組みを見る</a>
+      </div>
+    </header>
+
+    <!-- Key benefits -->
+    <section class="section" id="how-it-works">
+      <div style="text-align:center; margin-top:40px;">
+        <div class="badge-premium">EXPO2025 特化ポイント</div>
+        <h2 style="color:#fff; font-size:2.2rem; margin:8px 0 4px;">各種予約を“手作業”から“自動化”へ</h2>
+        <p style="max-width:820px;margin:0 auto 24px; font-size:1rem; color:#dadaff;">ひたすらリロード／ボタン連打する疲れを捨てて、空きが出た瞬間を逃さず、スマートに予約。万博を本来の目的で楽しむ時間を取り戻します。</p>
+      </div>
+
+      <div class="feature-grid">
+        <div class="card">
+          <h3><div class="icon-wrapper">①</div>来場日時設定の自動化</h3>
+          <p>オートパイロット機能を使えば来場日時設定操作を自動で繰り返し実行。ボタン連打はもう不要。予約が取れるまで働く“代行エージェント”。</p>
+        </div>
+        <div class="card">
+          <h3><div class="icon-wrapper">②</div>3日前・当日予約の簡単空きチェック</h3>
+          <p><span class="highlight">カスタムCSS</span>で「空きパビリオン」「空き時間」だけを表示。探す手間と時間を省き、時間との勝負の予約確率をアップ！</p>
+        </div>
+        <div class="card">
+          <h3><div class="icon-wrapper">③</div>当日予約の空き通知</h3>
+          <p>自動リロードの検知モードで「狙いのパビリオンの空き」を監視。空きが出たら即座に<b>音と振動</b>で知らせ、チャンスを逃さない。</p>
+        </div>
+        <div class="card">
+          <h3><div class="icon-wrapper">④</div>当日予約の空き予約★</h3>
+          <p>自動リロードの検知モードで「狙いのパビリオンの空き」を監視。空きが出たら自動で予約ボタンをタップ！さらに予約確率をアップ！！</p>
+        </div>
+      </div>
+        <div style="text-align:center; margin-top:40px;">
+            <p class="subtle-premium">★プレミアム機能は<a href="../premium.html">PageSentinel Plus</a>で利用可能</p>
+        </div>
+    </section>
+
+    <!-- How it works / usage -->
+    <section class="section">
+      <div class="feature-hero" aria-label="使い方">
+        <div class="left">
+          <div class="badge-new">簡単3ステップ</div>
+          <h2 style="margin:6px 0;">万博予約を自動化する流れ</h2>
+          <ul class="usage-list">
+            <li>
+              <div class="num">1</div>
+              <div>
+                <strong>空き条件を設定</strong><br>
+                見たいパビリオンと「空きのみ抽出」用のカスタムCSSをセット。検知キーワードやモードを選ぶ。
+              </div>
+            </li>
+            <li>
+              <div class="num">2</div>
+              <div>
+                <strong>監視スタート</strong><br>
+                自動リロード＆検知で狙いの空きパターンを監視。空きが出たら音と振動で通知。プレミアムなら次の操作も自動化。
+              </div>
+            </li>
+            <li>
+              <div class="num">3</div>
+              <div>
+                <strong>予約成立 or 確認</strong><br>
+                条件を満たせば自動でボタン操作（プレミアム）、または通知後手動で確定。万博の本番体験に集中。
+              </div>
+            </li>
+          </ul>
+          <div style="margin-top:24px;">
+            <a href="../premium.html" class="btn btn-primary">今すぐプレミアムで自動化する</a>
+          </div>
+        </div>
+        <div class="right">
+          <!-- イメージやスクリーンショットをここに。例としてのプレースホルダー -->
+          <div style="background: #0f172a; border-radius:16px; padding:18px; position:relative; overflow:hidden;">
+            <img src="screenshot-expo.png" alt="EXPO2025予約の自動化イメージ" style="width:100%; border-radius:12px; display:block; box-shadow:0 20px 50px -10px rgba(124,58,237,0.35);" />
+            <div style="position:absolute; top:12px; right:12px; background:rgba(255,255,255,0.1); padding:6px 10px; border-radius:8px; font-size:0.65rem; font-weight:600;">実例: パビリオン空き監視</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Testimonial / emotional -->
+    <section>
+      <div class="testimonial">
+        <p style="margin:0; font-size:1.15rem;">「何度もリロードして時間を浪費していた予約活動が、今では空きが出ると通知が来て、プレミアムのオートパイロットが勝手に操作してくれるので、本当に万博を楽しむ時間が増えました。」</p>
+        <div style="margin-top:14px; font-weight:600;">— EXPO2025参加予定者</div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="faq" aria-label="よくある質問">
+      <div class="container">
+        <h2>よくあるご質問</h2>
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">
+            EXPO2025のどのページが監視できますか？
+            <span aria-hidden="true">▾</span>
+          </button>
+          <div class="faq-answer">
+            <p>基本的にはWeb上のパビリオン予約ページが対象です。ログインが必要な場合や本人確認がある場合、一部操作に制約があることがあります。おすすめの設定や手順はサンプルを参照してください。</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">
+            オートパイロットって何ですか？
+            <span aria-hidden="true">▾</span>
+          </button>
+          <div class="faq-answer">
+            <p>空きが出たときに自動でボタン操作を実行する機能です。予約が取れるまで事前に設定した操作をくり返すため、手動で何度もタップする必要がありません（プレミアム限定）。</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">
+            空きが出たときの通知はどうなりますか？
+            <span aria-hidden="true">▾</span>
+          </button>
+          <div class="faq-answer">
+            <p>指定した条件に一致すると自動リロードが停止し、音と振動でお知らせします。すぐに予約操作に移るか、プレミアムならそのまま自動予約に進みます。</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">
+            設定を何度も使えますか？
+            <span aria-hidden="true">▾</span>
+          </button>
+          <div class="faq-answer">
+            <p>はい。お気に入りの監視条件と自動操作はプロファイルとして保存でき、次回ワンタップで復元できます。時間を節約し、反復的なセットアップを不要にします。</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA final -->
+    <div style="text-align:center; margin:60px 0;">
+      <h2 style="margin-bottom:12px;">もう手動チェックは終わりに</h2>
+      <p style="max-width:720px; margin:0 auto 18px;">EXPO2025のパビリオン予約を自動化して、あなたの本来の目的――現地での体験や時間を楽しむこと――に集中しましょう。</p>
+      <a href="premium.html" class="btn btn-primary" style="font-size:1.1rem; padding:16px 32px;">PageSentinel Plus を今すぐ使う</a>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+      <div style="margin-bottom:6px;">© 2025 PageSentinel</div>
+      <div style="margin-bottom:4px;">
+        <a href="privacy_ja.html">プライバシーポリシー</a> &middot; 
+        <a href="terms_ja.html">利用規約</a>
+      </div>
+      <div style="font-size:0.75rem; margin-top:4px;">EXPO2025は本アプリの登録商標ではありません。予約サイトの仕様変更により動作に影響が出る場合があります。</div>
+    </div>
+  </div>
+
+  <script>
+    // FAQ toggle
+    document.querySelectorAll('.faq-question').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const answer = btn.nextElementSibling;
+        const isOpen = answer.style.display === 'block';
+        document.querySelectorAll('.faq-answer').forEach(a => a.style.display = 'none');
+        document.querySelectorAll('.faq-question').forEach(q => q.setAttribute('aria-expanded','false'));
+        if (!isOpen) {
+          answer.style.display = 'block';
+          btn.setAttribute('aria-expanded','true');
+        }
+      });
+    });
+  </script>
+</body>
+</html>
