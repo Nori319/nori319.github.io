@@ -391,7 +391,8 @@ document.querySelectorAll('.copy-btn').forEach(btn => {
   });
 });
 // 更新日を表示（HTMLファイルの最終更新日時）
-const lastMod = new Date(document.lastModified);
+//const lastMod = new Date(document.lastModified);
+const lastMod = new Date("2025-08-05");
 document.getElementById("last-modified").textContent =
   lastMod.toLocaleDateString("ja-JP", {
     year: "numeric",
