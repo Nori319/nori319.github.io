@@ -116,6 +116,7 @@
         // 自動選択して予約ボタンを表示
         selectedIdx = idx;
         reserve.style.display = 'block';
+        reserve.setAttribute('data-message-code', 'SW_GP_DL_124_0018'); 
       }
 
       // 時間帯選択で予約ボタン表示
@@ -124,6 +125,7 @@
           if (btn.disabled) return;
           selectedIdx = idx;
           reserve.style.display = 'block';
+          reserve.setAttribute('data-message-code', 'SW_GP_DL_124_0018');
         });
       });
 
@@ -162,6 +164,8 @@ reserve.addEventListener('click', () => {
       // 結果ダイアログ: 閉じる → ページをリロード
 closeBtn.addEventListener('click', () => {
   resBd.style.display = 'none';
+  reserve.setAttribute('data-message-code', originalCode);
+  reserve.style.display = 'none';
   location.reload();  // 自動リロード
 });
 
