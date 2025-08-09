@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>EXPO2025予約を自動化｜PageSentinel Plus</title>
+  <meta name="description" content="大阪・関西万博(EXPO2025)のパビリオン予約を自動で監視。空きが出た瞬間に検知、通知、さらにプレミアムではオートパイロットで自動予約。リロードと連打から解放され、万博を思い切り楽しめます。" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+  <style>
+    /* ==== レスポンシブ対応グローバルCSS ==== */
+    html, body { overflow-x: hidden; }
+    img, video, iframe { max-width: 100%; height: auto; display: block; }
+    pre, code { white-space: pre-wrap; word-break: break-word; }
+    .settings-section table, .settings-table { display: block; width: 100%; overflow-x: auto; }
+    @media (max-width:1080px) { header h1 { font-size: 2.3rem; } }
+    @media (max-width:840px) { .split, .feature-hero { flex-direction: column; } }
+    /* ================================ */
+    :root {
+      --gradient-bg: linear-gradient(135deg,#4f46e5 0%,#7c3aed 60%);
+      --radius: 14px;
+      --shadow: 0 18px 40px -10px rgba(124,58,237,0.35);
+      --card-shadow: 0 12px 32px rgba(0,0,0,0.08);
+      --blue: #6366f1;
+      --dark: #1f2d3a;
+      --radius-sm: 8px;
+      font-synthesis: none;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: #0f111a;
+      color: #f0f5ff;
+      font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      line-height: 1.45;
+    }
+    a { color: inherit; text-decoration: none; }
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 16px;
+    }
+    header {
+      position: relative;
+      padding: 80px 16px 60px;
+      text-align: center;
+      background: var(--gradient-bg);
+      /* クリップパスを削除して矩形表示に変更 */
+    }
+    header .badge {
+      display: inline-flex;
+      gap: 6px;
+      align-items: center;
+      background: rgba(255,255,255,0.15);
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      margin-bottom: 8px;
+      font-weight: 600;
+    }
+    header h1 {
+      margin: 0;
+      font-size: 2.8rem;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      line-height: 1.1;
+    }
+    header p {
+      margin: 12px auto 0;
+      font-size: 1.1rem;
+      max-width: 720px;
+      opacity: 0.95;
+    }
+    .hero-cta {
+      margin-top: 30px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 12px;
+    }
+    .btn {
+      display: inline-block;
+      padding: 14px 24px;
+      border-radius: 999px;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      transition: transform .2s, filter .2s;
+      text-decoration: none;
+    }
+    .btn-primary {
+      background: white;
+      color: #4f46e5;
+      box-shadow: 0 18px 40px -10px rgba(124,58,237,0.35);
+    }
+    .btn-primary:hover { filter: brightness(1.05); transform: translateY(-1px); }
+    .btn-outline {
+      background: transparent;
+      color: #fff;
+      border: 2px solid rgba(255,255,255,0.85);
+    }
+    .btn-outline:hover { background: rgba(255,255,255,0.08); }
+    .feature-grid {
+      display: grid;
+      gap: 28px;
+      margin: 60px 0 40px;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    }
+    .card {
+      background: #1f2431;
+      border-radius: 16px;
+      padding: 24px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: var(--card-shadow);
+      transition: transform .25s;
+    }
+    .card:hover { transform: translateY(-4px); }
+    .card h3 {
+      margin: 0 0 10px;
+      font-size: 1.25rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .card p {
+      margin: 0;
+      font-size: 0.95rem;
+      color: #d8dce8;
+    }
+    .icon-wrapper {
+      width: 48px;
+      height: 48px;
+      flex-shrink: 0;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255,255,255,0.08);
+      border-radius: 12px;
+      margin-right: 10px;
+    }
+    .highlight {
+      background: rgba(99,102,241,0.1);
+      padding: 4px 10px;
+      border-radius: 6px;
+      display: inline-block;
+      font-size: 0.8rem;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+    .section { padding: 0; margin-bottom: 60px; }
+    .split {
+      display: flex;
+      gap: 40px;
+      align-items: flex-start;
+      flex-wrap: wrap;
+    }
+    .split .text { flex: 1 1 360px; min-width: 280px; }
+    .split .media { flex: 1 1 360px; min-width: 280px; position: relative; }
+    .feature-hero {
+      background: #1f2431;
+      border-radius: 16px;
+      padding: 28px;
+      margin: 40px 0 60px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 32px;
+      align-items: center;
+    }
+    .feature-hero .left { flex: 1 1 320px; min-width: 280px; }
+    .feature-hero .right { flex: 1 1 320px; min-width: 280px; position: relative; }
+    .badge-premium {
+      background: gold;
+      color: #1f2431;
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-weight: 700;
+      display: inline-block;
+      font-size: 0.75rem;
+      margin-bottom: 6px;
+    }
+    .usage-list { list-style: none; padding: 0; margin: 16px 0 0; }
+    .usage-list li { display: flex; gap: 14px; align-items: flex-start; margin-bottom: 20px; }
+    .usage-list li .num { flex-shrink: 0; font-size: 1.5rem; font-weight: 700; width: 40px; height: 40px; background: rgba(255,255,255,0.05); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fff; }
+    .testimonial {
+      background: linear-gradient(135deg,#6366f1 0%,#8b5cf6 70%);
+      padding: 30px;
+      border-radius: 16px;
+      color: #fff;
+      margin: 60px 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .testimonial:before { content: "“"; position: absolute; font-size: 120px; opacity: 0.08; top: 10px; left: 10px; font-weight: 700; }
+    .faq { background: #0f111a; padding: 50px 0 80px; }
+    .faq h2 { text-align: center; font-size: 2rem; margin-bottom: 16px; position: relative; }
+    .faq-item { max-width: 960px; margin: 0 auto 16px; background: #1f2431; border-radius: 12px; overflow: hidden; border: 1px solid rgba(255,255,255,0.08); }
+    .faq-question { width: 100%; background: #20253b; border: none; padding: 16px 20px; text-align: left; font-size: 1rem; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-weight: 600; color: #e5e9ff; }
+    .faq-answer { display: none; padding: 18px 20px; font-size: 0.9rem; line-height: 1.5; color: #d3d9ff; border-top: 1px solid rgba(255,255,255,0.08); }
+    .small { font-size: 0.75rem; opacity: 0.8; }
+    .badge-new { background: #10b981; padding: 6px 12px; border-radius: 999px; font-weight: 600; font-size: 0.65rem; display: inline-block; margin-right: 6px; }
+    .logo { width: 120px; display: block; margin: 0 auto 12px; }
+    .footer { padding: 60px 16px 40px; text-align: center; font-size: 0.85rem; color: #999; }
+    .pill { display: inline-block; background: rgba(255,255,255,0.08); padding: 6px 14px; border-radius: 999px; font-size: 0.7rem; font-weight: 600; margin-right: 6px; }
+    /* Settings sections */
+    .settings-section { margin: 2rem 0; padding: 1rem; background: #1f2431; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.25); color: #f0f5ff; }
+    .settings-section h3 { margin-bottom: 0.75rem; font-size: 1.2rem; color: #a5b4fc; border-bottom: 2px solid #4f46e5; padding-bottom: 0.3rem; }
+    .settings-table { width: 100%; border-collapse: collapse; font-size: 0.95rem; }
+    .settings-table th, .settings-table td { padding: 0.75rem 0.5rem; text-align: left; }
+    .settings-table th { background: #2a2e3a; color: #f0f5ff; border-bottom: 2px solid #444; }
+    .settings-table td { border-bottom: 1px solid #333; color: #d1d5db; }
+    .settings-table tr:hover td { background: #232634; }
+    .settings-table code { background: #272b38; color: #f8fafc; padding: 2px 4px; border-radius: 4px; }
+    .settings-table .copy-btn { margin-left: 0.5rem; padding: 2px 6px; font-size: 0.85rem; background: #2a2e3a; border: 1px solid #555; border-radius: 4px; cursor: pointer; transition: background 0.2s; }
+    .settings-table .copy-btn:hover { background: #3b4060; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Hero -->
+    <header aria-label="EXPO2025向け予約自動化">
+      <div class="badge-premium">EXPO2025での活用ガイド</div>
+      <br>
+      <div class="hero-icon">
+        <img src="../PageSentinelPlus.png" alt="PageSentinel Plus">  
+      </div>
+      <br><br>
+      <h1>画面リロードと予約ボタンタップから解放。<br>空きを検知したら、音と振動でお知らせ＆自動アクション。</h1>
+      <p>大阪・関西万博（EXPO2025）のパビリオン予約で「どれも満員」「空きを見つけてもすぐに埋まって予約できない」「時間があればスマホと睨めっこ」こんなストレスからあなたを解放。あなたに代わって画面リロード、空き通知、プレミアムなら予約ボタンの自動タップまで。</p>
+    </header>
+
+    <!-- 省略せず全コンテンツをここに記載 -->
+  </div>
+</body>
+</html>
