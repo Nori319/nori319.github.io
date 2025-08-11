@@ -199,9 +199,75 @@ pre code {
   padding: 4px 8px;
   border-radius: 6px;
 }
-
+/* ─── Notice (Data usage warning) ─── */
+.notice {
+  margin: 28px 0 8px;
+  padding: 18px 20px;
+  background: #1f2431;
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 14px;
+  box-shadow: 0 10px 28px rgba(0,0,0,0.18);
+  position: relative;
+}
+.notice:before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 14px;
+  padding: 1px;
+  background: linear-gradient(135deg,#f59e0b33,#ef444433,#8b5cf633);
+  -webkit-mask: linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+  pointer-events: none;
+}
+.notice .title {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 700;
+  margin: 0 0 8px;
+  color: #fde68a;
+}
+.notice .title .dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #f59e0b;
+  box-shadow: 0 0 18px #f59e0b88;
+}
+.notice p {
+  margin: 6px 0 0;
+  color: #eaeefc;
+  font-size: 0.95rem;
+}
+.notice ul {
+  margin: 10px 0 0 18px;
+  padding: 0;
+  color: #d3d9ff;
+  font-size: 0.95rem;
+}
+.notice li { margin: 6px 0; }
+.notice .small {
+  display: block;
+  margin-top: 10px;
+  color: #c7ccf8;
+  opacity: .9;
+  font-size: .8rem;
+}
     </style>
 </head>
+<!-- Data usage warning: Auto Reload -->
+<section class="notice" id="auto-reload-warning" aria-label="自動リロードの通信量に関するご注意">
+  <div class="title"><span class="dot"></span>自動リロード機能ご利用時のご注意</div>
+  <p>自動リロードは設定間隔ごとにページを更新するため、繰り返しの通信が発生します。以下の点にご注意ください。</p>
+  <ul>
+    <li><b>パケット通信料が増えます</b>：4G/5G回線やテザリングでは短時間で大量の通信が発生する場合があります。上限到達による速度制限や追加料金の可能性があります。</li>
+    <li><b>Wi-Fiでの利用を推奨</b>：通信量とコスト抑制のため、可能な限りWi-Fi環境でご利用ください。</li>
+    <li><b>リロード間隔は余裕をもって</b>：短すぎる間隔は通信量の増加や先方サーバへの負荷につながります。必要に応じて間隔を長めに設定してください。</li>
+  </ul>
+  <span class="small">※ 自動リロード機能のご利用はお客様の責任において行ってください。</span>
+</section>
 <body>
     <header>
       <div class="last-updated">最終更新日: <span id="last-modified"></span></div>
