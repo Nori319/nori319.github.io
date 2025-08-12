@@ -9,412 +9,124 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
 <style>
-  :root {
-    --gradient-bg: linear-gradient(135deg,#4f46e5 0%,#7c3aed 60%);
-    --radius: 14px;
-    --shadow: 0 18px 40px -10px rgba(124,58,237,0.35);
-    --card-shadow: 0 12px 32px rgba(0,0,0,0.08);
-    --blue:#6366f1;
-    --dark:#1f2d3a;
-    --radius-sm:8px;
-    font-synthesis: none;
-  }
-  *{box-sizing:border-box;}
-  body{
-    margin:0;
-    background:#0f111a;
-    color:#f0f5ff;
-    font-family: "Inter",system-ui,-apple-system,BlinkMacSystemFont,sans-serif;
-    line-height:1.45;
-  }
+  /* ===== 全体：横スクロールの発生を根絶 ===== */
+  html, body { max-width:100%; overflow-x:hidden; overscroll-behavior-x:none; -webkit-text-size-adjust:100%; }
+  body { margin:0; background:#0f111a; color:#f0f5ff; font-family:"Inter",system-ui,-apple-system,BlinkMacSystemFont,sans-serif; line-height:1.45; touch-action:pan-y; }
+  * { box-sizing:border-box; }
+  img, video, iframe, svg, canvas { max-width:100%; height:auto; display:block; }
+  /* 斜めカットを無効化（はみ出し原因） */
+  header { clip-path:none !important; }
+
   a{color:inherit;text-decoration:none;}
-  .container{
-    max-width:1100px;
-    margin:0 auto;
-    padding:0 16px;
+  .container{ max-width:1100px; margin:0 auto; padding:0 16px; }
+
+  /* ===== Hero ===== */
+  :root{
+    --gradient-bg: linear-gradient(135deg,#4f46e5 0%,#7c3aed 60%);
+    --card-shadow: 0 12px 32px rgba(0,0,0,0.08);
   }
   header{
     position:relative;
     padding:80px 16px 60px;
     text-align:center;
     background: var(--gradient-bg);
-    clip-path: polygon(0 0,100% 0,100% 85%,0 100%);
   }
-  header .badge{
-    display:inline-flex;
-    gap:6px;
-    align-items:center;
-    background:rgba(255,255,255,0.15);
-    padding:6px 14px;
-    border-radius:999px;
-    font-size:0.75rem;
-    margin-bottom:8px;
-    font-weight:600;
-  }
-  header h1{
-    margin:0;
-    font-size:2.8rem;
-    font-weight:700;
-    letter-spacing:-0.5px;
-    line-height:1.1;
-  }
-  header p{
-    margin:12px auto 0;
-    font-size:1.1rem;
-    max-width:720px;
-    opacity:0.95;
-  }
-  .hero-cta{
-    margin-top:30px;
-    display:flex;
-    flex-wrap:wrap;
-    justify-content:center;
-    gap:12px;
-  }
-  .btn{
-    display:inline-block;
-    padding:14px 24px;
-    border-radius:999px;
-    font-weight:600;
-    cursor:pointer;
-    border:none;
-    transition:transform .2s,filter .2s;
-    text-decoration:none;
-  }
-  .btn-primary{
-    background: white;
-    color: #4f46e5;
-    box-shadow:0 18px 40px -10px rgba(124,58,237,0.35);
-  }
-  .btn-primary:hover{filter:brightness(1.05);transform:translateY(-1px);}
-  .btn-outline{
-    background: transparent;
-    color: #fff;
-    border:2px solid rgba(255,255,255,0.85);
-  }
-  .btn-outline:hover{background:rgba(255,255,255,0.08);}
-  .feature-grid{
-    display:grid;
-    gap:28px;
-    margin:60px 0 40px;
-    grid-template-columns: repeat(auto-fit,minmax(260px,1fr));
-  }
-  .card{
-    background:#1f2431;
-    border-radius:16px;
-    padding:24px;
-    position:relative;
-    overflow:hidden;
-    box-shadow: var(--card-shadow);
-    transition:transform .25s;
-  }
-  .card:hover{transform:translateY(-4px);}
-  .card h3{
-    margin:0 0 10px;
-    font-size:1.25rem;
-    display:flex;
-    align-items:center;
-    gap:10px;
-  }
-  .card p{
-    margin:0;
-    font-size:0.95rem;
-    color: #d8dce8;
-  }
-  .icon-wrapper{
-    width:48px;
-    height:48px;
-    flex-shrink:0;
-    display:inline-flex;
-    align-items:center;
-    justify-content:center;
-    background:rgba(255,255,255,0.08);
-    border-radius:12px;
-    margin-right:10px;
-  }
-  .highlight{
-    background: rgba(99,102,241,0.1);
-    padding:4px 10px;
-    border-radius:6px;
-    display:inline-block;
-    font-size:0.8rem;
-    font-weight:600;
-    margin-bottom:6px;
-  }
-  .section{
-    padding:0;
-    margin-bottom:60px;
-  }
-  .split{
-    display:flex;
-    gap:40px;
-    align-items:flex-start;
-    flex-wrap:wrap;
-  }
-  .split .text{
-    flex:1 1 360px;
-    min-width:280px;
-  }
-  .split .media{
-    flex:1 1 360px;
-    min-width:280px;
-    position:relative;
-  }
-  .feature-hero{
-    background: #1f2431;
-    border-radius:16px;
-    padding:28px;
-    margin:40px 0 60px;
-    display:flex;
-    flex-wrap:wrap;
-    gap:32px;
-    align-items:center;
-  }
-  .feature-hero .left{
-    flex:1 1 320px;
-    min-width:280px;
-  }
-  .feature-hero .right{
-    flex:1 1 320px;
-    min-width:280px;
-    position:relative;
-  }
-  .badge-premium{
-    background: gold;
-    color: #1f2431;
-    padding:6px 14px;
-    border-radius:999px;
-    font-weight:700;
-    display:inline-block;
-    font-size:0.75rem;
-    margin-bottom:6px;
-  }
-  .usage-list{
-    list-style:none;
-    padding:0;
-    margin:16px 0 0;
-  }
-  .usage-list li{
-    display:flex;
-    gap:14px;
-    align-items:flex-start;
-    margin-bottom:20px;
-  }
-  .usage-list li .num{
-    flex-shrink:0;
-    font-size:1.5rem;
-    font-weight:700;
-    width:40px;
-    height:40px;
-    background: rgba(255,255,255,0.05);
-    border-radius:50%;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    color:#fff;
-  }
-  .testimonial{
-    background: linear-gradient(135deg,#6366f1 0%,#8b5cf6 70%);
-    padding:30px;
-    border-radius:16px;
-    color:#fff;
-    margin:60px 0;
-    position:relative;
-    overflow:hidden;
-  }
-  .testimonial:before{
-    content:"“";
-    position:absolute;
-    font-size:120px;
-    opacity:0.08;
-    top:10px;
-    left:10px;
-    font-weight:700;
-  }
-  .faq{
-    background:#0f111a;
-    padding:50px 0 80px;
-  }
-  .faq h2{
-    text-align:center;
-    font-size:2rem;
-    margin-bottom:16px;
-    position:relative;
-  }
-  .faq-item{
-    max-width:960px;
-    margin:0 auto 16px;
-    background:#1f2431;
-    border-radius:12px;
-    overflow:hidden;
-    border:1px solid rgba(255,255,255,0.08);
-  }
-  .faq-question{
-    width:100%;
-    background:#20253b;
-    border:none;
-    padding:16px 20px;
-    text-align:left;
-    font-size:1rem;
-    cursor:pointer;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    font-weight:600;
-    color:#e5e9ff;
-  }
-  .faq-answer{
-    display:none;
-    padding:18px 20px;
-    font-size:0.9rem;
-    line-height:1.5;
-    color:#d3d9ff;
-    border-top:1px solid rgba(255,255,255,0.08);
-  }
-  .small{
-    font-size:0.75rem;
-    opacity:0.8;
-  }
-  .badge-new{
-    background:#10b981;
-    padding:6px 12px;
-    border-radius:999px;
-    font-weight:600;
-    font-size:0.65rem;
-    display:inline-block;
-    margin-right:6px;
-  }
-  .logo{
-    width:120px;
-    display:block;
-    margin:0 auto 12px;
-  }
-  .footer{
-    padding:60px 16px 40px;
-    text-align:center;
-    font-size:0.85rem;
-    color:#999;
-  }
-  .pill{
-    display:inline-block;
-    background: rgba(255,255,255,0.08);
-    padding:6px 14px;
-    border-radius:999px;
-    font-size:0.7rem;
-    font-weight:600;
-    margin-right:6px;
-  }
-  @media (max-width:1080px){
-    header h1{font-size:2.3rem;}
-  }
-  @media (max-width:840px){
-    .split{flex-direction:column;}
-    .feature-hero{flex-direction:column;}
-  }
-  .hero-icon {
-  width: 220px;                /* お好みで調整 */
-  margin: 2rem auto 0;
-  position: relative;
-}
+  header .badge{ display:inline-flex; gap:6px; align-items:center; background:rgba(255,255,255,0.15); padding:6px 14px; border-radius:999px; font-size:0.75rem; margin-bottom:8px; font-weight:600; }
+  header h1{ margin:0; font-weight:700; letter-spacing:-0.5px; line-height:1.15; font-size:clamp(1.6rem,5.5vw,2.8rem); }
+  header p{ margin:12px auto 0; font-size:1.02rem; max-width:720px; opacity:0.95; }
+  .hero-icon{ width:220px; margin:2rem auto 0; position:relative; overflow:hidden; }
+  .hero-icon img{ width:100%; border-radius:32px; box-shadow:0 12px 28px rgba(0,0,0,0.25); }
+  .hero-icon::before{ content:""; position:absolute; inset:-4px; border-radius:36px; background:linear-gradient(135deg,#ffffff66,#ffd36b,#7dd3fc); z-index:-1; filter:blur(4px); }
 
-.hero-icon img {
-  width: 100%;
-  display: block;
-  border-radius: 32px;          /* 角丸 */
-  box-shadow: 0 12px 28px rgba(0,0,0,0.25);  /* 深めの影で高級感 */
-}
+  /* ===== グリッド & カード ===== */
+  .feature-grid{ display:grid; gap:28px; margin:60px 0 40px; grid-template-columns: repeat(auto-fit,minmax(260px,1fr)); }
+  .card{ background:#1f2431; border-radius:16px; padding:24px; position:relative; overflow:hidden; box-shadow:var(--card-shadow); transition:transform .25s; }
+  .card:hover{ transform:translateY(-4px); }
+  .card h3{ margin:0 0 10px; font-size:1.2rem; display:flex; align-items:center; gap:10px; }
+  .card p{ margin:0; font-size:0.95rem; color:#d8dce8; }
+  .icon-wrapper{ width:40px; height:40px; flex-shrink:0; display:inline-flex; align-items:center; justify-content:center; background:rgba(255,255,255,0.08); border-radius:10px; margin-right:6px; }
+  .highlight{ background:rgba(99,102,241,0.1); padding:4px 10px; border-radius:6px; display:inline-block; font-size:0.8rem; font-weight:600; margin-bottom:6px; }
 
-/* 外枠にグラデーションリングを付けたい場合 （任意）*/
-.hero-icon::before {
-  content: "";
-  position: absolute;
-  inset: -4px;                  /* リングの太さ */
-  border-radius: 36px;
-  background: linear-gradient(135deg, #ffffff66, #ffd36b, #7dd3fc);
-  z-index: -1;
-  filter: blur(4px);            /* ふんわり輝く感じ */
-}
+  .section{ padding:0; margin-bottom:60px; }
+  .feature-hero{ background:#1f2431; border-radius:16px; padding:28px; margin:40px 0 60px; display:flex; flex-wrap:wrap; gap:32px; align-items:center; }
+  .feature-hero .left{ flex:1 1 320px; min-width:280px; }
+  .feature-hero .right{ flex:1 1 320px; min-width:280px; position:relative; }
 
-/* ─── Settings sections (Dark Mode) ─── */
-.settings-section {
-  margin: 2rem 0;
-  padding: 1rem;
-  background: #1f2431;                /* 白 → ダークグレー */
-  border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.25);
-  color: #f0f5ff;                     /* テキストを明るく */
-}
-.settings-section h3 {
-  margin-bottom: 0.75rem;
-  font-size: 1.2rem;
-  color: #a5b4fc;                     /* アクセントにライトブルー */
-  border-bottom: 2px solid #4f46e5;   /* アクセントにパープルグラデ */
-  padding-bottom: 0.3rem;
-}
-.settings-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 0.95rem;
-}
-.settings-table th,
-.settings-table td {
-  padding: 0.75rem 0.5rem;
-  text-align: left;
-}
-.settings-table th {
-  background: #2a2e3a;                /* ヘッダーを少し明るく */
-  border-bottom: 2px solid #444;
-  color: #f0f5ff;
-}
-.settings-table td {
-  border-bottom: 1px solid #333;      /* 境界線を濃いめに */
-  color: #d1d5db;
-}
-.settings-table tr:hover td {
-  background: #232634;                /* ホバー時にわずかに明るく */
-}
-.settings-table code {
-  background: #272b38;                /* コード背景をダークグレー */
-  color: #f8fafc;
-  padding: 2px 4px;
-  border-radius: 4px;
-  font-size: 0.9em;
-}
-.settings-table .copy-btn {
-  margin-left: 0.5rem;
-  font-size: 0.85rem;
-  padding: 2px 6px;
-  border: 1px solid #555;
-  border-radius: 4px;
-  background: #2a2e3a;
-  color: #f0f5ff;
-  cursor: pointer;
-  transition: background 0.2s;
-}
-.settings-table .copy-btn:hover {
-  background: #3b4060;
-}
+  .usage-list{ list-style:none; padding:0; margin:16px 0 0; }
+  .usage-list li{ display:flex; gap:14px; align-items:flex-start; margin-bottom:18px; }
+  .usage-list .num{ flex-shrink:0; font-size:1.1rem; font-weight:700; width:32px; height:32px; background:rgba(255,255,255,0.08); border-radius:50%; display:flex; align-items:center; justify-content:center; color:#fff; }
 
+  .testimonial{ background:linear-gradient(135deg,#6366f1 0%,#8b5cf6 70%); padding:28px; border-radius:16px; color:#fff; margin:20px 0 26px; position:relative; overflow:hidden; }
+  .testimonial:before{ content:"“"; position:absolute; font-size:120px; opacity:0.08; top:0; left:10px; font-weight:700; }
+
+  .faq{ background:#0f111a; padding:50px 0 80px; }
+  .faq h2{ text-align:center; font-size:2rem; margin-bottom:16px; }
+  .faq-item{ max-width:960px; margin:0 auto 16px; background:#1f2431; border-radius:12px; overflow:hidden; border:1px solid rgba(255,255,255,0.08); }
+  .faq-question{ width:100%; background:#20253b; border:none; padding:16px 20px; text-align:left; font-size:1rem; cursor:pointer; display:flex; justify-content:space-between; align-items:center; font-weight:600; color:#e5e9ff; }
+  .faq-answer{ display:none; padding:18px 20px; font-size:0.9rem; line-height:1.5; color:#d3d9ff; border-top:1px solid rgba(255,255,255,0.08); }
+
+  .footer{ padding:60px 16px 40px; text-align:center; font-size:0.85rem; color:#999; }
+
+  /* ===== 設定テーブル：スマホで読みやすい & 横スクロールしない ===== */
+  .settings-section{ margin:2rem 0; padding:1rem; background:#1f2431; border-radius:12px; box-shadow:0 2px 8px rgba(0,0,0,0.25); color:#f0f5ff; }
+  .settings-section h3{ margin:0 0 .75rem; font-size:1.15rem; color:#a5b4fc; border-bottom:2px solid #4f46e5; padding-bottom:.35rem; }
+
+  .settings-table{ width:100%; border-collapse:collapse; table-layout:fixed; }
+  .settings-table th, .settings-table td{ padding:.7rem .6rem; text-align:left; vertical-align:middle; }
+  .settings-table th{ background:#2a2e3a; color:#f0f5ff; border-bottom:2px solid #444; font-weight:700; }
+  .settings-table td{ border-bottom:1px solid #333; color:#d1d5db; }
+  .settings-table tr:hover td{ background:#232634; }
+
+  /* 1列目をやや広めにして改行を抑止 */
+  .settings-table th:first-child, .settings-table td:first-child{ width:38%; }
+
+  /* コードはチップ化＋セル内だけ横スクロール */
+  .cell-code{ display:flex; align-items:center; gap:.5rem; flex-wrap:wrap; }
+  .settings-table code{
+    display:inline-block; max-width:100%;
+    padding:6px 8px; border-radius:8px; background:#0b1220; color:#f8fafc;
+    border:1px solid #2b3448; font-size:.86rem; font-family:ui-monospace,SFMono-Regular,Menlo,monospace;
+    white-space:nowrap; overflow-x:auto; -webkit-overflow-scrolling:touch;
+  }
+  .settings-table pre{ margin:0; max-width:100%; overflow-x:auto; -webkit-overflow-scrolling:touch; }
+  .settings-table pre code{ white-space:pre; }
+
+  .copy-btn{
+    margin-left:.25rem; font-size:.85rem; padding:4px 8px;
+    border:1px solid #555; border-radius:6px; background:#2a2e3a; color:#f0f5ff;
+    cursor:pointer; transition:background .2s,transform .05s; flex:0 0 auto;
+  }
+  .copy-btn:active{ transform:scale(.98); }
+  .copy-feedback{ font-size:.8rem; opacity:.85; }
+
+  /* 小画面最適化（ボリュームを詰める） */
+  @media (max-width:640px){
+    header p{ font-size:1rem; }
+    .settings-table th:first-child, .settings-table td:first-child{ width:42%; }
+    .settings-table th, .settings-table td{ padding:.6rem .5rem; }
+  }
+
+  /* App Store バッジ */
+  .appstore-link{ text-align:center; margin:20px 0; }
+  .appstore-link img{ height:50px; width:auto; display:inline-block; }
+
+  /* 補助 */
+  .badge-premium{ background:gold; color:#1f2431; padding:6px 14px; border-radius:999px; font-weight:700; font-size:.75rem; display:inline-block; }
 </style>
 </head>
 <body>
   <div class="container">
     <!-- Hero -->
     <header aria-label="EXPO2025向け予約自動化">
-            <div class="badge-premium">EXPO2025での活用ガイド</div>
-<br>
-            <div class="hero-icon">
+      <div class="badge-premium">EXPO2025での活用ガイド</div>
+      <br>
+      <div class="hero-icon">
         <img src="../PageSentinelPlus.png" alt="PageSentinel Plus">
-        </div>
+      </div>
       <br><br>
-      <!-- <div class="badge">EXPO2025徹底活用ガイド</div> -->
       <h1>画面リロードと予約ボタンタップから解放。<br>空きを検知したら、音と振動でお知らせ＆自動アクション。</h1>
       <p>大阪・関西万博（EXPO2025）のパビリオン予約で「どれも満員」「空きを見つけてもすぐに埋まって予約できない」「時間があればスマホと睨めっこ」こんなストレスからあなたを解放。あなたに代わって画面リロード、空き通知、プレミアムなら予約ボタンの自動タップまで。</p>
       <br><br>
-      <!-- <div class="hero-cta">
-        <a href="premium.html" class="btn btn-primary">PageSentinel Plus を入手</a>
-        <a href="#how-it-works" class="btn btn-outline">仕組みを見る</a>
-      </div> -->
     </header>
 
     <!-- Key benefits -->
@@ -425,578 +137,299 @@
       </div>
 
       <div class="feature-grid">
-        <div class="card">
-          <h3><div class="icon-wrapper">①</div>来場日時設定の自動化</h3>
-          <p>オートパイロット機能を使えば来場日時設定操作を自動で繰り返し実行。ひたすら同じ操作はもう不要。予約が取れるまで働く“代行エージェント”。</p>
-        </div>
-        <div class="card">
-          <h3><div class="icon-wrapper">②</div>3日前・当日予約の簡単空きチェック</h3>
-          <p><span class="highlight">カスタムCSS</span>で「空きパビリオン」「空き時間」だけを表示。探す手間と時間を省き、時間との勝負の予約確率をアップ！</p>
-        </div>
-        <div class="card">
-          <h3><div class="icon-wrapper">③</div>入場後の当日予約開始をチェック</h3>
-          <p>万博入場後から当日予約が可能になるまでの待ち時間を自動リロードの検知モードでスマートにチェック。当日予約開始のタイミングを見逃しません！</p>
-        </div>
-        <div class="card">
-          <h3><div class="icon-wrapper">④</div>当日予約の空き通知</h3>
-          <p>自動リロードの検知モードで「狙いのパビリオンの空き」を監視。空きが出たら即座に<b>音と振動</b>でお知らせ。チャンスを逃さない。</p>
-        </div>
-        <div class="card">
-          <h3><div class="icon-wrapper">⑤</div>当日予約の空き自動予約★</h3>
-          <p>自動リロードの検知モードで「狙いのパビリオンの空き」を監視。空きが出たら自動で予約ボタンをタップ！さらに予約成功率をアップ！！</p>
-        </div>
-        <div class="card">
-          <h3><div class="icon-wrapper">⑥</div>設定保存でいつでも万博設定を呼び出し★</h3>
-          <p>プロファイルとして設定を保存・呼び出し。複数パターンも一括管理。</p>
-        </div>
+        <div class="card"><h3><div class="icon-wrapper">①</div>来場日時設定の自動化</h3><p>オートパイロット機能を使えば来場日時設定操作を自動で繰り返し実行。ひたすら同じ操作はもう不要。予約が取れるまで働く“代行エージェント”。</p></div>
+        <div class="card"><h3><div class="icon-wrapper">②</div>3日前・当日予約の簡単空きチェック</h3><p><span class="highlight">カスタムCSS</span>で「空きパビリオン」「空き時間」だけを表示。探す手間と時間を省き、時間との勝負の予約確率をアップ！</p></div>
+        <div class="card"><h3><div class="icon-wrapper">③</div>入場後の当日予約開始をチェック</h3><p>万博入場後から当日予約が可能になるまでの待ち時間を自動リロードの検知モードでスマートにチェック。当日予約開始のタイミングを見逃しません！</p></div>
+        <div class="card"><h3><div class="icon-wrapper">④</div>当日予約の空き通知</h3><p>自動リロードの検知モードで「狙いのパビリオンの空き」を監視。空きが出たら即座に<b>音と振動</b>でお知らせ。チャンスを逃さない。</p></div>
+        <div class="card"><h3><div class="icon-wrapper">⑤</div>当日予約の空き自動予約★</h3><p>自動リロードの検知モードで「狙いのパビリオンの空き」を監視。空きが出たら自動で予約ボタンをタップ！さらに予約成功率をアップ！！</p></div>
+        <div class="card"><h3><div class="icon-wrapper">⑥</div>設定保存でいつでも万博設定を呼び出し★</h3><p>プロファイルとして設定を保存・呼び出し。複数パターンも一括管理。</p></div>
       </div>
-        <div style="text-align:center; margin-top:40px;">
-            <p class="subtle-premium">★プレミアム機能を利用</p>
-        </div>
+      <div style="text-align:center; margin-top:40px;"><p class="subtle-premium">★プレミアム機能を利用</p></div>
     </section>
 
     <!-- How it works / usage -->
     <section class="section">
       <div class="feature-hero" aria-label="使い方">
         <div class="left">
-          <div class="badge-new">簡単3ステップ</div>
+          <div class="badge-new" style="background:#10b981;padding:6px 12px;border-radius:999px;font-weight:600;font-size:.75rem;display:inline-block;margin-right:6px;">簡単3ステップ</div>
           <h2 style="margin:6px 0;">万博予約を自動化する流れ</h2>
           <ul class="usage-list">
-            <li>
-              <div class="num">1</div>
-              <div>
-                <strong>全ての設定を完了</strong><br>
-                漏れなく設定して、全ての予約を効率的に。一度設定すれば何度でも使い回し可能。（EXPO2025専用設定を参照）
-              </div>
-            </li>
-            <li>
-              <div class="num">2</div>
-              <div>
-                <strong>プロファイルに保存</strong><br>
-                いつでも万博設定に戻せるようにプロファイルに好きな名前をつけて保存。（「保存」ボタンを押下）
-              </div>
-            </li>
-            <li>
-              <div class="num">3</div>
-              <div>
-                <strong>大阪・関西万博チケットサイトにアクセス</strong><br>
-                チケットサイトから来場日時登録やパビリオン予約を行おう！（「ページを開く」ボタンを押下）
-              </div>
-            </li>
+            <li><div class="num">1</div><div><strong>全ての設定を完了</strong><br>漏れなく設定して、全ての予約を効率的に。一度設定すれば何度でも使い回し可能。（EXPO2025専用設定を参照）</div></li>
+            <li><div class="num">2</div><div><strong>プロファイルに保存</strong><br>いつでも万博設定に戻せるようにプロファイルに好きな名前をつけて保存。（「保存」ボタンを押下）</div></li>
+            <li><div class="num">3</div><div><strong>大阪・関西万博チケットサイトにアクセス</strong><br>チケットサイトから来場日時登録やパビリオン予約を行おう！（「ページを開く」ボタンを押下）</div></li>
           </ul>
         </div>
         <div class="right">
-          <!-- イメージやスクリーンショットをここに。例としてのプレースホルダー -->
-<div style="
-    background: #0f172a;
-    border-radius: 16px;
-    padding: 18px;
-    position: relative;
-    overflow: hidden;
-
-    /* ここから横並び用 */
-    display: flex;
-    flex-wrap: wrap;
-    gap: 12px;
-    justify-content: center;
-">
-  <img
-    src="./SS-EXPO2025-1.png"
-    alt="EXPO2025設定1"
-    style="
-      flex: 1 1 calc(50% - 12px);
-      max-width: 200px;      /* お好みで調整 */
-      width: 100%;
-      border-radius: 12px;
-      box-shadow: 0 20px 50px -10px rgba(124,58,237,0.35);
-      object-fit: cover;
-    "
-  />
-  <img
-    src="./SS-EXPO2025-2.png"
-    alt="EXPO2025設定2"
-    style="
-      flex: 1 1 calc(50% - 12px);
-      max-width: 200px;      /* お好みで調整 */
-      width: 100%;
-      border-radius: 12px;
-      box-shadow: 0 20px 50px -10px rgba(124,58,237,0.35);
-      object-fit: cover;
-    "
-  />
-</div>        </div>
+          <div style="background:#0f172a;border-radius:16px;padding:18px;position:relative;overflow:hidden;display:flex;flex-wrap:wrap;gap:12px;justify-content:center;">
+            <img src="./SS-EXPO2025-1.png" alt="EXPO2025設定1" style="flex:1 1 calc(50% - 12px);max-width:200px;width:100%;border-radius:12px;box-shadow:0 20px 50px -10px rgba(124,58,237,0.35);object-fit:cover;" />
+            <img src="./SS-EXPO2025-2.png" alt="EXPO2025設定2" style="flex:1 1 calc(50% - 12px);max-width:200px;width:100%;border-radius:12px;box-shadow:0 20px 50px -10px rgba(124,58,237,0.35);object-fit:cover;" />
+          </div>
+        </div>
       </div>
     </section>
 
+    <!-- STEP1〜3 設定セクション（内容はそのまま、表示だけ最適化） -->
+    <h2>①EXPO2025・来場日時設定</h2>
+    <div class="settings-section">
+      <h3>監視URL</h3>
+      <table class="settings-table">
+        <thead><tr><th>項目</th><th>値</th></tr></thead>
+        <tbody>
+          <tr>
+            <td>追加</td>
+            <td class="cell-code">
+              <code id="url-ticket">https://ticket.expo2025.or.jp/myticket/</code>
+              <button class="copy-btn" data-target="url-ticket">コピー</button>
+              <span class="copy-feedback" aria-live="polite"></span>
+              <br>URLを貼り付けた後「追加」ボタンを押して選択状態にしてください。
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
 
-<!-- STEP1〜3 設定セクション例 -->
-<h2>①EXPO2025・来場日時設定</h2>
-<div class="settings-section">
-  <h3>監視URL</h3>
-  <table class="settings-table">
-    <thead>
-      <tr>
-        <th>項目</th>
-        <th>値</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>追加</td>
-        <td>
-          <code id="url-ticket">https://ticket.expo2025.or.jp/myticket/</code>
-          <button class="copy-btn" data-target="url-ticket">コピー</button>
-          <span class="copy-feedback" aria-live="polite"></span>
-          <br>URLを貼り付けた後「追加」ボタンを押して選択状態にしてください。
-        </td>
-      </tr>
-    </tbody>
-  </table>
-</div>
-<div class="settings-section">
-  <h3>オートパイロット</h3>
-  <table class="settings-table">
-    <thead>
-      <tr>
-        <th>項目</th>
-        <th>値</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>有効にする</td>
-        <td>ON</td>
-      </tr>
-      <tr>
-        <td>STEP1：CSSセレクタ</td>
-        <td>
-          <code id="step1-ticket">[data-message-code=SW_GP_DL_101_0118]</code>
-          <button class="copy-btn" data-target="step1-ticket">コピー</button>
-          <span class="copy-feedback" aria-live="polite"></span>
-        </td>
-      </tr>
-      <tr>
-        <td>STEP1：タップ後の待機</td>
-        <td>0秒</td>
-      </tr>
-      <tr>
-        <td>STEP2を有効にする</td>
-        <td>ON</td>
-      </tr>
-      <tr>
-        <td>STEP2：CSSセレクタ</td>
-        <td>
-          <code id="step2-ticket">[data-message-code=SW_GP_DL_117_0413]</code>
-          <button class="copy-btn" data-target="step2-ticket">コピー</button>
-          <span class="copy-feedback" aria-live="polite"></span>
-        </td>
-      </tr>
-      <tr>
-        <td>STEP2：タップ後の待機</td>
-        <td>5秒（誤検知する場合は大きく）</td>
-      </tr>
-      <tr>
-        <td>STEP3を有効にする</td>
-        <td>ON</td>
-      </tr>
-      <tr>
-        <td>STEP3：CSSセレクタ</td>
-        <td>
-          <code id="step3-ticket">[data-message-code=SW_GP_DL_101_0140]</code>
-          <button class="copy-btn" data-target="step3-ticket">コピー</button>
-          <span class="copy-feedback" aria-live="polite"></span>
-        </td>
-      </tr>
-      <tr>
-        <td>STEP3：タップ後の待機</td>
-        <td>0秒</td>
-      </tr>
-    </tbody>
-  </table>
-</div>
-<!--  -->
-<h2>②EXPO2025・簡単空きチェック</h2>
-<div class="settings-section">
-  <h3>監視URL</h3>
-  <table class="settings-table">
-    <thead>
-      <tr>
-        <th>項目</th>
-        <th>値</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>追加</td>
-        <td>
-          <code id="url-ticket">https://ticket.expo2025.or.jp/myticket/</code>
-          <button class="copy-btn" data-target="url-ticket">コピー</button>
-          <span class="copy-feedback" aria-live="polite"></span>
-          <br>URLを貼り付けた後「追加」ボタンを押して選択状態にしてください。
-        </td>
-      </tr>
-    </tbody>
-  </table>
-</div>
-<div class="settings-section">
-  <h3>カスタムCSS</h3>
-  <table class="settings-table">
-    <thead>
-      <tr>
-        <th>項目</th>
-        <th>値</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>有効にする</td>
-        <td>ON</td>
-      </tr>
-      <tr>
-        <td>カスタムCSSコード</td>
-        <td>
-          <pre>
-<code id="css-ticket">
+    <div class="settings-section">
+      <h3>オートパイロット</h3>
+      <table class="settings-table">
+        <thead><tr><th>項目</th><th>値</th></tr></thead>
+        <tbody>
+          <tr><td>有効にする</td><td>ON</td></tr>
+          <tr>
+            <td>STEP1：CSSセレクタ</td>
+            <td class="cell-code">
+              <code id="step1-ticket">[data-message-code=SW_GP_DL_101_0118]</code>
+              <button class="copy-btn" data-target="step1-ticket">コピー</button>
+              <span class="copy-feedback" aria-live="polite"></span>
+            </td>
+          </tr>
+          <tr><td>STEP1：タップ後の待機</td><td>0秒</td></tr>
+          <tr><td>STEP2を有効にする</td><td>ON</td></tr>
+          <tr>
+            <td>STEP2：CSSセレクタ</td>
+            <td class="cell-code">
+              <code id="step2-ticket">[data-message-code=SW_GP_DL_117_0413]</code>
+              <button class="copy-btn" data-target="step2-ticket">コピー</button>
+              <span class="copy-feedback" aria-live="polite"></span>
+            </td>
+          </tr>
+          <tr><td>STEP2：タップ後の待機</td><td>5秒（誤検知する場合は大きく）</td></tr>
+          <tr><td>STEP3を有効にする</td><td>ON</td></tr>
+          <tr>
+            <td>STEP3：CSSセレクタ</td>
+            <td class="cell-code">
+              <code id="step3-ticket">[data-message-code=SW_GP_DL_101_0140]</code>
+              <button class="copy-btn" data-target="step3-ticket">コピー</button>
+              <span class="copy-feedback" aria-live="polite"></span>
+            </td>
+          </tr>
+          <tr><td>STEP3：タップ後の待機</td><td>0秒</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- ② 簡単空きチェック -->
+    <h2>②EXPO2025・簡単空きチェック</h2>
+    <div class="settings-section">
+      <h3>監視URL</h3>
+      <table class="settings-table">
+        <thead><tr><th>項目</th><th>値</th></tr></thead>
+        <tbody>
+          <tr>
+            <td>追加</td>
+            <td class="cell-code">
+              <code id="url-ticket-2">https://ticket.expo2025.or.jp/myticket/</code>
+              <button class="copy-btn" data-target="url-ticket-2">コピー</button>
+              <span class="copy-feedback" aria-live="polite"></span>
+              <br>URLを貼り付けた後「追加」ボタンを押して選択状態にしてください。
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="settings-section">
+      <h3>カスタムCSS</h3>
+      <table class="settings-table">
+        <thead><tr><th>項目</th><th>値</th></tr></thead>
+        <tbody>
+          <tr><td>有効にする</td><td>ON</td></tr>
+          <tr>
+            <td>カスタムCSSコード</td>
+            <td class="cell-code">
+<pre><code id="css-ticket">
 .style_search_item_note__vExQQ,
 .style_event_links__jS3Q_,
 .style_search_item_row__moqWC:has(img[src*="calendar_none.svg"]),
 .style_time_picker__wrap__UBImr:has(img[src*="ico_ng.svg"]) {
   display: none !important;
 }
-</code>
-  <button class="copy-btn" data-target="css-ticket">コピー</button>
-  <span class="copy-feedback" aria-live="polite"></span>
-</pre>
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-<!--  -->
-<h2>③EXPO2025・当日予約開始チェック</h2>
-<div class="settings-section">
-  <h3>監視URL</h3>
-  <table class="settings-table">
-    <thead>
-      <tr>
-        <th>項目</th>
-        <th>値</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>追加</td>
-        <td>
-          <code id="url-ticket">https://ticket.expo2025.or.jp/myticket/</code>
-          <button class="copy-btn" data-target="url-ticket">コピー</button>
-          <span class="copy-feedback" aria-live="polite"></span>
-          <br>URLを貼り付けた後「追加」ボタンを押して選択状態にしてください。
-        </td>
-      </tr>
-    </tbody>
-  </table>
-</div>
-<div class="settings-section">
-  <h3>再読み込み間隔(s)</h3>
-  <table class="settings-table">
-    <thead>
-      <tr>
-        <th>項目</th>
-        <th>値</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>リロード間隔</td>
-        <td>10秒（任意で設定）</td>
-      </tr>
-    </tbody>
-  </table>
-</div>
-<div class="settings-section">
-  <h3>検知キーワード</h3>
-  <table class="settings-table">
-    <thead>
-      <tr>
-        <th>値</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>
-          <code id="keyword1-ticket">[data-message-code=SW_GP_DL_018_0509]</code>
-          <button class="copy-btn" data-target="keyword1-ticket">コピー</button>
-          <span class="copy-feedback" aria-live="polite"></span>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-</div>
-<div class="settings-section">
-  <h3>検知モード</h3>
-  <table class="settings-table">
-    <thead>
-      <tr>
-        <th>項目</th>
-        <th>値</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>モード</td>
-        <td>出現時</td>
-      </tr>
-    </tbody>
-  </table>
-</div>
-<div class="settings-section">
-  <h3>検知ディレイ</h3>
-  <table class="settings-table">
-    <thead>
-      <tr>
-        <th>値</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>1秒</td>
-      </tr>
-    </tbody>
-  </table>
-</div>
-<div class="settings-section">
-  <h3>検知時のアクション（Standard版は設定項目なし）</h3>
-  <table class="settings-table">
-    <thead>
-      <tr>
-        <th>値</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>停止（選択）
-        </td>
-      </tr>
-    </tbody>
-  </table>
-</div>
-<!--  -->
-<h2>④⑤EXPO2025・当日予約（パビリオン/イベント）</h2>
-<div class="settings-section">
-  <h3>監視URL</h3>
-  <table class="settings-table">
-    <thead>
-      <tr>
-        <th>項目</th>
-        <th>値</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>追加</td>
-        <td>
-          <code id="url-ticket">https://ticket.expo2025.or.jp/myticket/</code>
-          <button class="copy-btn" data-target="url-ticket">コピー</button>
-          <span class="copy-feedback" aria-live="polite"></span>
-          <br>URLを貼り付けた後「追加」ボタンを押して選択状態にしてください。
-        </td>
-      </tr>
-    </tbody>
-  </table>
-</div>
-<div class="settings-section">
-  <h3>再読み込み間隔(s)</h3>
-  <table class="settings-table">
-    <thead>
-      <tr>
-        <th>項目</th>
-        <th>値</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>リロード間隔</td>
-        <td>6秒（誤検知する場合は値を大きくする）</td>
-      </tr>
-    </tbody>
-  </table>
-</div>
+</code></pre>
+<button class="copy-btn" data-target="css-ticket">コピー</button>
+<span class="copy-feedback" aria-live="polite"></span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
 
-<div class="settings-section">
-  <h3>検知キーワード</h3>
-  <table class="settings-table">
-    <thead>
-      <tr>
-        <th>値</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>
-          <code id="keyword1-ticket">予約可能な時間帯がありません</code>
-          <button class="copy-btn" data-target="keyword1-ticket">コピー</button>
-          <span class="copy-feedback" aria-live="polite"></span>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-</div>
+    <!-- ③ 当日予約開始チェック -->
+    <h2>③EXPO2025・当日予約開始チェック</h2>
+    <div class="settings-section">
+      <h3>監視URL</h3>
+      <table class="settings-table">
+        <thead><tr><th>項目</th><th>値</th></tr></thead>
+        <tbody>
+          <tr>
+            <td>追加</td>
+            <td class="cell-code">
+              <code id="url-ticket-3">https://ticket.expo2025.or.jp/myticket/</code>
+              <button class="copy-btn" data-target="url-ticket-3">コピー</button>
+              <span class="copy-feedback" aria-live="polite"></span>
+              <br>URLを貼り付けた後「追加」ボタンを押して選択状態にしてください。
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="settings-section">
+      <h3>再読み込み間隔(s)</h3>
+      <table class="settings-table">
+        <thead><tr><th>項目</th><th>値</th></tr></thead>
+        <tbody><tr><td>リロード間隔</td><td>10秒（任意で設定）</td></tr></tbody>
+      </table>
+    </div>
+    <div class="settings-section">
+      <h3>検知キーワード</h3>
+      <table class="settings-table">
+        <thead><tr><th>値</th></tr></thead>
+        <tbody>
+          <tr>
+            <td class="cell-code">
+              <code id="keyword1-ticket">[data-message-code=SW_GP_DL_018_0509]</code>
+              <button class="copy-btn" data-target="keyword1-ticket">コピー</button>
+              <span class="copy-feedback" aria-live="polite"></span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="settings-section">
+      <h3>検知モード</h3>
+      <table class="settings-table">
+        <thead><tr><th>項目</th><th>値</th></tr></thead>
+        <tbody><tr><td>モード</td><td>出現時</td></tr></tbody>
+      </table>
+    </div>
+    <div class="settings-section">
+      <h3>検知ディレイ</h3>
+      <table class="settings-table">
+        <thead><tr><th>値</th></tr></thead>
+        <tbody><tr><td>1秒</td></tr></tbody>
+      </table>
+    </div>
+    <div class="settings-section">
+      <h3>検知時のアクション（Standard版は設定項目なし）</h3>
+      <table class="settings-table">
+        <thead><tr><th>値</th></tr></thead>
+        <tbody><tr><td>停止（選択）</td></tr></tbody>
+      </table>
+    </div>
 
-<div class="settings-section">
-  <h3>検知モード</h3>
-  <table class="settings-table">
-    <thead>
-      <tr>
-        <th>項目</th>
-        <th>値</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>モード</td>
-        <td>消失時</td>
-      </tr>
-    </tbody>
-  </table>
-</div>
+    <!-- ④⑤ 当日予約 -->
+    <h2>④⑤EXPO2025・当日予約（パビリオン/イベント）</h2>
+    <div class="settings-section">
+      <h3>監視URL</h3>
+      <table class="settings-table">
+        <thead><tr><th>項目</th><th>値</th></tr></thead>
+        <tbody>
+          <tr>
+            <td>追加</td>
+            <td class="cell-code">
+              <code id="url-ticket-4">https://ticket.expo2025.or.jp/myticket/</code>
+              <button class="copy-btn" data-target="url-ticket-4">コピー</button>
+              <span class="copy-feedback" aria-live="polite"></span>
+              <br>URLを貼り付けた後「追加」ボタンを押して選択状態にしてください。
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="settings-section">
+      <h3>再読み込み間隔(s)</h3>
+      <table class="settings-table">
+        <thead><tr><th>項目</th><th>値</th></tr></thead>
+        <tbody><tr><td>リロード間隔</td><td>6秒（誤検知する場合は値を大きくする）</td></tr></tbody>
+      </table>
+    </div>
+    <div class="settings-section">
+      <h3>検知キーワード</h3>
+      <table class="settings-table">
+        <thead><tr><th>値</th></tr></thead>
+        <tbody>
+          <tr>
+            <td class="cell-code">
+              <code id="keyword2-ticket">予約可能な時間帯がありません</code>
+              <button class="copy-btn" data-target="keyword2-ticket">コピー</button>
+              <span class="copy-feedback" aria-live="polite"></span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="settings-section">
+      <h3>検知モード</h3>
+      <table class="settings-table">
+        <thead><tr><th>項目</th><th>値</th></tr></thead>
+        <tbody><tr><td>モード</td><td>消失時</td></tr></tbody>
+      </table>
+    </div>
+    <div class="settings-section">
+      <h3>検知ディレイ</h3>
+      <table class="settings-table">
+        <thead><tr><th>値</th></tr></thead>
+        <tbody><tr><td>1秒（誤検知する場合は値を大きくする）</td></tr></tbody>
+      </table>
+    </div>
+    <div class="settings-section">
+      <h3>検知時のアクション（Standard版は設定項目なし）</h3>
+      <table class="settings-table">
+        <thead><tr><th>値</th></tr></thead>
+        <tbody>
+          <tr><td>+ボタン（選択）</td></tr>
+          <tr>
+            <td class="cell-code">
+              <code id="button1-ticket">[data-message-code=SW_GP_DL_124_0047]</code>
+              <button class="copy-btn" data-target="button1-ticket">コピー</button>
+              <span class="copy-feedback" aria-live="polite"></span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
 
-<div class="settings-section">
-  <h3>検知ディレイ</h3>
-  <table class="settings-table">
-    <thead>
-      <tr>
-        <th>値</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>1秒（誤検知する場合は値を大きくする）</td>
-      </tr>
-    </tbody>
-  </table>
-</div>
+    <!-- 通信料注意喚起 -->
+    <div style="background:rgba(255,193,7,.08);border-left:4px solid #ffc107;padding:14px 18px;margin:50px auto 40px;border-radius:8px;max-width:920px;display:flex;gap:10px;align-items:flex-start;color:#f8f9fa;font-size:.9rem;line-height:1.5;">
+      <span style="font-size:1.2rem;line-height:1.2;">⚠️</span>
+      <span>EXPO2025設定での自動リロードは短い間隔でページを更新するため、モバイル回線ご利用時にはパケット通信料が増加する可能性があります。通信量制限のあるプランの場合は、パケット使用量にご注意ください。</span>
+    </div>
 
-<div class="settings-section">
-  <h3>検知時のアクション（Standard版は設定項目なし）</h3>
-  <table class="settings-table">
-    <thead>
-      <tr>
-        <th>値</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>+ボタン（選択）
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <code id="button1-ticket">[data-message-code=SW_GP_DL_124_0047]</code>
-          <button class="copy-btn" data-target="button1-ticket">コピー</button>
-          <span class="copy-feedback" aria-live="polite"></span>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-</div>
-
-
-<!-- 通信料注意喚起（控えめバージョン） -->
-<div style="
-  background: rgba(255, 193, 7, 0.08);
-  border-left: 4px solid #ffc107;
-  padding: 14px 18px;
-  margin: 50px auto 40px;
-  border-radius: 8px;
-  max-width: 920px;
-  display: flex;
-  gap: 10px;
-  align-items: flex-start;
-  color: #f8f9fa;
-  font-size: 0.9rem;
-  line-height: 1.5;
-">
-  <span style="font-size: 1.2rem; line-height: 1.2;">⚠️</span>
-  <span>
-    EXPO2025設定での自動リロードは短い間隔でページを更新するため、
-    モバイル回線ご利用時にはパケット通信料が増加する可能性があります。
-    通信量制限のあるプランの場合は、パケット使用量にご注意ください。
-  </span>
-</div>
-
-    <!-- Testimonial / emotional -->
+    <!-- Voice -->
     <section>
-    <h2>利用者の声</h2>
-      <div class="testimonial">
-        <p style="margin:0; font-size:1.15rem;">9時の枠はいつ見ても埋まっており、稀に混雑状態を見つけて設定しようとしても既に埋まっている事の繰り返しでしたが、このアプリのオートパイロット機能を使って登録処理を繰り返していたところ、いつの間にか希望の時間の登録が行えていました。
-           9時に入場できたおかげで、簡単に当日予約が取れて、またパビリオンの混雑も少なく、スムーズに回ることができました。
-           このアプリを使っていなかったら、9時の枠は取れなかったと思います。
-           本当に感謝しています。</p> 
-        </p>
-        <div style="margin-top:14px; font-weight:600;">— 9時に入場できた！ さん</div>
-      </div>
-      <div class="testimonial">
-        <p style="margin:0; font-size:1.15rem;">このアプリを使ってもなかなか当日予約が確保ができませんでした。数秒間隔でチェックしているにも関わらず、空きが出ても一瞬で埋まってしまう感じですね。スマホでの予約は無理と諦めていましたが、何度か繰り返していると運良く取ることができました。
-          取れた時の喜びが大きいので期待せずに使う方が良いかもしれません。</p> 
-        </p>
-        <div style="margin-top:14px; font-weight:600;">— 当日予約が取れたらラッキー さん</div>
-      </div>
-      <div class="testimonial">
-        <p style="margin:0; font-size:1.15rem;">10時入場組でしたが、マレージア館を見ている間にガンダムの予約が取れました。その後も大屋根リング散策中やフランス館の待ち時間中に自動で予約に成功。
-          スマホ画面を見続けなくて良いのはこのアプリのメリットですね。トータル４つの予約が取れました。</p> 
-        </p>
-        <div style="margin-top:14px; font-weight:600;">— スマホは手に持ってブラブラ さん</div>
-      </div>
+      <h2>利用者の声</h2>
+      <div class="testimonial"><p style="margin:0; font-size:1.05rem;">9時の枠はいつ見ても埋まっており、稀に混雑状態を見つけて設定しようとしても既に埋まっている事の繰り返しでしたが、このアプリのオートパイロット機能を使って登録処理を繰り返していたところ、いつの間にか希望の時間の登録が行えていました。9時に入場できたおかげで、簡単に当日予約が取れて、またパビリオンの混雑も少なく、スムーズに回ることができました。このアプリを使っていなかったら、9時の枠は取れなかったと思います。本当に感謝しています。</p><div style="margin-top:14px; font-weight:600;">— 9時に入場できた！ さん</div></div>
+      <div class="testimonial"><p style="margin:0; font-size:1.05rem;">このアプリを使ってもなかなか当日予約が確保ができませんでした。数秒間隔でチェックしているにも関わらず、空きが出ても一瞬で埋まってしまう感じですね。スマホでの予約は無理と諦めていましたが、何度か繰り返していると運良く取ることができました。取れた時の喜びが大きいので期待せずに使う方が良いかもしれません。</p><div style="margin-top:14px; font-weight:600;">— 当日予約が取れたらラッキー さん</div></div>
+      <div class="testimonial"><p style="margin:0; font-size:1.05rem;">10時入場組でしたが、マレージア館を見ている間にガンダムの予約が取れました。その後も大屋根リング散策中やフランス館の待ち時間中に自動で予約に成功。スマホ画面を見続けなくて良いのはこのアプリのメリットですね。トータル４つの予約が取れました。</p><div style="margin-top:14px; font-weight:600;">— スマホは手に持ってブラブラ さん</div></div>
     </section>
 
-    <!-- FAQ -->
-    <section class="faq" aria-label="よくある質問">
-      <div class="container">
-        <h2>よくあるご質問</h2>
-        <div class="faq-item">
-          <button class="faq-question" aria-expanded="false">
-            予約を取るコツはありますか？
-            <span aria-hidden="true">▾</span>
-          </button>
-          <div class="faq-answer">
-            <p>来場日時やパリビリオンを予約する場合は、1名づつ行う事で空きが出た時に取りやすくなります。なかなか予約が取れない場合は試してみてください。</p>
-          </div>
-        </div>
-        <div class="faq-item">
-          <button class="faq-question" aria-expanded="false">
-            サーバーエラーが出ます。どうすればいいですか？
-            <span aria-hidden="true">▾</span>
-          </button>
-          <div class="faq-answer">
-            <p>当日予約枠が解放される時間がありますが、その時間はサーバにアクセスが集中し、サーバ側でエラーが発生する事があります。しばらくしてから再度アクセスしてみてください。</p>
-          </div>
-        </div>
-        <div class="faq-item">
-          <button class="faq-question" aria-expanded="false">
-            リロードを繰り返していると画面が真っ白になります。どうすればいいですか？
-            <span aria-hidden="true">▾</span>
-          </button>
-          <div class="faq-answer">
-            <p>ご利用の端末の電波状態を確認してください。もし無料Wi-Fiに接続している状態で発生する場合は無料Wi-Fiを切断してモバイル通信状態でリロードしてみてください。</p>
-          </div>
-        </div>
-        <div class="faq-item">
-          <button class="faq-question" aria-expanded="false">
-            設定を何度も使えますか？
-            <span aria-hidden="true">▾</span>
-          </button>
-          <div class="faq-answer">
-            <p>はい。お気に入りの監視条件と自動操作はプロファイルとして保存でき、次回ワンタップで復元できます。時間を節約し、反復的なセットアップを不要にします。</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- CTA final -->
+    <!-- CTA -->
     <div style="text-align:center; margin:60px 0;">
       <h2 style="margin-bottom:12px;">もう手動チェックは終わりに</h2>
-      <p style="max-width:720px; margin:0 auto 18px;">EXPO2025のパビリオン予約を自動化して、あなたの本来の目的――現地での体験や時間を楽しむこと――に集中しましょう。</p>
-      <a href="premium.html" class="btn btn-primary" style="font-size:1.1rem; padding:16px 32px;">PageSentinel Plus を今すぐ使う</a>
+      <p style="max-width:720px; margin:0 auto 18px;">EXPO2025のパビリオン予約を自動化して、あなたの本来の目的<br>――現地での体験や時間を楽しむこと――<br>に集中しましょう。</p>
+    </div>
+
+    <div class="appstore-link">
+      <a href="https://apps.apple.com/jp/app/id6746980444" target="_blank" rel="noopener">
+        <img src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg" alt="Download on the App Store">
+      </a>
     </div>
 
     <!-- Footer -->
@@ -1018,51 +451,35 @@
         const isOpen = answer.style.display === 'block';
         document.querySelectorAll('.faq-answer').forEach(a => a.style.display = 'none');
         document.querySelectorAll('.faq-question').forEach(q => q.setAttribute('aria-expanded','false'));
-        if (!isOpen) {
-          answer.style.display = 'block';
-          btn.setAttribute('aria-expanded','true');
+        if (!isOpen) { answer.style.display = 'block'; btn.setAttribute('aria-expanded','true'); }
+      });
+    });
+
+    // コピー機能
+    document.querySelectorAll('.copy-btn').forEach(btn => {
+      btn.addEventListener('click', async () => {
+        const targetId = btn.dataset.target;
+        const code = document.getElementById(targetId);
+        const text = code.innerText.trim();
+        const feedback = btn.nextElementSibling;
+        try {
+          await navigator.clipboard.writeText(text);
+          if (feedback) { feedback.textContent = 'コピーしました！'; setTimeout(()=> feedback.textContent='', 2000); }
+        } catch (e) {
+          const textarea = document.createElement('textarea');
+          textarea.value = text; document.body.appendChild(textarea);
+          textarea.select(); document.execCommand('copy'); document.body.removeChild(textarea);
+          if (feedback) { feedback.textContent = 'コピーしました！'; setTimeout(()=> feedback.textContent='', 2000); }
         }
       });
     });
 
-  // コピー機能の実装
-document.querySelectorAll('.copy-btn').forEach(btn => {
-  btn.addEventListener('click', async () => {
-    const targetId = btn.dataset.target;
-    const code = document.getElementById(targetId);
-    const text = code.innerText.trim();
-    const feedback = btn.nextElementSibling;
-
-    try {
-      await navigator.clipboard.writeText(text);
-      if (feedback) {
-        feedback.textContent = 'コピーしました！';
-        setTimeout(() => feedback.textContent = '', 2000);
-      }
-    } catch (e) {
-      // フォールバック（古いブラウザ向け）
-      const textarea = document.createElement('textarea');
-      textarea.value = text;
-      document.body.appendChild(textarea);
-      textarea.select();
-      document.execCommand('copy');
-      document.body.removeChild(textarea);
-      if (feedback) {
-        feedback.textContent = 'コピーしました！';
-        setTimeout(() => feedback.textContent = '', 2000);
-      }
+    // 更新日（対象要素がある場合のみ）
+    const lastModEl = document.getElementById("last-modified");
+    if (lastModEl){
+      const lastMod = new Date("2025-08-06");
+      lastModEl.textContent = lastMod.toLocaleDateString("ja-JP",{year:"numeric",month:"2-digit",day:"2-digit"});
     }
-  });
-});
-// 更新日を表示（HTMLファイルの最終更新日時）
-//const lastMod = new Date(document.lastModified);
-const lastMod = new Date("2025-08-06");
-document.getElementById("last-modified").textContent =
-  lastMod.toLocaleDateString("ja-JP", {
-    year: "numeric",
-    month: "2-digit",
-    day: "2-digit"
-  });
-</script>
+  </script>
 </body>
 </html>
