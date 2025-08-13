@@ -167,6 +167,22 @@
 
   /* 補助 */
   .badge-premium{ background:gold; color:#1f2431; padding:6px 14px; border-radius:999px; font-weight:700; font-size:.75rem; display:inline-block; }
+
+    .feature-cta{
+      margin:36px auto 16px;text-align:center;
+    }
+    .feature-cta a{
+      display:inline-block;background:var(--grad);color:#fff;padding:14px 32px;
+      border-radius:32px;font-size:1rem;font-weight:600;text-decoration:none;
+      box-shadow:0 6px 14px rgba(0,0,0,.15);
+      transition:transform .2s, box-shadow .2s;
+    }
+    .feature-cta a + a{ margin-left:12px; } /* ← 追加：ボタン間の余白 */
+    .feature-cta a:hover{
+      transform:translateY(-2px);
+      box-shadow:0 8px 18px rgba(0,0,0,.2);
+    }
+
 </style>
 </head>
 <body>
