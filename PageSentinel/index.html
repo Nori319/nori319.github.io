@@ -104,6 +104,7 @@
       box-shadow:0 6px 14px rgba(0,0,0,.15);
       transition:transform .2s, box-shadow .2s;
     }
+    .feature-cta a + a{ margin-left:12px; } /* ← 追加：ボタン間の余白 */
     .feature-cta a:hover{
       transform:translateY(-2px);
       box-shadow:0 8px 18px rgba(0,0,0,.2);
@@ -121,30 +122,31 @@
       h1{font-size:1.4rem;}
       .hero-icon{width:220px;border-radius:18px;}
       .feature-cta a{padding:12px 26px;font-size:.95rem;}
+      .feature-cta a + a{ margin-top:10px; margin-left:0; display:block; } /* スマホでは縦積み */
     }
     .subtle-premium{
-  font-size:.85rem;
-  color:#007AFF;
-  opacity:.75;
-  text-align:center;
-  margin:32px 0 12px;
-  transition:opacity .2s;
-}
-.subtle-premium a{ color:inherit; }
-.subtle-premium:hover{ opacity:1; text-decoration:underline; }
+      font-size:.85rem;
+      color:#007AFF;
+      opacity:.75;
+      text-align:center;
+      margin:32px 0 12px;
+      transition:opacity .2s;
+    }
+    .subtle-premium a{ color:inherit; }
+    .subtle-premium:hover{ opacity:1; text-decoration:underline; }
 
-.info-banner {
-  background: linear-gradient(to right, #007AFF, #5AC8FA);
-  color: white;
-  text-align: center;
-  padding: 0.8em 1.2em;
-  font-weight: 600;
-  font-size: 0.95rem;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-}
+    .info-banner {
+      background: linear-gradient(to right, #007AFF, #5AC8FA);
+      color: white;
+      text-align: center;
+      padding: 0.8em 1.2em;
+      font-weight: 600;
+      font-size: 0.95rem;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
   </style>
 </head>
 <body>
@@ -162,10 +164,12 @@
 
     <div class="feature-cta">
       <a href="Marketing/index.html">▶ 機能紹介ページを見る</a>
+      <br><br>
+      <a href="Marketing/expo2025.html" aria-label="関西万博 特設ページ（EXPO2025）へ">🏟️ 関西万博 特設ページ</a>
     </div>
     <p class="subtle-premium">
-  <a href="./premium.html">プレミアム機能の詳細はこちら</a>
-</p>
+      <a href="./premium.html">プレミアム機能の詳細はこちら</a>
+    </p>
 
     <h2>日本語</h2>
     <ul>
