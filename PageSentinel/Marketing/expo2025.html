@@ -38,59 +38,58 @@
   .hero-icon img{ width:100%; border-radius:32px; box-shadow:0 12px 28px rgba(0,0,0,0.25); }
   .hero-icon::before{ content:""; position:absolute; inset:-4px; border-radius:36px; background:linear-gradient(135deg,#ffffff66,#ffd36b,#7dd3fc); z-index:-1; filter:blur(4px); }
 
-  /* ===== カウントダウン ===== */
-  .countdown{
-  display:grid;
-  gap:14px;
-  grid-template-columns: repeat(4, minmax(80px, 1fr)); /* 既定: 4列 */
-  justify-items:center;
-  }
-  @media (max-width:520px){
-  .countdown{
-    grid-template-columns: repeat(2, minmax(120px, 1fr)); /* 小画面: 2×2 */
-  }
-  }
-  .cd-box{
-    width:100%;
-    max-width:190px;
-    padding:14px 10px;
-    border-radius:18px;
-    background:rgba(255,255,255,.10);
-    border:1px solid rgba(255,255,255,.18);
-    backdrop-filter:blur(6px);
-  }
+/* ===== カウントダウン（PCで横に広がらない版） ===== */
+.countdown{
+  margin:22px auto 0;
+  text-align:center;
+}
+.countdown-intro{
+  font-weight:700;
+  opacity:.95;
+  margin-bottom:12px;
+}
 
-.cd-num{ font-size:clamp(1.6rem, 6.2vw, 2.4rem); font-weight:800; }
-.cd-label{ display:block; margin-top:4px; opacity:.85; font-size:.9rem; }
-  .countdown { margin:22px auto 0; max-width:860px; }
-  .countdown-intro { font-weight:700; opacity:.95; margin-bottom:10px; }
-  .countdown-wrap{ display:flex; flex-wrap:wrap; gap:10px; justify-content:center; }
-  .cd-item{
-    background:rgba(255,255,255,.14);
-    border:1px solid rgba(255,255,255,.18);
-    backdrop-filter: blur(6px);
-    border-radius:12px;
-    padding:10px 12px;
-    min-width:72px;
-    text-align:center;
-    box-shadow:0 10px 20px rgba(0,0,0,.15);
+/* 中身のサイズだけに縮めて中央寄せ */
+.countdown-wrap{
+  display:grid;
+  gap:16px;
+  grid-template-columns: repeat(4, minmax(120px, max-content));
+  width: fit-content;      /* ← これで親幅いっぱいに広がらない */
+  margin: 0 auto;          /* ← センター */
+  justify-items: center;
+}
+
+@media (max-width:560px){
+  .countdown-wrap{
+    grid-template-columns: repeat(2, minmax(120px, max-content)); /* 2×2 に */
   }
-  .cd-value{
-    font-variant-numeric: tabular-nums;
-    font-weight:800;
-    font-size:clamp(1.25rem,5vw,2rem);
-    line-height:1;
-  }
-  .cd-label{ display:block; margin-top:4px; font-size:.72rem; opacity:.9; }
-  .cd-note{ margin-top:6px; font-size:.8rem; opacity:.85; }
-  .cd-end{
-    background:rgba(16,185,129,.16);
-    border:1px solid rgba(16,185,129,.35);
-    color:#e7ffef;
-    padding:10px 12px;
-    border-radius:12px;
-    font-weight:600;
-  }
+}
+
+.cd-item{
+  background:rgba(255,255,255,.14);
+  border:1px solid rgba(255,255,255,.18);
+  backdrop-filter: blur(6px);
+  border-radius:12px;
+  padding:10px 12px;
+  min-width:120px;         /* 視認性のため固定めに */
+  text-align:center;
+  box-shadow:0 10px 20px rgba(0,0,0,.15);
+}
+.cd-value{
+  font-variant-numeric: tabular-nums;
+  font-weight:800;
+  font-size:clamp(1.25rem,5vw,2rem);
+  line-height:1;
+}
+.cd-label{ display:block; margin-top:4px; font-size:.72rem; opacity:.9; }
+.cd-end{
+  background:rgba(16,185,129,.16);
+  border:1px solid rgba(16,185,129,.35);
+  color:#e7ffef;
+  padding:10px 12px;
+  border-radius:12px;
+  font-weight:600;
+}
 
   /* ===== グリッド & カード ===== */
   .feature-grid{ display:grid; gap:28px; margin:60px 0 40px; grid-template-columns: repeat(auto-fit,minmax(260px,1fr)); }
@@ -393,7 +392,7 @@
   </table>
 </div>
  <div class="video-wrap">
-  <iframe src="https://www.youtube.com/embed/JMmUORu_RLo" allowfullscreen
+  <iframe loading="lazy" src="https://www.youtube.com/embed/JMmUORu_RLo" allowfullscreen
           title="YouTube video player"></iframe>
 </div>
 <hr>
@@ -498,7 +497,7 @@
   <h3>再読み込み間隔(s)</h3>
   <table class="settings-table onecol">
     <tbody>
-      <tr><td>6秒（Standarad版は10秒）</td></tr>
+      <tr><td>6秒（Standard版は10秒）</td></tr>
     </tbody>
   </table>
 </div>
@@ -562,8 +561,8 @@
     <section>
       <h2>利用者の声</h2>
       <div class="testimonial"><p style="margin:0; font-size:1.05rem;">9時の枠はいつ見ても埋まっており、稀に混雑状態を見つけて設定しようとしても既に埋まっている事の繰り返しでしたが、このアプリのオートパイロット機能を使って登録処理を繰り返していたところ、いつの間にか希望の時間の登録が行えていました。9時に入場できたおかげで、簡単に当日予約が取れて、またパビリオンの混雑も少なく、スムーズに回ることができました。このアプリを使っていなかったら、9時の枠は取れなかったと思います。本当に感謝しています。</p><div style="margin-top:14px; font-weight:600;">— 9時に入場できた！ さん</div></div>
-      <div class="testimonial"><p style="margin:0; font-size:1.05rem;">このアプリを使ってもなかなか当日予約が確保ができませんでした。10間隔でチェックしているにも関わらず、空きが出てもすぐに埋まってしまう感じですね。スマホでの予約は無理と諦めていましたが、何度か繰り返していると運良く取ることができました。取れた時の喜びが大きいので期待せずに使う方が良いかもしれません。</p><div style="margin-top:14px; font-weight:600;">— 当日予約が取れたらラッキー さん</div></div>
-      <div class="testimonial"><p style="margin:0; font-size:1.05rem;">10時入場組でしたが、マレージア館を見ている間にガンダムの予約が取れました。その後も大屋根リング散策中やフランス館の待ち時間中に自動で予約に成功。スマホ画面を見続けなくて良いのはこのアプリのメリットですね。トータル４つの予約が取れました。</p><div style="margin-top:14px; font-weight:600;">— スマホは手に持ってブラブラ さん</div></div>
+      <div class="testimonial"><p style="margin:0; font-size:1.05rem;">このアプリを使ってもなかなか当日予約が確保ができませんでした。10秒間隔でチェックしているにも関わらず、空きが出てもすぐに埋まってしまう感じですね。スマホでの予約は無理と諦めていましたが、何度か繰り返していると運良く取ることができました。取れた時の喜びが大きいので期待せずに使う方が良いかもしれません。</p><div style="margin-top:14px; font-weight:600;">— 当日予約が取れたらラッキー さん</div></div>
+      <div class="testimonial"><p style="margin:0; font-size:1.05rem;">10時入場組でしたが、マレーシア館を見ている間にガンダムの予約が取れました。その後も大屋根リング散策中やフランス館の待ち時間中に自動で予約に成功。スマホ画面を見続けなくて良いのはこのアプリのメリットですね。トータル４つの予約が取れました。</p><div style="margin-top:14px; font-weight:600;">— スマホは手に持ってブラブラ さん</div></div>
     </section>
 
  <!-- FAQ -->
@@ -576,7 +575,7 @@
             <span aria-hidden="true">▾</span>
           </button>
           <div class="faq-answer">
-            <p>来場日時やパリビリオンを予約する場合は、1名づつ行う事で空きが出た時に取りやすくなります。なかなか予約が取れない場合は試してみてください。</p>
+            <p>来場日時やパビリオンを予約する場合は、1名ずつ行う事で空きが出た時に取りやすくなります。なかなか予約が取れない場合は試してみてください。</p>
           </div>
         </div>
         <div class="faq-item">
@@ -603,7 +602,7 @@
             <span aria-hidden="true">▾</span>
           </button>
           <div class="faq-answer">
-            <p>当日予約枠が解放される時間がありますが、その時間はサーバにアクセスが集中し、サーバ側でエラーが発生する事があります。しばらくしてから再度アクセスしてみてください。</p>
+            <p>当日予約枠が解放される時間がありますが、その時間はサーバーにアクセスが集中し、サーバー側でエラーが発生する事があります。しばらくしてから再度アクセスしてみてください。</p>
           </div>
         </div>
         <div class="faq-item">
@@ -719,7 +718,12 @@
       }
 
       tick();
-      const timer = setInterval(tick, 1000);
+      let timer = setInterval(tick, 1000);
+      document.addEventListener('visibilitychange', () => {
+        if (document.hidden) { clearInterval(timer); }
+        else { tick(); timer = setInterval(tick, 1000); }
+      });
+
     })();
 
     // 更新日（対象要素がある場合のみ）
