@@ -39,6 +39,29 @@
   .hero-icon::before{ content:""; position:absolute; inset:-4px; border-radius:36px; background:linear-gradient(135deg,#ffffff66,#ffd36b,#7dd3fc); z-index:-1; filter:blur(4px); }
 
   /* ===== カウントダウン ===== */
+  .countdown{
+  display:grid;
+  gap:14px;
+  grid-template-columns: repeat(4, minmax(80px, 1fr)); /* 既定: 4列 */
+  justify-items:center;
+  }
+  @media (max-width:520px){
+  .countdown{
+    grid-template-columns: repeat(2, minmax(120px, 1fr)); /* 小画面: 2×2 */
+  }
+  }
+  .cd-box{
+    width:100%;
+    max-width:190px;
+    padding:14px 10px;
+    border-radius:18px;
+    background:rgba(255,255,255,.10);
+    border:1px solid rgba(255,255,255,.18);
+    backdrop-filter:blur(6px);
+  }
+
+.cd-num{ font-size:clamp(1.6rem, 6.2vw, 2.4rem); font-weight:800; }
+.cd-label{ display:block; margin-top:4px; opacity:.85; font-size:.9rem; }
   .countdown { margin:22px auto 0; max-width:860px; }
   .countdown-intro { font-weight:700; opacity:.95; margin-bottom:10px; }
   .countdown-wrap{ display:flex; flex-wrap:wrap; gap:10px; justify-content:center; }
