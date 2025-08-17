@@ -209,6 +209,17 @@
   max-width:560px;   /* 任意。中央寄せしたいなら */
   margin:0 auto 16px;
 }
+  .premium-link {
+    color:#3b82f6;
+    font-weight:600;
+    text-decoration:underline;
+    transition:color 0.2s ease;
+  }
+  .premium-link:hover {
+    color:#2563eb;
+    text-decoration:none;
+  }
+
 </style>
 </head>
 <body>
@@ -254,7 +265,8 @@
         <div class="card"><h3><div class="icon-wrapper">⑤</div>当日予約の空き自動予約★</h3><p>自動リロードの検知モードで「狙いのパビリオンの空き」を監視。空きが出たら自動で予約ボタンをタップ！さらに予約成功率をアップ！！</p></div>
         <div class="card"><h3><div class="icon-wrapper">⑥</div>設定保存でいつでも万博設定を呼び出し★</h3><p>プロファイルとして設定を保存・呼び出し。複数パターンも一括管理。</p></div>
       </div>
-      <div style="text-align:center; margin-top:40px;"><p class="subtle-premium">★プレミアム機能を利用</p></div>
+      <div style="text-align:center; margin-top:40px;">
+  <p class="subtle-premium"><a href="../premium.html" class="premium-link">★ プレミアム機能を利用</a></p></div>
     </section>
 
     <!-- How it works / usage -->
@@ -288,7 +300,7 @@
 
     <!-- 監視URL：値だけ1列 -->
     <div class="settings-section">
-      <h3>監視URL</h3>
+      <h3>監視URL（マイチケットページ）</h3>
       <table class="settings-table onecol">
         <tbody>
           <tr>
@@ -355,7 +367,7 @@
     <h2>②EXPO2025・簡単空きチェック</h2>
 
     <div class="settings-section">
-      <h3>監視URL</h3>
+      <h3>監視URL（マイチケットページ）</h3>
       <table class="settings-table onecol">
         <tbody>
           <tr>
@@ -405,7 +417,7 @@
     </div>
 
     <div class="settings-section">
-      <h3>監視URL</h3>
+      <h3>監視URL（マイチケットページ）</h3>
       <table class="settings-table onecol">
         <tbody>
           <tr>
@@ -485,7 +497,7 @@
     </div>
 
     <div class="settings-section">
-      <h3>監視URL</h3>
+      <h3>監視URL（マイチケットページ）</h3>
       <table class="settings-table onecol">
         <tbody>
           <tr>
@@ -556,6 +568,33 @@
     </tbody>
   </table>
 </div>
+ <div class="video-wrap">
+  <iframe loading="lazy" src="https://www.youtube.com/embed/WRFV-yuuca0" allowfullscreen
+          title="YouTube video player"></iframe>
+</div>
+<hr>
+<h2>ログイン時の本人確認をメール認証に設定する手順</h2>
+    <div class="settings-section">
+      <h3>監視URL（万博IDページ）</h3>
+      <table class="settings-table onecol">
+        <tbody>
+          <tr>
+            <td class="cell-code">
+              <code id="url9-ticket">https://usrmng.accounts.expo2025.or.jp/idmng/users/screen/menuScreen</code>
+              <button class="copy-btn" data-target="url9-ticket">コピー</button>
+              <span class="copy-feedback" aria-live="polite"></span>
+              <br>URLを貼り付けた後「追加」ボタンを押して選択状態にしてください。
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+<div class="video-wrap">
+  <iframe src="https://www.youtube.com/embed/yMroWmzZKT8" allowfullscreen
+          title="YouTube video player"></iframe>
+</div>
+<hr>
 
     <!-- 通信料注意喚起 -->
     <div style="background:rgba(255,193,7,.08);border-left:4px solid #ffc107;padding:14px 18px;margin:50px auto 40px;border-radius:8px;max-width:920px;display:flex;gap:10px;align-items:flex-start;color:#f8f9fa;font-size:.9rem;line-height:1.5;">
