@@ -143,17 +143,10 @@
       </div>
     </section>
 
-    <p class="hint">その他の時間帯を選択したい場合は以下から予約可能な時間帯を選択してください。</p>
+    <p class="hint">リロードを行う事に1/5の確率で予約可能になり、予約するボタンをタップすると1/3の確率で予約が成功するように設定しています。この環境ではリロード間隔や検知ディレイを小さくしても正常に動作しますが、実際のサイトは色々な内部処理が行われている為、まずは当ホームページで指定した設定値でお試しください。正しく動作することを確認してからチューニングを行うようにしてください。
+    </p>
     <div class="spacer"></div>
   </main>
-
-  <nav class="bottom-nav" aria-label="主ナビゲーション">
-    <div class="nav-item"><div class="icon" aria-hidden="true"></div><div>ホーム</div></div>
-    <div class="nav-item"><div class="icon" aria-hidden="true"></div><div>チケット</div></div>
-    <div class="nav-item"><div class="icon" aria-hidden="true"></div><div>予約・抽選</div></div>
-    <div class="nav-item"><div class="icon" aria-hidden="true"></div><div>マイチケット</div></div>
-    <div class="nav-item"><div class="icon" aria-hidden="true"></div><div>メッセージ</div></div>
-  </nav>
 
   <div class="modal-backdrop" id="modalRoot" role="dialog" aria-modal="true" aria-labelledby="modalTitle" aria-hidden="true">
     <div class="modal">
@@ -179,7 +172,7 @@
       return `${two(start.getHours())}:${two(start.getMinutes())}-${two(end.getHours())}:${two(end.getMinutes())}`;
     }
 
-    const hasSlot = Math.random() < 0.10;
+    const hasSlot = Math.random() < 0.20;
     let chosenSlot = '';
 
     if (hasSlot) {
@@ -206,7 +199,7 @@
       modalRoot.setAttribute('aria-hidden', 'false');
       if (type === 'ok') {
         modalTitle.innerHTML = '＜ 当日登録 ＞<br><span class="ok">パビリオン/イベントが予約されました</span>';
-        modalStamp.textContent = 'ブルーオーシャンドーム';
+        modalStamp.textContent = 'ブルースカイドーム';
         modalTime.textContent = chosenSlot ? `${chosenSlot.replace('-', '〜')}` : '';
       } else {
         modalTitle.innerHTML = '＜ 当日登録 ＞<br><span class="ng">パビリオン/イベントの予約が確保できませんでした</span>';
@@ -222,7 +215,7 @@
 
     reserveBtn.addEventListener('click', () => {
       if (reserveBtn.disabled) return;
-      const success = Math.random() < 0.20;
+      const success = Math.random() < 0.33;
       openModal(success ? 'ok' : 'ng');
     });
     closeModal.addEventListener('click', closeModalFn);
