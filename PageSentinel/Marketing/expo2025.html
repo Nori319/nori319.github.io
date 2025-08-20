@@ -229,6 +229,16 @@
     color:#2563eb;
     text-decoration:none;
   }
+.last-updated {
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.85);
+  background: rgba(0, 0, 0, 0.2);
+  padding: 4px 8px;
+  border-radius: 6px;
+}
 
 </style>
 </head>
@@ -236,6 +246,8 @@
   <div class="container">
     <!-- Hero -->
     <header aria-label="EXPO2025向け予約自動化">
+            <div class="last-updated">最終更新日: <span id="last-modified"></span></div>
+
       <div class="badge-premium">EXPO2025での活用ガイド</div>
       <br>
       <div class="hero-icon">
@@ -709,6 +721,31 @@
       </a>
     </div>
 
+    <!-- 友達に知らせる -->
+<section class="section" style="text-align:center; margin:60px 0;">
+  <h2 style="margin-bottom:16px;">友達に知らせる</h2>
+  <p style="color:#dadaff; margin-bottom:20px;">友達にもシェアして一緒にEXPO2025を楽しもう！</p>
+  <div style="display:flex; justify-content:center; gap:16px; flex-wrap:wrap;">
+    <!-- X (Twitter) -->
+    <a href="https://twitter.com/intent/tweet?text=EXPO2025の予約を自動化できるアプリ「PageSentinel」おすすめ！&url=https://nori319.github.io/PageSentinel/"
+       target="_blank" rel="noopener"
+       style="background:#1DA1F2; color:#fff; padding:10px 18px; border-radius:8px; font-weight:600; text-decoration:none;">
+      X (Twitter) でシェア
+    </a>
+    <!-- LINE -->
+    <a href="https://line.me/R/msg/text/?EXPO2025の予約を自動化できるアプリ「PageSentinel」がおすすめ！%0Ahttps://nori319.github.io/PageSentinel/"
+       target="_blank" rel="noopener"
+       style="background:#06C755; color:#fff; padding:10px 18px; border-radius:8px; font-weight:600; text-decoration:none;">
+      LINEでシェア
+    </a>
+    <!-- Email -->
+    <a href="mailto:?subject=EXPO2025予約を自動化できるアプリ&body=EXPO2025の予約を自動化できるアプリ「PageSentinel」を見つけました！ぜひチェックしてみてください。%0Ahttps://nori319.github.io/PageSentinel/"
+       style="background:#6366f1; color:#fff; padding:10px 18px; border-radius:8px; font-weight:600; text-decoration:none;">
+      メールで知らせる
+    </a>
+  </div>
+</section>
+
     <!-- Footer -->
     <div class="footer">
       <div style="margin-bottom:6px;">© 2025 PageSentinel</div>
@@ -800,7 +837,7 @@
     // 更新日（対象要素がある場合のみ）
     const lastModEl = document.getElementById("last-modified");
     if (lastModEl){
-      const lastMod = new Date("2025-08-06");
+      const lastMod = new Date("2025-08-20");
       lastModEl.textContent = lastMod.toLocaleDateString("ja-JP",{year:"numeric",month:"2-digit",day:"2-digit"});
     }
   </script>
