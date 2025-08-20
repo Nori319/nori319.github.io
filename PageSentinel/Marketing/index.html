@@ -113,14 +113,25 @@
         }
         .cta a:hover { background: #E08A00; }
         /* フッター */
-        footer {
-            text-align: center;
-            padding: 1.5rem 1rem;
-            background: #fff;
-            font-size: 0.9rem;
-            color: #666;
-        }
-        footer a { color: #007AFF; }
+footer {
+    text-align: center;
+    padding: 1.5rem 1rem;
+    background: #fff;
+    font-size: 0.9rem;
+    color: #666;
+}
+        footer a {
+    color: inherit;              /* 親要素の色(#666)を引き継ぐ */
+    text-decoration: none;       /* 下線を消す */
+    font-weight: 500;            /* 少し太めでシャープに */
+    transition: color 0.2s ease;
+}
+
+footer a:hover {
+    color: #000;                 /* ホバー時だけ濃くしてシャープに */
+    text-decoration: underline;  /* 下線を付けるとリンク感が出る */
+}
+        
         .appstore-link {
   text-align: center;
   margin: 20px 0;
@@ -250,7 +261,7 @@ pre code {
         <img src="screenshot-hero.png" alt="PageSentinel 設定画面" class="screenshot">
     </section-->
     <div class="feature-cta">
-    <a href="./expo2025.html" aria-label="関西万博 特設ページ（EXPO2025）へ">🏟️ 関西万博 特設ページ</a>
+    <a href="./expo2025.html" aria-label="関西万博 特設ページ（EXPO2025）へ">大阪・関西万博（EXPO2025）<br>🏟️ 特設ページ</a>
     </div>
 
     <section>
@@ -282,10 +293,6 @@ pre code {
             </div>
         </div>
     </section>
-
-    <div class="feature-cta">
-    <a href="./expo2025.html" aria-label="関西万博 特設ページ（EXPO2025）へ">🏟️ 関西万博 特設ページ</a>
-    </div>
 
     <p class="subtle-premium">
     <a href="../premium.html">プレミアム機能の詳細はこちら</a>
@@ -390,10 +397,11 @@ pre code {
             </a>
           </div>
 
-    <footer>
-        <p>© 2025 PageSentinel</p>
-        <p><a href="https://nori319.github.io/PageSentinel/" target="_blank">公式サイト</a></p>
-    </footer>
+<footer>
+  <a href="../index.html" style="color:inherit; text-decoration:none;">
+    &copy; 2025 PageSentinel. All rights reserved.
+  </a>
+</footer>
 
     <script>
   document.querySelectorAll('.faq-question').forEach(button => {
