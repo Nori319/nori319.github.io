@@ -239,6 +239,17 @@
   padding: 4px 8px;
   border-radius: 6px;
 }
+.badge-new {
+  display: inline-block;
+  background-color: red;
+  color: white;
+  font-size: 10px;
+  font-weight: bold;
+  padding: 2px 6px;
+  border-radius: 6px;
+  margin-left: 6px;
+  vertical-align: middle;
+}
 
 </style>
 </head>
@@ -654,6 +665,21 @@
         <h2>よくあるご質問</h2>
         <div class="faq-item">
           <button class="faq-question" aria-expanded="false">
+            来場日時設定のオートパイロットがすぐ止まります (8/22更新)<span class="badge-new">NEW</span>
+            <span aria-hidden="true">▾</span>
+          </button>
+          <div class="faq-answer">
+            <p>以下の手順で試してみてください。<br>
+              1. 入場したい日付の空きのある時間帯を選択して来場日時を設定する<br>
+              2. 来場日時の変更を行い、同日の行きたい時間帯に空き(混雑状態)が出るのを待つ<br>
+              3. 空きが出たらその時間帯をタップして選択する<br>
+              4. オートパイロットを開始（稲妻型アイコンをタップ）する<br>
+              開始直後は埋まっていても、次の空きが出た時にタイミングが合えば予約が行えます。
+              10時台であれば空きは比較的出やすいので、9時台にチャレンジする前に試してみる事をお勧めします。</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">
             予約を取るコツはありますか？
             <span aria-hidden="true">▾</span>
           </button>
@@ -668,6 +694,17 @@
           </button>
           <div class="faq-answer">
             <p>頻繁に空きが発生するパビリオンは比較的予約がとりやすいとされています。パビリオンの空き一覧を表示させた時に空きが出ているものがあれば、その後も空きが発生する可能性はあります。</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">
+            時間指定して自動予約を行うことはできますか？ (8/22更新)<span class="badge-new">NEW</span>
+            <span aria-hidden="true">▾</span>
+          </button>
+          <div class="faq-answer">
+            <p>いいえ、時間指定での自動予約は行えません。自動予約は直近の予約可能時間に対して予約を行うボタンをタップするだけの機能となります。
+              もし取れた予約時間がかなり遅い時間で、比較的空きが出やすいパビリオンであれば一度キャンセルしてから、予約し直す事をお勧めします。
+              当日予約は、その予約を利用するまでは次の予約が行えないためです。</p>
           </div>
         </div>
         <div class="faq-item">
@@ -839,7 +876,7 @@
     // 更新日（対象要素がある場合のみ）
     const lastModEl = document.getElementById("last-modified");
     if (lastModEl){
-      const lastMod = new Date("2025-08-20");
+      const lastMod = new Date("2025-08-22");
       lastModEl.textContent = lastMod.toLocaleDateString("ja-JP",{year:"numeric",month:"2-digit",day:"2-digit"});
     }
   </script>
