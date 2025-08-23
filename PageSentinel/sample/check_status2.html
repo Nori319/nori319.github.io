@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>パビリオン空き速報</title>
+  <style>
+    body { font-family: sans-serif; background: #f9fafb; color: #111827; margin: 0; padding: 20px; }
+    h1 { font-size: 1.5rem; font-weight: bold; }
+    .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; }
+    .announcements { background: #fff; border: 1px solid #e5e7eb; border-radius: 12px; overflow: hidden; }
+    .announcements-header { padding: 0.5rem 1rem; border-bottom: 1px solid #e5e7eb; display: flex; justify-content: space-between; }
+    .row { display: grid; grid-template-columns: 1fr 1fr 120px; padding: 0.5rem 1rem; border-bottom: 1px solid #f3f4f6; align-items: center; }
+    .row:last-child { border-bottom: none; }
+    .error { background: #fee2e2; color: #991b1b; border: 1px solid #fecaca; padding: 0.5rem 1rem; border-radius: 8px; margin-bottom: 1rem; }
+    .notice { padding: 1rem; color: #6b7280; }
+    details { margin-top: 1rem; font-size: 0.9rem; color: #374151; }
+    code { background: #f3f4f6; padding: 0 0.2rem; border-radius: 4px; }
+  .btn{appearance:none;border:1px solid #e5e7eb;background:#fff;color:#111827;border-radius:8px;padding:6px 10px;cursor:pointer}
+.btn:hover{border-color:#cbd5e1;background:#f9fafb}
+</style>
+</head>
+<body>
+  <div class="header">
+    <h1>パビリオン空き速報</h1>
+    <div style="display:flex; align-items:center; gap:10px; font-size:0.9rem; color:#6b7280;">
+      <span id="lastUpdated">最終更新: ―</span> / <span id="countdown">次回更新まで: ―秒</span>
+      <button id="dlCsv" class="btn" type="button" title="表示中リストをCSV保存">CSVダウンロード</button>
+    </div>
+  </div>
+  <div id="error" class="error" style="display:none"></div>
+
+  <div class="announcements">
+    <div class="announcements-header">
+      <span>新たに空きが出たパビリオン</span>
+      <span id="loading" style="font-size:0.8rem; color:#6b7280;"></span>
+    </div>
+    <div id="list"></div>
+  </div>
+
+  <details>
+    <summary>判定ロジックと注意点</summary>
+    <ul>
+      <li><code>slot.s</code> が <code>0</code>（空席あり）または <code>1</code>（残りわずか）で「空きあり」と判定。</li>
+      <li>「前回は空き無し → 今回は空きあり」に遷移した場合のみ通知。</li>
+      <li>空き時間は <code>slot.t</code> → <code>slot.time</code> → <code>slot.h</code> → <code>slot.label</code> を優先。</li>
+    </ul>
+  </details>
+
+  <script>
+    // === 設定 ===
+    const API_URL = 'https://purple-cherry-5864.gnavi2014.workers.dev/';
+    const POLL_INTERVAL_MS = 10000;
+
+    let lastSnapshot = new Map();
+    let announcements = [];
+    let lastUpdated = null;
+    let countdown = POLL_INTERVAL_MS / 1000;
+
+    // --- CSV ダウンロード ---
+    function toCSV(rows){
+      const head = ['name','times','at'];
+      const esc = (v)=> '"' + String(v).replace(/"/g,'""') + '"';
+      const body = rows.map(r => [
+        esc(r.name),
+        esc((r.times && r.times.length ? r.times.join(' / ') : '')),
+        esc(new Date(r.at).toLocaleString('ja-JP'))
+      ].join(','));
+      return '﻿' + [head.join(','), ...body].join('
+'); // BOM付与（Excel対策）
+    }
+    function downloadCSV(){
+      const csv = toCSV(announcements);
+      const blob = new Blob([csv], {type:'text/csv;charset=utf-8;'});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      const ts = new Date().toISOString().replace(/[:T]/g,'-').split('.')[0];
+      a.href = url; a.download = `availability-${ts}.csv`;
+      document.body.appendChild(a); a.click(); a.remove();
+      URL.revokeObjectURL(url);
+    }
+    document.addEventListener('DOMContentLoaded',()=>{
+      const btn = document.getElementById('dlCsv');
+      if(btn) btn.addEventListener('click', downloadCSV);
+    });
+
+    function isAvailableStatus(s) { return s === 0 || s === 1; }
+    function hasAnyAvailable(pavilion) { return Array.isArray(pavilion?.s) && pavilion.s.some(slot => isAvailableStatus(slot.s)); }
+    function extractTimes(pavilion) {
+      if (!pavilion?.s) return [];
+      return [...new Set(pavilion.s.filter(slot => isAvailableStatus(slot.s)).map(slot => slot.t || slot.time || slot.h || slot.label || "時間不明"))];
+    }
+
+    function render() {
+      document.getElementById('lastUpdated').textContent = `最終更新: ${lastUpdated ? lastUpdated.toLocaleString('ja-JP') : '―'}`;
+      document.getElementById('countdown').textContent = `次回更新まで: ${countdown}秒`;
+      const listEl = document.getElementById('list');
+      if (announcements.length === 0) {
+        listEl.innerHTML = `<div class="notice">まだ通知はありません（空きが発生するとここに表示されます）</div>`;
+      } else {
+        listEl.innerHTML = announcements.map(row => `
+          <div class="row">
+            <div>${row.name}</div>
+            <div>${row.times.length > 0 ? row.times.join('、') : '空き時間: 情報なし'}</div>
+            <div style="text-align:right; font-size:0.8rem; color:#6b7280;">${row.at.toLocaleTimeString('ja-JP')}</div>
+          </div>`).join('');
+      }
+    }
+
+    async function tick() {
+      document.getElementById('loading').textContent = '更新中...';
+      document.getElementById('error').style.display = 'none';
+      try {
+        const res = await fetch(API_URL);
+        if (!res.ok) throw new Error('API取得失敗');
+        const data = await res.json();
+        const list = Array.isArray(data) ? data : data?.data || [];
+
+        const currentSnapshot = new Map();
+        const newly = [];
+        for (const pavilion of list) {
+          if (!pavilion || pavilion.n === "") continue;
+          const code = pavilion.c || pavilion.n;
+          const availableNow = hasAnyAvailable(pavilion);
+          currentSnapshot.set(code, { available: availableNow, pavilion });
+          const prev = lastSnapshot.get(code)?.available || false;
+          if (!prev && availableNow) {
+            newly.push({
+              id: code + Date.now(),
+              name: pavilion.n,
+              times: extractTimes(pavilion),
+              at: new Date()
+            });
+          }
+        }
+        if (lastSnapshot.size > 0 && newly.length > 0) {
+          // 先頭に追加（スクロール不要）
+          // newly の検出順を保ったまま先頭に積むため、逆順で unshift
+          for (let i = newly.length - 1; i >= 0; i--) {
+            announcements.unshift(newly[i]);
+          }
+          announcements = announcements.slice(0, 10000);
+        }
+        lastSnapshot = currentSnapshot;
+        lastUpdated = new Date();
+      } catch (e) {
+        document.getElementById('error').textContent = '取得エラー: ' + e.message;
+        document.getElementById('error').style.display = 'block';
+      } finally {
+        document.getElementById('loading').textContent = '';
+        countdown = POLL_INTERVAL_MS / 1000;
+        render();
+      }
+    }
+
+    setInterval(() => { if (countdown > 0) countdown--; render(); }, 1000);
+    tick();
+    setInterval(tick, POLL_INTERVAL_MS);
+  </script>
+</body>
+</html>
