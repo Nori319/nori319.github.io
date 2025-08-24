@@ -1,0 +1,309 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>万博チケット予約リンク生成ツール</title>
+  <style>
+    :root{--bg:#f8fafc;--fg:#0f172a;--muted:#64748b;--card:#ffffff;--border:#e2e8f0;--accent:#2563eb;--accent-fg:#fff;--warn:#ef4444}
+    *{box-sizing:border-box}
+    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,"Apple Color Emoji","Segoe UI Emoji";background:var(--bg);color:var(--fg)}
+    .container{max-width:960px;margin:0 auto;padding:24px}
+    header{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:16px}
+    h1{font-size:20px;margin:0}
+    .card{background:var(--card);border:1px solid var(--border);border-radius:16px;box-shadow:0 1px 2px rgba(0,0,0,.04);padding:16px}
+    .grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+    .field{display:flex;flex-direction:column;gap:6px}
+    label{font-size:13px;color:var(--muted)}
+    input[type="text"], input[type="date"], select, textarea{border:1px solid var(--border);border-radius:10px;padding:10px 12px;font-size:14px;background:#fff;color:var(--fg)}
+    input[type="radio"]{transform:translateY(1px)}
+    .row{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+    .small{font-size:12px;color:var(--muted)}
+    .btn{appearance:none;border:1px solid var(--border);background:#fff;border-radius:10px;padding:10px 12px;cursor:pointer}
+    .btn.primary{background:var(--accent);color:var(--accent-fg);border-color:var(--accent)}
+    .btn:disabled{opacity:.6;cursor:not-allowed}
+    .chips{display:flex;gap:8px;flex-wrap:wrap}
+    .chip{display:inline-flex;gap:8px;align-items:center;border:1px solid var(--border);background:#fff;border-radius:999px;padding:6px 10px;font-size:12px}
+    .chip button{border:none;background:transparent;color:#334155;cursor:pointer}
+    .muted{color:var(--muted)}
+    .urlbox{display:flex;gap:8px}
+    .urlbox input{flex:1}
+    .listbox{display:flex;flex-direction:column;gap:8px}
+    .listbox .row{gap:8px}
+    .listbox .row input{flex:1}
+    .listbox select{height:240px}
+    @media (max-width:840px){.grid{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>万博チケット予約リンク生成ツール</h1>
+      <div class="small">必要項目を入力 → 下のボタンで予約画面に遷移できます</div>
+    </header>
+
+    <div class="card grid">
+      <section class="field">
+        <label>チケットID</label>
+        <div class="row">
+          <input id="ticketId" type="text" placeholder="例: 12345678" autocomplete="off" />
+          <button class="btn" id="saveIdBtn" type="button">保存</button>
+        </div>
+        <div id="savedChips" class="chips" aria-live="polite"></div>
+
+        <div class="field" style="margin-top:16px">
+          <label>予約種別</label>
+          <div class="row">
+            <label><input type="radio" name="lottery" value="4"> 3日前</label>
+            <label><input type="radio" name="lottery" value="5"> 当日</label>
+          </div>
+        </div>
+
+        <div class="field" style="margin-top:16px">
+          <label>入場年月日</label>
+          <input id="date" type="date" />
+        </div>
+      </section>
+
+      <section class="field listbox">
+        <label>パビリオン名（検索可）</label>
+        <div class="row">
+          <input id="search" type="text" placeholder="名称・別名・英字で検索…" />
+          <button class="btn" id="clearSearch" type="button">クリア</button>
+        </div>
+        <select id="pavilionSelect" size="10" aria-label="パビリオン一覧"></select>
+        <div class="small">選択中: <span id="selectedLabel" class="muted">—</span></div>
+      </section>
+    </div>
+
+    <div class="card" style="margin-top:16px">
+      <div class="field">
+        <label>生成されたURL</label>
+        <div class="urlbox">
+          <input id="resultUrl" type="text" readonly>
+          <button class="btn" id="copyBtn" type="button">コピー</button>
+        </div>
+        <div class="row" style="margin-top:12px">
+          <button class="btn primary" id="openBtn" type="button" disabled>予約画面に遷移</button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const SCREEN_ID='108';
+      const STATE_KEY='expoFormState';
+
+      const PAVILIONS=[
+        {id:"C2N0",name:"イタリアパビリオン also hosting the Holy See ～15:00",alias:""},
+        {id:"C2N3",name:"イタリアパビリオン also hosting the Holy See 15:00～",alias:""},
+        {id:"H5H9",name:"大阪ヘルスケアパビリオン(XD HALL)モンスターハンター ブリッジ",alias:"モンハン"},
+        {id:"HAH0",name:"NTT Pavilion",alias:"NTT"},
+        {id:"HEH0",name:"住友館",alias:""},
+        {id:"JC00",name:"空飛ぶクルマ ステーション",alias:"空飛ぶクルマ"},
+        {id:"HMH0",name:"PASONA NATUREVERSE",alias:"PASONA"},
+        {id:"HSH0",name:"TECH WORLD館",alias:"TECH WORLD"},
+        {id:"HUH0",name:"ガスパビリオン・おばけワンダーランド/XRゴーグル(利用制限あり)",alias:"ガス・おばけ"},
+        {id:"II00",name:"シグネチャーパビリオン 河森正治 「いのちめぐる冒険」 超時空シアター",alias:"超時空シアター"},
+        {id:"D633",name:"ポーランドパビリオン：ショパンコンサート",alias:"ショパンコンサート"},
+        {id:"Q001",name:"『アオと夜の虹のパレード』 Presented by SUNTORY｜DAIKIN　予約観覧エリア",alias:"アオと夜の虹"},
+        {id:"H5H0",name:"大阪ヘルスケアパビリオン（本館）　リボーン体験",alias:""},
+        {id:"H5H3",name:"大阪ヘルスケアパビリオン（本館）　リボーン体験＋人生ゲームREBORN in 2050",alias:""},
+        {id:"C730",name:"オーストラリアパビリオン 「Chasing the Sun ― 太陽の大地へ」",alias:""},
+        {id:"C7R0",name:"オランダパビリオン　コモングラウンド",alias:""},
+        {id:"CCB0",name:"クウェート国パビリオン",alias:""},
+        {id:"CFR0",name:"国際赤十字・赤新月運動館",alias:""},
+        {id:"CFV0",name:"国連パビリオン",alias:""},
+        {id:"CO70",name:"タイパビリオン（一般入館）",alias:""},
+        {id:"D630",name:"ポーランドパビリオン",alias:""},
+        {id:"H1H9",name:"日本館　3エリア観覧",alias:""},
+        {id:"H3H0",name:"ウーマンズ パビリオン in collaboration with Cartier",alias:""},
+        {id:"H7H0",name:"関西パビリオン",alias:""},
+        {id:"HCH0",name:"電力館",alias:"電力館"},
+        {id:"HGH0",name:"パナソニック館 「ノモの国」",alias:"ノモの国"},
+        {id:"HIH0",name:"三菱未来館 JOURNEY TO LIFE",alias:"三菱未来館"},
+        {id:"HOH0",name:"ブルーオーシャンドーム",alias:""},
+        {id:"HQH0",name:"GUNDAM NEXT FUTURE PAVILION",alias:"ガンダム"},
+        {id:"HWH0",name:"飯田グループ×大阪公立大学共同出展館",alias:""},
+        {id:"I300",name:"シグネチャーパビリオン 宮田裕章 「Better Co-Being」",alias:""},
+        {id:"I600",name:"シグネチャーパビリオン 石黒浩「いのちの未来」 一般",alias:"いのちの未来"},
+        {id:"I900",name:"シグネチャーパビリオン 中島さち子 「いのちの遊び場 クラゲ館",alias:"いのちの遊び場"},
+        {id:"IC00",name:"シグネチャーパビリオン 落合陽一 「null²」ダイアログモード",alias:"null²"},
+        {id:"IF00",name:"シグネチャーパビリオン 福岡伸一 「いのち動的平衡館",alias:"いのち動的平衡館"},
+        {id:"II06",name:"シグネチャーパビリオン 河森正治 「いのちめぐる冒険」 ANIMA!",alias:"ANIMA!"},
+        {id:"IL00",name:"シグネチャーパビリオン 小山薫堂 「EARTH MART",alias:"EARTH MART"},
+        {id:"IO00",name:"シグネチャーパビリオン 河瀨直美「Dialogue Theater - いのちのあかし -",alias:"いのちのあかし"}
+      ];
+
+      const ticketIdEl=document.getElementById('ticketId');
+      const saveIdBtn=document.getElementById('saveIdBtn');
+      const chipsWrap=document.getElementById('savedChips');
+      const searchEl=document.getElementById('search');
+      const clearSearchBtn=document.getElementById('clearSearch');
+      const pavilionSelect=document.getElementById('pavilionSelect');
+      const selectedLabel=document.getElementById('selectedLabel');
+      const dateEl=document.getElementById('date');
+      const resultUrlEl=document.getElementById('resultUrl');
+      const copyBtn=document.getElementById('copyBtn');
+      const openBtn=document.getElementById('openBtn');
+
+      function saveState(){
+        const state={
+          ticketId:ticketIdEl.value.trim(),
+          lottery:document.querySelector('input[name="lottery"]:checked')?.value||'',
+          date:dateEl.value,
+          eventId:pavilionSelect.value
+        };
+        localStorage.setItem(STATE_KEY,JSON.stringify(state));
+      }
+
+      function loadState(){
+        try{
+          return JSON.parse(localStorage.getItem(STATE_KEY)||'{}');
+        }catch{return{}};
+      }
+
+      function renderOptions(list,selectedId){
+        pavilionSelect.innerHTML='';
+        list.forEach(p=>{
+          const opt=document.createElement('option');
+          opt.value=p.id;
+          opt.textContent=`${p.name} (${p.id})`;
+          if(p.id===selectedId) opt.selected=true;
+          pavilionSelect.appendChild(opt);
+        });
+        if(pavilionSelect.options.length>0){
+          if(!selectedId){pavilionSelect.selectedIndex=0;}
+          selectedLabel.textContent=pavilionSelect.options[pavilionSelect.selectedIndex].textContent;
+        }
+      }
+
+      function update(){
+        const url=buildUrl();
+        resultUrlEl.value=url;
+        openBtn.disabled=!url;
+        saveState();
+      }
+
+      function buildUrl(){
+        const id=encodeURIComponent((ticketIdEl.value||'').trim());
+        const eventId=pavilionSelect.value;
+        const lottery=document.querySelector('input[name="lottery"]:checked')?.value;
+        const dateStr=dateEl.value.replaceAll('-','');
+        if(!id||!eventId||!lottery||!dateStr) return '';
+        return`https://ticket.expo2025.or.jp/event_time/?id=${id}&event_id=${eventId}&screen_id=${SCREEN_ID}&lottery=${lottery}&entrance_date=${dateStr}`;
+      }
+
+      ticketIdEl.addEventListener('input',update);
+      dateEl.addEventListener('change',update);
+      document.querySelectorAll('input[name="lottery"]').forEach(el=>el.addEventListener('change',update));
+      pavilionSelect.addEventListener('change',()=>{selectedLabel.textContent=pavilionSelect.options[pavilionSelect.selectedIndex].textContent;update()});
+      copyBtn.addEventListener('click',async()=>{if(!resultUrlEl.value)return;await navigator.clipboard.writeText(resultUrlEl.value)});
+      openBtn.addEventListener('click',()=>{
+        const url=resultUrlEl.value;
+        if(!url){alert('必要項目を入力してください');return;}
+        saveState();
+        window.location.href=url;
+      });
+
+      const st=loadState();
+      renderOptions(PAVILIONS,st.eventId);
+      if(st.ticketId) ticketIdEl.value=st.ticketId;
+      if(st.lottery){
+        const el=document.querySelector(`input[name="lottery"][value="${st.lottery}"]`);
+        if(el) el.checked=true;
+      }
+      if(st.date) dateEl.value=st.date;
+      update();
+    </script>
+  <script>
+    // --- Persist state across back/forward navigation (enhancement layer) ---
+    (function(){
+      try{
+        // Use a new versioned key to avoid collisions
+        const KEY = 'expoFormState_v2';
+        const has = (fn)=> typeof fn === 'function';
+
+        // Grab elements if available
+        const ticketIdEl = document.getElementById('ticketId');
+        const searchEl = document.getElementById('search');
+        const dateEl = document.getElementById('date');
+        const pavilionSelect = document.getElementById('pavilionSelect');
+        const selectedLabel = document.getElementById('selectedLabel');
+        const openBtn = document.getElementById('openBtn');
+
+        // Fallback no-op if critical nodes are missing
+        if(!ticketIdEl || !dateEl || !pavilionSelect) return;
+
+        // Wrap/override load/save helpers
+        const loadState = ()=>{
+          try{ return JSON.parse(localStorage.getItem(KEY)||'{}'); }catch{ return {}; }
+        };
+        const saveState = ()=>{
+          const state = {
+            ticketId: ticketIdEl.value.trim(),
+            lottery: document.querySelector('input[name="lottery"]:checked')?.value || '',
+            date: dateEl.value,
+            eventId: pavilionSelect.value,
+            search: searchEl ? searchEl.value : ''
+          };
+          try{ localStorage.setItem(KEY, JSON.stringify(state)); }catch{}
+        };
+
+        // Enhance renderOptions if defined to preserve selection
+        if(has(window.renderOptions)){
+          const __orig = window.renderOptions;
+          window.renderOptions = function(list, selectedId){
+            const prev = pavilionSelect.value;
+            __orig.call(this, list, selectedId || prev);
+            if(selectedLabel && pavilionSelect.options.length){
+              selectedLabel.textContent = pavilionSelect.options[pavilionSelect.selectedIndex].textContent;
+            }
+          };
+        }
+
+        // Restore on load / pageshow (bfcache)
+        const restore = ()=>{
+          const st = loadState();
+          if(st.ticketId) ticketIdEl.value = st.ticketId;
+          if(st.date) dateEl.value = st.date;
+          if(st.lottery){
+            const r = document.querySelector(`input[name="lottery"][value="${st.lottery}"]`);
+            if(r) r.checked = true;
+          }
+          if(searchEl && st.search){ searchEl.value = st.search; }
+          // If filterList exists and search is present, apply filtered view prioritizing stored selection
+          if(has(window.filterList) && searchEl && searchEl.value){
+            window.filterList(searchEl.value);
+            if(st.eventId) { pavilionSelect.value = st.eventId; }
+          } else if(st.eventId) {
+            try { pavilionSelect.value = st.eventId; } catch {}
+          }
+          if(selectedLabel && pavilionSelect.options.length){
+            selectedLabel.textContent = pavilionSelect.options[pavilionSelect.selectedIndex].textContent;
+          }
+          // Trigger URL rebuild if available
+          if(has(window.update)) window.update();
+        };
+
+        // Save frequently and before leaving
+        ['input','change'].forEach(ev=>{
+          ticketIdEl.addEventListener(ev, saveState);
+          dateEl.addEventListener(ev, saveState);
+          pavilionSelect.addEventListener(ev, saveState);
+          const radios = document.querySelectorAll('input[name="lottery"]');
+          radios.forEach(r=> r.addEventListener('change', saveState));
+          if(searchEl) searchEl.addEventListener(ev, saveState);
+        });
+        window.addEventListener('beforeunload', saveState);
+        if(openBtn){
+          // Ensure state is saved even if original handler navigates immediately
+          openBtn.addEventListener('click', saveState, true);
+        }
+        window.addEventListener('pageshow', restore);
+        // First paint restore
+        restore();
+      }catch(e){ /* swallow */ }
+    })();
+  </script>
+</body>
+</html>
