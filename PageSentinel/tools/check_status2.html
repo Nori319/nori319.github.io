@@ -15,11 +15,20 @@
     .card{background:var(--card);border:1px solid var(--border);border-radius:16px;box-shadow:0 1px 2px rgba(0,0,0,.04)}
     .card-head{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border-bottom:1px solid var(--border)}
     .list{display:block}
-    .row{display:grid;grid-template-columns:1fr minmax(180px,0.6fr) 110px;gap:10px;padding:12px 16px;border-top:1px solid var(--border)}
+    /* 4列（名称｜event_id｜空き時間｜検出時刻） */
+    .row{
+      display:grid;
+      grid-template-columns: 1fr 140px minmax(180px,0.6fr) 110px;
+      gap:10px;
+      padding:12px 16px;
+      border-top:1px solid var(--border);
+      align-items: center;
+    }
     .row:first-child{border-top:none}
     .name{font-weight:600}
     .time{font-size:14px}
     .stamp{font-size:12px;color:var(--muted);text-align:right}
+    .code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;font-size:12px;color:#334155}
     .empty{padding:18px 16px;color:var(--muted)}
     .toolbar{display:flex;gap:10px;align-items:center}
     button{appearance:none;border:1px solid var(--border);background:#fff;border-radius:10px;padding:8px 12px;cursor:pointer}
@@ -28,7 +37,10 @@
     .err{color:var(--danger);font-size:14px;padding:10px 16px}
     details{margin-top:16px;color:var(--muted);font-size:14px}
     code{background:#f3f4f6;border:1px solid #e5e7eb;border-radius:6px;padding:1px 6px}
-    @media (max-width:640px){.row{grid-template-columns:1fr}.stamp{text-align:left}}
+    @media (max-width:640px){
+      .row{grid-template-columns:1fr}
+      .stamp{text-align:left}
+    }
   </style>
 </head>
 <body>
@@ -57,9 +69,10 @@
     <details>
       <summary>判定ロジックと注意点</summary>
       <ul>
-        <li><code>slot.s</code> が <code>0</code>（空席あり）または <code>1</code>（残りわずか）を「空きあり」と判定します。</li>
+        <li><code>slot.s</code> が <code>0</code>（<b>○ 空席あり</b>）または <code>1</code>（<b>△ 残りわずか</b>）を「空きあり」と判定します。</li>
+        <li>同一時間帯に 0/1 が混在する場合は <b>○ を優先</b> して表示します。</li>
         <li>「前回は空き無し → 今回は空きあり」へ遷移したタイミングのみ行を追加します。</li>
-        <li>空き時間は <code>slot.t</code> → <code>slot.time</code> → <code>slot.h</code> → <code>slot.label</code> の順で推定し、無い場合は「時間不明」。</li>
+        <li>空き時間は <code>slot.t</code> → <code>slot.time</code> → <code>slot.h</code> → <code>slot.label</code> の順で推定、無い場合は「時間不明」。</li>
         <li>表示名は <code>names[pavilion.c][0]</code> を優先、無ければ <code>pavilion.n</code>。</li>
       </ul>
     </details>
@@ -67,11 +80,11 @@
 
   <script>
     // === 設定 ===
-    const API_URL = 'https://purple-cherry-5864.gnavi2014.workers.dev/'; // ご指定のURL
-    const POLL_INTERVAL_MS = 10_000; // 10秒
-    const MAX_ROWS = 10000;          // 表示上限
+    const API_URL = 'https://purple-cherry-5864.gnavi2014.workers.dev/';
+    const POLL_INTERVAL_MS = 5_000;
+    const MAX_ROWS = 10000;
 
-    // === names マップ ===
+    // === names マップ（表示名の補正に使用）===
     const names = {"C0R0":["UAE",""],"C0R3":["UAEバリアフリー","バリアフリー"],"C2N0":["イタリア~15:00","~15:00"],"C2N3":["イタリア15:00~","15:00~"],"C570":["英国",""],"C730":["オーストラリア",""],"C7R0":["オランダ",""],"C930":["カナダ",""],"C9J0":["韓国",""],"CCB0":["クウェート",""],"CFR0":["赤十字",""],"CFV0":["国連",""],"CM30":["セルビア",""],"CO70":["タイ",""],"CO73":["タイ障がい者用","障がい者用"],"D630":["ポーランド",""],"D633":["ポーランドショパン","ショパン"],"EDF0":["ヨルダン",""],"H1H9":["日本館",""],"H1HC":["日本館プラント見学","プラント見学"],"H1HF":["日本館プラント見学車いす","プラント見学車いす"],"H5H0":["ヘルスケアリボーン","リボーン"],"H5H3":["ヘルスケアリボ+人生","リボ+人生"],"H5H6":["ヘルスケアリボ(ミライのじぶん無し)","リボ(ミライのじぶん無し)"],"H5H9":["ヘルスケアモンハン","モンハン"],"H5HC":["ヘルスケアモンハン(車いす)","モンハン(車いす)"],"H7H0":["関西",""],"H7H3":["関西飲食付ハイチェア","飲食付ハイチェア"],"H7H6":["関西飲食付ローチェア","飲食付ローチェア"],"HAH0":["NTT",""],"HCH0":["電力館",""],"HCH3":["電力館車いす","車いす"],"HEH0":["住友館",""],"HEH3":["住友館車いす","車いす"],"HEH6":["住友館植林体験","植林体験"],"HGH0":["ノモの国",""],"HIH0":["三菱未来館",""],"HIH3":["三菱未来館車いす","車いす"],"HKH0":["よしもと",""],"HMH0":["PASONA",""],"HMH3":["PASONA車いす","車いす"],"HOH0":["ブルーオーシャンドーム",""],"HOH3":["ブルーオーシャンドーム車いす","車いす"],"HQH0":["ガンダム",""],"HSH0":["TECH WORLD",""],"HUH0":["ガス・おばけ",""],"HUH3":["ガス・おばけ車いす・補助犬","車いす・補助犬"],"HUH6":["ガス・おばけスマートデバイス","スマートデバイス"],"HWH0":["飯田×大阪公立大学",""],"HWH3":["飯田×大阪公立大学車いす","車いす"],"I300":["Better Co-Being",""],"I600":["いのちの未来",""],"I603":["いのちの未来車いす","車いす"],"I606":["いのちの未来インクルーシブ","インクルーシブ"],"I900":["いのちの遊び場",""],"I903":["いのちの遊び場車いす","車いす"],"I906":["いのちの遊び場English","English"],"I909":["いのちの遊び場English車いす","English車いす"],"I90C":["いのちの遊び場","ぺちゃくちゃ"],"I90F":["いのちの遊び場ぺちゃくちゃ(車いす)","ぺちゃくちゃ(車いす)"],"IC00":["null²",""],"IC03":["null²インスタレーション","インスタレーション"],"IC09":["null²インスタレーション","インスタレーション"],"IF00":["いのち動的平衡館",""],"IF03":["いのち動的平衡館触覚体験(視覚・聴覚に障害がある方)","触覚体験(視覚・聴覚に障害がある方)"],"II00":["いのちめぐる冒険超時空シアター","超時空シアター"],"II03":["いのちめぐる冒険超時空シアター(車いす)","超時空シアター(車いす)"],"II06":["いのちめぐる冒険ANIMA!","ANIMA!"],"IL00":["EARTH MART",""],"IO00":["いのちのあかし",""],"IO03":["いのちのあかし車いす","車いす"],"J900":["未来の都市","シアター入場付き"],"J903":["未来の都市",""],"JC00":["空飛ぶクルマ",""],"Q001":["アオと夜の虹",""],"Q004":["アオと夜の虹車いす","車いす"],"Q007":["万博サウナ90分男性","90分男性"],"Q010":["万博サウナ90分女性","90分女性"],"Q013":["万博サウナ90分男女混合","90分男女混合"],"H3H0":["ウーマンズ",""],"S02C":["ジュニアSDGsキャンプ会場内ツアー","会場内ツアー"]};
 
     // === ユーティリティ ===
@@ -90,7 +103,7 @@
     let remaining = POLL_INTERVAL_MS / 1000;
     let paused = false;
 
-    // 表示用に保持（CSV出力用も兼ねる）：新着は先頭に unshift
+    // 表示用（CSV出力にも利用）：新着は先頭に unshift
     let announcements = [];
     // code(or name) -> { available:boolean, pavilion:object }
     let lastSnapshot = new Map();
@@ -107,50 +120,76 @@
       if (p?.c && names[p.c] && names[p.c][0]) return names[p.c][0];
       return p?.n || '名称不明';
     }
-    function extractAvailableTimes(p){
+
+    // ★ 空き時間に「○/△」を付けて返す（同一時間は○優先）
+    function extractAvailableTimesMarked(p){
       if (!Array.isArray(p?.s)) return [];
-      const times = p.s.filter(sl=>isAvailableStatus(sl?.s)).map(sl=>sl?.t ?? sl?.time ?? sl?.h ?? sl?.label ?? '時間不明').filter(Boolean);
-      return [...new Set(times)];
+      const markOf = new Map(); // timeStr -> '○' | '△'
+      for (const sl of p.s){
+        if (!isAvailableStatus(sl?.s)) continue;
+        const t = sl?.t ?? sl?.time ?? sl?.h ?? sl?.label ?? '時間不明';
+        const m = (Number(sl?.s) === 0) ? '○' : '△';
+        if (!markOf.has(t) || markOf.get(t) === '△') {
+          // まだ未登録、または既存が△なら○で上書き
+          markOf.set(t, m);
+        }
+      }
+      return Array.from(markOf.entries()).map(([t,m]) => `${t}（${m}）`);
     }
+
     function fmt(dt){
-      return new Intl.DateTimeFormat('ja-JP', {year:'numeric', month:'2-digit', day:'2-digit', hour:'2-digit', minute:'2-digit', second:'2-digit'}).format(dt);
+      return new Intl.DateTimeFormat('ja-JP', {
+        year:'numeric', month:'2-digit', day:'2-digit',
+        hour:'2-digit', minute:'2-digit', second:'2-digit'
+      }).format(dt);
     }
 
     // 先頭に行を追加＋上限超過なら末尾を削除
-    function addAnnouncementRow({name, times, at}){
+    function addAnnouncementRow({id, name, times, at}){
       if (emptyEl) emptyEl.remove();
       const row = document.createElement('div');
       row.className = 'row';
+
       const nameEl = document.createElement('div');
       nameEl.className = 'name';
       nameEl.textContent = name;
+
+      const codeEl = document.createElement('div');
+      codeEl.className = 'code';
+      codeEl.textContent = id || '';
+
       const timeEl = document.createElement('div');
       timeEl.className = 'time';
       timeEl.textContent = (times && times.length>0) ? times.join('、') : '空き時間: 情報なし';
+
       const stampEl = document.createElement('div');
       stampEl.className = 'stamp';
       stampEl.textContent = new Intl.DateTimeFormat('ja-JP',{hour:'2-digit',minute:'2-digit',second:'2-digit'}).format(at);
-      row.appendChild(nameEl); row.appendChild(timeEl); row.appendChild(stampEl);
+
+      row.appendChild(nameEl);
+      row.appendChild(codeEl);
+      row.appendChild(timeEl);
+      row.appendChild(stampEl);
 
       // 先頭に差し込む
       if (listEl.firstChild && listEl.firstChild.classList && listEl.firstChild.classList.contains('row')) {
         listEl.insertBefore(row, listEl.firstChild);
       } else {
-        // まだ行がない（empty要素のみ等）
         listEl.insertBefore(row, listEl.firstChild);
       }
 
-      // DOM上限管理：行数が MAX_ROWS を超えたら末尾から削除
+      // DOM上限管理
       while (listEl.querySelectorAll('.row').length > MAX_ROWS) {
         listEl.lastElementChild && listEl.lastElementChild.remove();
       }
     }
 
-    // CSV出力
+    // CSV出力（CSVは従来通り：時間文字列のみ／○△は付与しません。付けたい場合は教えてください）
     function toCSV(rows){
-      const head = ['name','times','at'];
+      const head = ['event_id','name','times','at'];
       const esc = (v)=> '"' + String(v).replace(/"/g,'""') + '"';
       const body = rows.map(r => [
+        esc(r.id ?? ''),
         esc(r.name),
         esc(r.times && r.times.length ? r.times.join(' / ') : ''),
         esc(fmt(new Date(r.at)))
@@ -185,7 +224,7 @@
 
         for (const p of list){
           if (!p || p.n === '') continue; // 無名はスキップ
-          const code = p.c || p.n;
+          const code = (p.c ?? p.code ?? p.id ?? p.n) || ''; // event_id 想定
           const available = hasAnyAvailable(p);
           current.set(code, { available, pavilion: p });
         }
@@ -198,7 +237,12 @@
           for (const [code, {available, pavilion}] of current.entries()){
             const prev = lastSnapshot.get(code)?.available ?? false;
             if (!prev && available){
-              newly.push({ name: getDisplayName(pavilion), times: extractAvailableTimes(pavilion), at: new Date() });
+              newly.push({
+                id: String(code),
+                name: getDisplayName(pavilion),
+                times: extractAvailableTimesMarked(pavilion), // ★ ○/△付き
+                at: new Date()
+              });
             }
           }
           if (newly.length){
@@ -207,7 +251,7 @@
               announcements.unshift(newly[i]);
               addAnnouncementRow(newly[i]);
             }
-            // 配列上限管理：超過分は末尾を捨てる
+            // 配列上限管理
             if (announcements.length > MAX_ROWS) announcements.length = MAX_ROWS;
           }
           lastSnapshot = current;
@@ -226,7 +270,7 @@
       stopTimers();
       timerId = setInterval(()=>{ if(!paused) tick(); }, POLL_INTERVAL_MS);
       countdownTimer = setInterval(()=>{
-        if (paused) return; 
+        if (paused) return;
         remaining = Math.max(0, remaining - 1);
         countdownEl.textContent = String(remaining);
       }, 1000);
