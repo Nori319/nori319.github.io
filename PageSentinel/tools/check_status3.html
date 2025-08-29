@@ -1,0 +1,324 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>パビリオン空き速報</title>
+  <style>
+    :root{--bg:#f7f7fb;--fg:#111827;--muted:#6b7280;--card:#ffffff;--border:#e5e7eb;--accent:#2563eb;--danger:#ef4444}
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--bg);color:var(--fg);font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,"Apple Color Emoji","Segoe UI Emoji"}
+    .container{max-width:960px;margin:0 auto;padding:24px}
+    header{display:flex;gap:16px;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap}
+    h1{font-size:22px;margin:0}
+    .muted{color:var(--muted)}
+    .card{background:var(--card);border:1px solid var(--border);border-radius:16px;box-shadow:0 1px 2px rgba(0,0,0,.04)}
+    .card-head{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border-bottom:1px solid var(--border)}
+    .list{display:block}
+    /* 4列（名称｜event_id｜空き時間｜検出時刻） */
+    .row{
+      display:grid;
+      grid-template-columns: 1fr 140px minmax(180px,0.6fr) 110px;
+      gap:10px;
+      padding:12px 16px;
+      border-top:1px solid var(--border);
+      align-items: center;
+    }
+    .row:first-child{border-top:none}
+    .name{font-weight:600}
+    .time{font-size:14px}
+    .stamp{font-size:12px;color:var(--muted);text-align:right}
+    .code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;font-size:12px;color:#334155}
+    .empty{padding:18px 16px;color:var(--muted)}
+    .toolbar{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+    button, select{appearance:none;border:1px solid var(--border);background:#fff;border-radius:10px;padding:8px 12px;cursor:pointer}
+    button:hover, select:hover{border-color:#cbd5e1}
+    .pill{display:inline-flex;align-items:center;gap:8px;padding:6px 10px;border-radius:999px;background:#eef2ff;border:1px solid #e0e7ff;color:#3730a3;font-size:12px}
+    .err{color:var(--danger);font-size:14px;padding:10px 16px}
+    details{margin-top:16px;color:var(--muted);font-size:14px}
+    code{background:#f3f4f6;border:1px solid #e5e7eb;border-radius:6px;padding:1px 6px}
+    @media (max-width:640px){
+      .row{grid-template-columns:1fr}
+      .stamp{text-align:left}
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>パビリオン空き速報</h1>
+      <div class="toolbar">
+        <span class="pill">最終更新: <span id="lastUpdated">—</span></span>
+        <span class="pill">次回更新まで: <span id="countdown">—</span> 秒</span>
+        <!-- ▼ 追加：ポーリング間隔の選択 -->
+        <label class="pill" style="gap:6px;background:#f0f9ff;border-color:#bae6fd;color:#075985">
+          間隔
+          <select id="intervalSel" title="自動更新間隔（秒）">
+            <option value="5">5秒</option>
+            <option value="10">10秒</option>
+            <option value="15">15秒</option>
+            <option value="20">20秒</option>
+            <option value="25">25秒</option>
+            <option value="30">30秒</option>
+          </select>
+        </label>
+        <button id="csvBtn" type="button" title="表示中リストをCSVで保存">CSVダウンロード</button>
+        <button id="toggleBtn" type="button" aria-pressed="true">一時停止</button>
+      </div>
+    </header>
+
+    <div class="card">
+      <div class="card-head">
+        <strong>新たに空きが出たパビリオン</strong>
+        <small class="muted" id="loadingHint"></small>
+      </div>
+      <div id="errorBox" class="err" hidden></div>
+      <div id="list" class="list">
+        <div id="empty" class="empty">まだ通知はありません（空きが発生するとここに表示されます）</div>
+      </div>
+    </div>
+
+    <details>
+      <summary>判定ロジックと注意点</summary>
+      <ul>
+        <li><code>slot.s</code> が <code>0</code>（<b>○ 空席あり</b>）または <code>1</code>（<b>△ 残りわずか</b>）を「空きあり」と判定します。</li>
+        <li>同一時間帯に 0/1 が混在する場合は <b>○ を優先</b> して表示します。</li>
+        <li>「前回は空き無し → 今回は空きあり」へ遷移したタイミングのみ行を追加します。</li>
+        <li>空き時間は <code>slot.t</code> → <code>slot.time</code> → <code>slot.h</code> → <code>slot.label</code> の順で推定、無い場合は「時間不明」。</li>
+        <li>表示名は <code>names[pavilion.c][0]</code> を優先、無ければ <code>pavilion.n</code>。</li>
+      </ul>
+    </details>
+  </div>
+
+  <script>
+    // === 設定 ===
+    const API_URL = 'https://purple-cherry-5864.gnavi2014.workers.dev/';
+    const MAX_ROWS = 10000;
+
+    // 初期ポーリング間隔（秒）を localStorage から復元（なければ 5）
+    const INTERVAL_KEY = 'expoPollIntervalSec';
+    const initialIntervalSec = Number(localStorage.getItem(INTERVAL_KEY) || 5);
+
+    // === names マップ（表示名の補正に使用）===
+    const names = {"C0R0":["UAE",""],"C0R3":["UAEバリアフリー","バリアフリー"],"C2N0":["イタリア~15:00","~15:00"],"C2N3":["イタリア15:00~","15:00~"],"C570":["英国",""],"C730":["オーストラリア",""],"C7R0":["オランダ",""],"C930":["カナダ",""],"C9J0":["韓国",""],"CCB0":["クウェート",""],"CFR0":["赤十字",""],"CFV0":["国連",""],"CM30":["セルビア",""],"CO70":["タイ",""],"CO73":["タイ障がい者用","障がい者用"],"D630":["ポーランド",""],"D633":["ポーランドショパン","ショパン"],"EDF0":["ヨルダン",""],"H1H9":["日本館",""],"H1HC":["日本館プラント見学","プラント見学"],"H1HF":["日本館プラント見学車いす","プラント見学車いす"],"H5H0":["ヘルスケアリボーン","リボーン"],"H5H3":["ヘルスケアリボ+人生","リボ+人生"],"H5H6":["ヘルスケアリボ(ミライのじぶん無し)","リボ(ミライのじぶん無し)"],"H5H9":["ヘルスケアモンハン","モンハン"],"H5HC":["ヘルスケアモンハン(車いす)","モンハン(車いす)"],"H7H0":["関西",""],"H7H3":["関西飲食付ハイチェア","飲食付ハイチェア"],"H7H6":["関西飲食付ローチェア","飲食付ローチェア"],"HAH0":["NTT",""],"HCH0":["電力館",""],"HCH3":["電力館車いす","車いす"],"HEH0":["住友館",""],"HEH3":["住友館車いす","車いす"],"HEH6":["住友館植林体験","植林体験"],"HGH0":["ノモの国",""],"HIH0":["三菱未来館",""],"HIH3":["三菱未来館車いす","車いす"],"HKH0":["よしもと",""],"HMH0":["PASONA",""],"HMH3":["PASONA車いす","車いす"],"HOH0":["ブルーオーシャンドーム",""],"HOH3":["ブルーオーシャンドーム車いす","車いす"],"HQH0":["ガンダム",""],"HSH0":["TECH WORLD",""],"HUH0":["ガス・おばけ",""],"HUH3":["ガス・おばけ車いす・補助犬","車いす・補助犬"],"HUH6":["ガス・おばけスマートデバイス","スマートデバイス"],"HWH0":["飯田×大阪公立大学",""],"HWH3":["飯田×大阪公立大学車いす","車いす"],"I300":["Better Co-Being",""],"I600":["いのちの未来",""],"I603":["いのちの未来車いす","車いす"],"I606":["いのちの未来インクルーシブ","インクルーシブ"],"I900":["いのちの遊び場",""],"I903":["いのちの遊び場車いす","車いす"],"I906":["いのちの遊び場English","English"],"I909":["いのちの遊び場English車いす","English車いす"],"I90C":["いのちの遊び場","ぺちゃくちゃ"],"I90F":["いのちの遊び場ぺちゃくちゃ(車いす)","ぺちゃくちゃ(車いす)"],"IC00":["null²",""],"IC03":["null²インスタレーション","インスタレーション"],"IC09":["null²インスタレーション","インスタレーション"],"IF00":["いのち動的平衡館",""],"IF03":["いのち動的平衡館触覚体験(視覚・聴覚に障害がある方)","触覚体験(視覚・聴覚に障害がある方)"],"II00":["いのちめぐる冒険超時空シアター","超時空シアター"],"II03":["いのちめぐる冒険超時空シアター(車いす)","超時空シアター(車いす)"],"II06":["いのちめぐる冒険ANIMA!","ANIMA!"],"IL00":["EARTH MART",""],"IO00":["いのちのあかし",""],"IO03":["いのちのあかし車いす","車いす"],"J900":["未来の都市","シアター入場付き"],"J903":["未来の都市",""],"JC00":["空飛ぶクルマ",""],"Q001":["アオと夜の虹",""],"Q004":["アオと夜の虹車いす","車いす"],"Q007":["万博サウナ90分男性","90分男性"],"Q010":["万博サウナ90分女性","90分女性"],"Q013":["万博サウナ90分男女混合","90分男女混合"],"H3H0":["ウーマンズ",""],"S02C":["ジュニアSDGsキャンプ会場内ツアー","会場内ツアー"]};
+
+    // === ユーティリティ ===
+    const $ = (sel) => document.querySelector(sel);
+    const listEl = $('#list');
+    const emptyEl = $('#empty');
+    const errEl = $('#errorBox');
+    const lastUpdatedEl = $('#lastUpdated');
+    const countdownEl = $('#countdown');
+    const loadingHintEl = $('#loadingHint');
+    const toggleBtn = $('#toggleBtn');
+    const csvBtn = $('#csvBtn');
+    const intervalSel = $('#intervalSel');
+
+    // 選択肢を初期化（保存値を反映）
+    intervalSel.value = String(initialIntervalSec);
+
+    let pollIntervalMs = initialIntervalSec * 1000;
+    let timerId = null;
+    let countdownTimer = null;
+    let remaining = pollIntervalMs / 1000;
+    let paused = false;
+
+    // 表示用（CSV出力にも利用）：新着は先頭に unshift
+    let announcements = [];
+    // code(or name) -> { available:boolean, pavilion:object }
+    let lastSnapshot = new Map();
+    let initialized = false;
+
+    function isAvailableStatus(s){
+      const v = Number(s);
+      return v === 0 || v === 1;
+    }
+    function hasAnyAvailable(p){
+      return Array.isArray(p?.s) && p.s.some(slot => isAvailableStatus(slot?.s));
+    }
+    function getDisplayName(p){
+      if (p?.c && names[p.c] && names[p.c][0]) return names[p.c][0];
+      return p?.n || '名称不明';
+    }
+
+    // ○/△ 付きの空き時間一覧（同一時間は○優先）
+    function extractAvailableTimesMarked(p){
+      if (!Array.isArray(p?.s)) return [];
+      const markOf = new Map(); // timeStr -> '○' | '△'
+      for (const sl of p.s){
+        if (!isAvailableStatus(sl?.s)) continue;
+        const t = sl?.t ?? sl?.time ?? sl?.h ?? sl?.label ?? '時間不明';
+        const m = (Number(sl?.s) === 0) ? '○' : '△';
+        if (!markOf.has(t) || markOf.get(t) === '△') {
+          markOf.set(t, m);
+        }
+      }
+      return Array.from(markOf.entries()).map(([t,m]) => `${t}（${m}）`);
+    }
+
+    function fmt(dt){
+      return new Intl.DateTimeFormat('ja-JP', {
+        year:'numeric', month:'2-digit', day:'2-digit',
+        hour:'2-digit', minute:'2-digit', second:'2-digit'
+      }).format(dt);
+    }
+
+    // 先頭に行を追加＋上限超過なら末尾を削除
+    function addAnnouncementRow({id, name, times, at}){
+      if (emptyEl) emptyEl.remove();
+      const row = document.createElement('div');
+      row.className = 'row';
+
+      const nameEl = document.createElement('div');
+      nameEl.className = 'name';
+      nameEl.textContent = name;
+
+      const codeEl = document.createElement('div');
+      codeEl.className = 'code';
+      codeEl.textContent = id || '';
+
+      const timeEl = document.createElement('div');
+      timeEl.className = 'time';
+      timeEl.textContent = (times && times.length>0) ? times.join('、') : '空き時間: 情報なし';
+
+      const stampEl = document.createElement('div');
+      stampEl.className = 'stamp';
+      stampEl.textContent = new Intl.DateTimeFormat('ja-JP',{hour:'2-digit',minute:'2-digit',second:'2-digit'}).format(at);
+
+      row.appendChild(nameEl);
+      row.appendChild(codeEl);
+      row.appendChild(timeEl);
+      row.appendChild(stampEl);
+
+      if (listEl.firstChild && listEl.firstChild.classList && listEl.firstChild.classList.contains('row')) {
+        listEl.insertBefore(row, listEl.firstChild);
+      } else {
+        listEl.insertBefore(row, listEl.firstChild);
+      }
+
+      while (listEl.querySelectorAll('.row').length > MAX_ROWS) {
+        listEl.lastElementChild && listEl.lastElementChild.remove();
+      }
+    }
+
+    // CSV出力
+    function toCSV(rows){
+      const head = ['event_id','name','times','at'];
+      const esc = (v)=> '"' + String(v).replace(/"/g,'""') + '"';
+      const body = rows.map(r => [
+        esc(r.id ?? ''),
+        esc(r.name),
+        esc(r.times && r.times.length ? r.times.join(' / ') : ''),
+        esc(fmt(new Date(r.at)))
+      ].join(','));
+      return '\ufeff' + [head.join(','), ...body].join('\n'); // BOM付き
+    }
+    function downloadCSV(){
+      const csv = toCSV(announcements);
+      const blob = new Blob([csv], {type:'text/csv;charset=utf-8;'});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      const ts = new Date().toISOString().replace(/[:T]/g,'-').split('.')[0];
+      a.href = url; a.download = `availability-${ts}.csv`;
+      document.body.appendChild(a); a.click(); a.remove();
+      URL.revokeObjectURL(url);
+    }
+    csvBtn.addEventListener('click', downloadCSV);
+
+    async function fetchExpoData(){
+      const res = await fetch(API_URL, { cache: 'no-store' });
+      if (!res.ok) throw new Error('APIからのデータ取得に失敗しました');
+      return res.json();
+    }
+
+    async function tick(){
+      errEl.hidden = true; errEl.textContent = '';
+      loadingHintEl.textContent = '更新中…';
+      try{
+        const data = await fetchExpoData();
+        const list = Array.isArray(data) ? data : (data && Array.isArray(data.data) ? data.data : []);
+        const current = new Map();
+
+        for (const p of list){
+          if (!p || p.n === '') continue; // 無名はスキップ
+          const code = (p.c ?? p.code ?? p.id ?? p.n) || ''; // event_id 想定
+          const available = hasAnyAvailable(p);
+          current.set(code, { available, pavilion: p });
+        }
+
+        if (!initialized){
+          lastSnapshot = current;
+          initialized = true;
+        } else {
+          const newly = [];
+          for (const [code, {available, pavilion}] of current.entries()){
+            const prev = lastSnapshot.get(code)?.available ?? false;
+            if (!prev && available){
+              newly.push({
+                id: String(code),
+                name: getDisplayName(pavilion),
+                times: extractAvailableTimesMarked(pavilion),
+                at: new Date()
+              });
+            }
+          }
+          if (newly.length){
+            for (let i = newly.length - 1; i >= 0; i--) {
+              announcements.unshift(newly[i]);
+              addAnnouncementRow(newly[i]);
+            }
+            if (announcements.length > MAX_ROWS) announcements.length = MAX_ROWS;
+          }
+          lastSnapshot = current;
+        }
+        lastUpdatedEl.textContent = fmt(new Date());
+      }catch(e){
+        errEl.hidden = false; errEl.textContent = e?.message || '取得に失敗しました';
+        console.error(e);
+      }finally{
+        loadingHintEl.textContent = '';
+        remaining = pollIntervalMs / 1000; // ← 選択間隔に合わせてカウントダウン更新
+      }
+    }
+
+    function startTimers(){
+      stopTimers();
+      // すぐ1回実行したい場合はここで tick() を呼んでもOK
+      timerId = setInterval(()=>{ if(!paused) tick(); }, pollIntervalMs);
+      countdownTimer = setInterval(()=>{
+        if (paused) return;
+        remaining = Math.max(0, remaining - 1);
+        countdownEl.textContent = String(remaining);
+      }, 1000);
+      countdownEl.textContent = String(remaining);
+    }
+    function stopTimers(){
+      if (timerId) clearInterval(timerId); timerId = null;
+      if (countdownTimer) clearInterval(countdownTimer); countdownTimer = null;
+    }
+
+    // ▼ 追加：間隔変更時の処理（保存→タイマー再起動→カウントダウンリセット）
+    intervalSel.addEventListener('change', ()=>{
+      const sec = Number(intervalSel.value || 5);
+      localStorage.setItem(INTERVAL_KEY, String(sec));
+      pollIntervalMs = sec * 1000;
+      remaining = pollIntervalMs / 1000;
+      startTimers();
+    });
+
+    toggleBtn.addEventListener('click', ()=>{
+      paused = !paused;
+      toggleBtn.textContent = paused ? '再開' : '一時停止';
+      toggleBtn.setAttribute('aria-pressed', String(!paused));
+      if (!paused && remaining === 0) { remaining = pollIntervalMs / 1000; }
+    });
+
+    // 初回即時実行 → タイマー開始
+    (async function init(){
+      countdownEl.textContent = String(remaining);
+      await tick();
+      startTimers();
+    })();
+  </script>
+</body>
+</html>
