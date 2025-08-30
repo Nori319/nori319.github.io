@@ -139,6 +139,38 @@
 </style>
 </head>
 <body>
+  <script>
+(function () {
+  const labelMap = {
+    bin0: "空き発生なし",
+    bin1: "ごくまれ",
+    bin2: "まれ",
+    bin3: "ときどき",
+    bin4: "やや頻繁",
+    bin5: "頻繁",
+  };
+
+  function apply(root = document) {
+    root.querySelectorAll('td.bin0, td.bin1, td.bin2, td.bin3, td.bin4, td.bin5')
+      .forEach(td => {
+        const cls = Array.from(td.classList).find(c => labelMap[c]);
+        if (!cls) return;
+        const label = labelMap[cls];
+        td.title = label;
+        const sr = td.querySelector('.sr-only');
+        if (sr) sr.textContent = label;
+        td.setAttribute('aria-label', label);
+      });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => apply());
+  } else {
+    apply();
+  }
+})();
+</script>
+
 <div class="wrap" role="region" aria-label="空き発生ヒートマップ（色のみ）">
   <div class="title">時間帯毎の空き発生回数ヒートマップ（2025年8月30日 土曜）</div>
 
