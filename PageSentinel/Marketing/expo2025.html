@@ -955,8 +955,15 @@
     </section>
 
 <section class="ref-min" aria-label="参考情報リンク">
-  <h2>参考情報：時間帯毎の空き発生頻度　(9/13更新)<span class="badge-new">NEW</span></h2>
+  <h2>参考情報：時間帯毎の空き発生頻度　(9/14更新)<span class="badge-new">NEW</span></h2>
     <div class="ref-list">
+    <a class="ref-link" href="./data/heatmap_20250914.html" target="_blank" rel="noopener">
+      <span class="label">
+        <span class="badge-date">2025/09/14</span>
+        <span class="text">空き発生状況（9/14）</span>
+      </span>
+      <span class="icon">↗</span>
+    </a>
     <a class="ref-link" href="./data/heatmap_20250913.html" target="_blank" rel="noopener">
       <span class="label">
         <span class="badge-date">2025/09/13</span>
@@ -1127,7 +1134,7 @@
     // 更新日（対象要素がある場合のみ）
     const lastModEl = document.getElementById("last-modified");
     if (lastModEl){
-      const lastMod = new Date("2025-09-13");
+      const lastMod = new Date("2025-09-14");
       lastModEl.textContent = lastMod.toLocaleDateString("ja-JP",{year:"numeric",month:"2-digit",day:"2-digit"});
     }
   </script>
