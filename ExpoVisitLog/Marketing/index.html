@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ExpoVisitLog（万博訪問ログ）へようこそ</title>
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body { font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; color:#333; line-height:1.6; }
+    img { max-width:100%; display:block; }
+    a { color:#007AFF; text-decoration:none; }
+    button { cursor:pointer; border:none; border-radius:4px; padding:0.75em 1.5em; font-size:1rem; background:#007AFF; color:#fff; }
+    
+    header {
+      text-align:center;
+      padding:2em 1em;
+      background:#f5f5f5;
+    }
+    header .icon {
+      width:120px;
+      height:120px;
+      margin:0 auto 0.5em;    /* 中央寄せ */
+      padding:8px;
+      background:#fff;         /* 背景を白に */
+      border-radius:16px;
+      box-shadow:0 2px 4px rgba(0,0,0,0.1);
+      object-fit:contain;
+    }
+    header h1 {
+      font-size:2rem;
+      margin-bottom:0.25em;
+    }
+    header h2 {
+      font-size:1.25rem;
+      margin-bottom:0.75em;
+      color:#555;
+    }
+    header p {
+      font-size:1rem;
+      color:#666;
+    }
+
+    section { padding:2em 1em; }
+    section h2 { text-align:center; font-size:1.75rem; margin-bottom:1em; }
+
+    .features {
+      display:grid;
+      grid-template-columns:repeat(auto-fit, minmax(200px,1fr));
+      gap:1.5em;
+      max-width:900px;
+      margin:0 auto;
+    }
+    .feature {
+      background:#fff;
+      border:1px solid #e0e0e0;
+      border-radius:8px;
+      padding:1.5em;
+      text-align:center;
+      box-shadow:0 2px 4px rgba(0,0,0,0.05);
+    }
+    .feature h3 { font-size:1.1rem; margin-bottom:0.75em; color:#007AFF; }
+    .feature p { font-size:0.9rem; color:#666; line-height:1.4; }
+
+    .cta { text-align:center; padding:2em 1em; background:#007AFF; color:#fff; }
+    .cta h2 { margin-bottom:1em; font-size:1.5rem; }
+    .cta button { background:#fff; color:#007AFF; }
+    
+    footer { text-align:center; padding:1em; font-size:.85rem; color:#999; }
+  </style>
+</head>
+<body>
+
+  <header>
+    <img class="icon" src="ExpoLogView.png" alt="ExpoVisitLog／万博訪問ログ アイコン"/>
+    <h1>ExpoVisitLog</h1>
+    <h2>万博訪問ログ</h2>
+    <p>パビリオン毎にワンタップで訪問記録。思い出を漏れなく残そう。</p>
+  </header>
+
+  <section>
+    <h2>主な機能</h2>
+    <div class="features">
+      <div class="feature">
+        <h3>ワンタップ記録</h3>
+        <p>タップ操作だけで訪問履歴を即登録。</p>
+      </div>
+      <div class="feature">
+        <h3>５段階評価</h3>
+        <p>パビリオンごとに★1〜★5でマイ評価を残そう。</p>
+      </div>
+      <div class="feature">
+        <h3>複数回の訪問管理</h3>
+        <p>何度でも訪問を登録して、リピートも簡単に記録。</p>
+      </div>
+      <div class="feature">
+        <h3>履歴一覧</h3>
+        <p>過去の訪問をリストでひと目で振り返り。</p>
+      </div>
+      <div class="feature">
+        <h3>マイランキング</h3>
+        <p>評価順に並べ替え、自分だけのお気に入りパビリオンをチェック。</p>
+      </div>
+      <div class="feature">
+        <h3>ゾーン訪問率</h3>
+        <p>ゾーンごとの訪問率を表示。100%制覇を目指そう！</p>
+      </div>
+      <div class="feature">
+        <h3>チケット表示</h3>
+        <p>スクリーンショットをワンタップで呼び出し、スムーズに入場。</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta">
+    <h2>今すぐダウンロードして体験しよう！</h2>
+    <button>App Store で入手</button>
+  </section>
+
+  <footer>
+    &copy; 2025 ExpoVisitLog. All rights reserved.
+  </footer>
+
+</body>
+</html>
