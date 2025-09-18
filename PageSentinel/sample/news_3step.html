@@ -261,8 +261,11 @@
 
     // Events
     btn1.addEventListener('click', () => {
-      openModal(confirmDialog);
-    });
+  const titleEl = document.getElementById('confirmTitle');
+  const isAlt = Math.random() < 0.2; // 20%の確率
+  titleEl.textContent = isAlt ? '最新情報2を取得しますか？' : '最新情報を取得しますか？';
+  openModal(confirmDialog);
+});
     noBtn.addEventListener('click', () => {
       closeModal(confirmDialog);
       // Clear pending badge if it was left
