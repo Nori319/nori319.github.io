@@ -272,23 +272,21 @@
       }
     });
     btn2.addEventListener('click', () => {
-      closeModal(confirmDialog);
-      // show result dialog in "pending" state immediately
-      setPending();
-      openModal(resultDialog);
+  closeModal(confirmDialog);
 
-      // Simulate async work: after 500ms decide success/failure (20% fail)
-      setTimeout(() => {
-        const fail = Math.random() < 0.2; // 5回に1回の失敗
-        if (fail) {
-          setError();
-        } else {
-          const now = new Date();
-          const timeText = now.toLocaleString();
-          setSuccess(timeText);
-        }
-      }, 500);
-    });
+  // 0.5秒後に結果だけを表示（途中の「処理中」は出さない）
+  setTimeout(() => {
+    const fail = Math.random() < 0.2; // 5回に1回失敗
+    if (fail) {
+      setError();
+    } else {
+      const now = new Date();
+      const timeText = now.toLocaleString();
+      setSuccess(timeText);
+    }
+    openModal(resultDialog); // 結果を作ってから開く
+  }, 500);
+});
     btn3.addEventListener('click', () => {
       closeModal(resultDialog);
     });
