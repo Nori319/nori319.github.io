@@ -938,7 +938,7 @@
         </div>
         <div class="faq-item">
           <button class="faq-question" aria-expanded="false">
-            このアプリを利用するとIDを無効化されませんか？ (8/30追加)
+            このアプリを利用するとIDを無効化されませんか？
             <span aria-hidden="true">▾</span>
           </button>
           <div class="faq-answer">
@@ -955,8 +955,15 @@
     </section>
 
 <section class="ref-min" aria-label="参考情報リンク">
-  <h2>参考情報：時間帯毎の空き発生頻度　(9/14更新)<span class="badge-new">NEW</span></h2>
+  <h2>参考情報：時間帯毎の空き発生頻度　(9/20更新)<span class="badge-new">NEW</span></h2>
     <div class="ref-list">
+    <a class="ref-link" href="./data/heatmap_20250920.html" target="_blank" rel="noopener">
+      <span class="label">
+        <span class="badge-date">2025/09/20</span>
+        <span class="text">空き発生状況（9/20）</span>
+      </span>
+      <span class="icon">↗</span>
+    </a>
     <a class="ref-link" href="./data/heatmap_20250914.html" target="_blank" rel="noopener">
       <span class="label">
         <span class="badge-date">2025/09/14</span>
@@ -1134,7 +1141,7 @@
     // 更新日（対象要素がある場合のみ）
     const lastModEl = document.getElementById("last-modified");
     if (lastModEl){
-      const lastMod = new Date("2025-09-14");
+      const lastMod = new Date("2025-09-20");
       lastModEl.textContent = lastMod.toLocaleDateString("ja-JP",{year:"numeric",month:"2-digit",day:"2-digit"});
     }
   </script>
