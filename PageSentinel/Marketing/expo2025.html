@@ -833,18 +833,22 @@
         <h2>よくあるご質問</h2>
         <div class="faq-item">
           <button class="faq-question" aria-expanded="false">
-            来場日時設定のオートパイロットがすぐ止まります
+            来場日時設定のオートパイロットが１回動作して停止します。（9/21更新)<span class="badge-new">NEW</span>
             <span aria-hidden="true">▾</span>
           </button>
           <div class="faq-answer">
-            <p>以下の手順で試してみてください。<br>
+            <p>オートパイロット設定が正しく行われていることをご確認のうえ、以下の手順を試してみてください。<br><br>
               1. 入場したい日付の空きのある時間帯を選択して来場日時を設定する<br>
               2. 来場日時の変更を行い、同日の行きたい時間帯に空き(混雑状態)が出るのを待つ<br>
               3. 空きが出たらその時間帯をタップして選択する<br>
-              4. オートパイロットを開始（稲妻型アイコンをタップ）する<br>
-              開始直後は埋まっていても、次の空きが出た時にタイミングが合えば予約が行えます。
-              10時台であれば空きは比較的出やすいので、9時台にチャレンジする前に試してみる事をお勧めします。<br>
-             上記２の空き待ちには通常リロード機能を利用されると便利です。また9/13来場日までの裏技になりますが、翌月に切り替え→空き時間選択→前月に切り替え、で時間を指定する方法もあります。</p>
+              4. オートパイロットを開始（稲妻型アイコンをタップ）する<br><br>
+              例：すでに 10月9日 12時で予約済みの状態で、変更画面から 10月10日 10時を選んで⚡️を押すと、すぐ停止してしまうことがあります。  
+              この場合、まず 10月10日の別の時間（例：17時）で予約を確定し、その後に変更画面で 10日の10時を選択して⚡️を押すと繰り返し動作するようになります。  
+              オートパイロットが繰り返し動作できるかどうかは、手動で「来場日設定」ボタンを押して「定員を超えたため、ご希望の時間帯は選択できませんでした」  
+              という画面を閉じたあと、ページが更新され、他の操作をしなくても直ちに再び「来場日時設定」ボタンが押せる状態になっているかどうかに依存します。  
+              （オートパイロットは、人の単純タップ操作を自動で繰り返す機能となります）<br><br>  
+              最近の万博サイトは非常に混雑しており、空き枠の流動性も低いため、稀に空きが出ても本機能で確保するのはかなり困難な状況です。
+              ご不便をおかけしますが、この様な状況であることをご理解いただければ幸いです。  
           </div>
         </div>
         <div class="faq-item">
@@ -885,7 +889,8 @@
               ・GUNDAM NEXT FUTURE PAVILION<br>
               ・国際赤十字・赤新月運動館<br>
               ・関西パビリオン<br>
-              逆に、イタリア館やモンスターハンターなどは、ほとんど空きが出ない傾向があります。参考情報にある空き発生頻度を参照ください。<br>
+              逆に、イタリア館やモンスターハンターなどは、ほとんど空きが出ない傾向があります。<br><br>
+              詳しくは参考情報にある時間帯毎の空き発生頻度をご参照ください。<br>
             </p>
           </div>
         </div>
@@ -955,8 +960,15 @@
     </section>
 
 <section class="ref-min" aria-label="参考情報リンク">
-  <h2>参考情報：時間帯毎の空き発生頻度　(9/20更新)<span class="badge-new">NEW</span></h2>
+  <h2>参考情報：時間帯毎の空き発生頻度　(9/21更新)<span class="badge-new">NEW</span></h2>
     <div class="ref-list">
+    <a class="ref-link" href="./data/heatmap_20250921.html" target="_blank" rel="noopener">
+      <span class="label">
+        <span class="badge-date">2025/09/21</span>
+        <span class="text">空き発生状況（9/21）</span>
+      </span>
+      <span class="icon">↗</span>
+    </a>
     <a class="ref-link" href="./data/heatmap_20250920.html" target="_blank" rel="noopener">
       <span class="label">
         <span class="badge-date">2025/09/20</span>
@@ -1141,7 +1153,7 @@
     // 更新日（対象要素がある場合のみ）
     const lastModEl = document.getElementById("last-modified");
     if (lastModEl){
-      const lastMod = new Date("2025-09-20");
+      const lastMod = new Date("2025-09-21");
       lastModEl.textContent = lastMod.toLocaleDateString("ja-JP",{year:"numeric",month:"2-digit",day:"2-digit"});
     }
   </script>
