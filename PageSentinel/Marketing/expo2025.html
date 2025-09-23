@@ -365,15 +365,77 @@
       </div>
     </section>
 
-    <!-- STEP1〜3 設定セクション（内容はそのまま、表示だけ最適化） -->
-    <h2>①EXPO2025・来場日時設定</h2>
+    <h2>①-1 EXPO2025・来場日時設定：新規 (9/23追加)<span class="badge-new">NEW</span></h2>
+    来場日時設定を行っていない未予約状態のチケットの場合<br><br>
+    <div>
+      <code id="profile11-ticket">EXPO2025・来場日時設定（新規）</code>
+      <button class="copy-btn" data-target="profile11-ticket">コピー</button>
+      <span class="copy-feedback" aria-live="polite"></span>
+    </div>
+
+    <div class="settings-section">
+      <h3>監視URL（マイチケットページ）</h3>
+      <table class="settings-table onecol">
+        <tbody>
+          <tr>
+            <td class="cell-code">
+              <code id="url-ticket">https://ticket.expo2025.or.jp/myticket/</code>
+              <button class="copy-btn" data-target="url-ticket">コピー</button>
+              <span class="copy-feedback" aria-live="polite"></span>
+              <br>URLを貼り付けた後「追加」ボタンを押して選択状態にしてください。
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="settings-section">
+      <h3>オートパイロット</h3>
+      <table class="settings-table">
+        <thead><tr><th>項目</th><th>値</th></tr></thead>
+        <tbody>
+          <tr><td>有効にする</td><td>ON</td></tr>
+          <tr>
+            <td>STEP1：CSSセレクタ</td>
+            <td class="cell-code">
+              <code id="step11-ticket">[data-message-code=SW_GP_DL_101_0118]</code>
+              <button class="copy-btn" data-target="step11-ticket">コピー</button>
+              <span class="copy-feedback" aria-live="polite"></span>
+            </td>
+          </tr>
+          <tr><td>STEP1：タップ後の待機</td><td>5秒</td></tr>
+          <tr><td>STEP2を有効にする</td><td>ON</td></tr>
+          <tr>
+            <td>STEP2：CSSセレクタ</td>
+            <td class="cell-code">
+              <code id="step21-ticket">[data-message-code=SW_GP_DL_101_0140]</code>
+              <button class="copy-btn" data-target="step21-ticket">コピー</button>
+              <span class="copy-feedback" aria-live="polite"></span>
+            </td>
+          </tr>
+          <tr><td>STEP2：タップ後の待機</td><td>0秒</td></tr>
+          <tr><td>STEP3を有効にする</td><td>OFF</td></tr>
+          <tr>
+            <td>検知キーワード</td>
+            <td class="cell-code">
+              <code id="keyword0-ticket">設定されました</code>
+              <button class="copy-btn" data-target="keyword0-ticket">コピー</button>
+              <span class="copy-feedback" aria-live="polite"></span>
+            </td>
+          </tr>
+          <tr><td>検知時の動作</td><td>停止する</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2>①-2 EXPO2025・来場日時設定：変更</h2>
+    来場日時設定を行っており、予約済み状態のチケットの変更を行う場合<br><br>
     <div>
       <code id="profile1-ticket">EXPO2025・来場日時設定</code>
       <button class="copy-btn" data-target="profile1-ticket">コピー</button>
       <span class="copy-feedback" aria-live="polite"></span>
     </div>
 
-    <!-- 監視URL：値だけ1列 -->
     <div class="settings-section">
       <h3>監視URL（マイチケットページ）</h3>
       <table class="settings-table onecol">
@@ -482,6 +544,9 @@
   <iframe loading="lazy" src="https://www.youtube.com/embed/JMmUORu_RLo" allowfullscreen
           title="YouTube video player"></iframe>
 </div>
+<div style="font-size:0.75rem; margin-top:4px;">※この動画は「①-2 EXPO2025・来場日時設定」と「②EXPO2025・簡単空きチェック」の両方の設定を行った場合の動作イメージです。</div>
+<br>
+
 <hr>
     <!-- ③ 当日予約開始チェック -->
     <h2>③EXPO2025・当日予約開始チェック</h2>
@@ -732,8 +797,8 @@
           <tr>
             <td>STEP1：CSSセレクタ</td>
             <td class="cell-code">
-              <code id="step11-ticket">[data-message-code=SW_GP_DL_124_0047]</code>
-              <button class="copy-btn" data-target="step11-ticket">コピー</button>
+              <code id="step71-ticket">[data-message-code=SW_GP_DL_124_0047]</code>
+              <button class="copy-btn" data-target="step71-ticket">コピー</button>
               <span class="copy-feedback" aria-live="polite"></span>
             </td>
           </tr>
@@ -960,8 +1025,22 @@
     </section>
 
 <section class="ref-min" aria-label="参考情報リンク">
-  <h2>参考情報：時間帯毎の空き発生頻度　(9/21更新)<span class="badge-new">NEW</span></h2>
+  <h2>参考情報：時間帯毎の空き発生頻度　(9/23更新)<span class="badge-new">NEW</span></h2>
     <div class="ref-list">
+    <a class="ref-link" href="./data/heatmap_20250923.html" target="_blank" rel="noopener">
+      <span class="label">
+        <span class="badge-date">2025/09/23</span>
+        <span class="text">空き発生状況（9/23）</span>
+      </span>
+      <span class="icon">↗</span>
+    </a>
+    <a class="ref-link" href="./data/heatmap_20250922.html" target="_blank" rel="noopener">
+      <span class="label">
+        <span class="badge-date">2025/09/22</span>
+        <span class="text">空き発生状況（9/22）</span>
+      </span>
+      <span class="icon">↗</span>
+    </a>
     <a class="ref-link" href="./data/heatmap_20250921.html" target="_blank" rel="noopener">
       <span class="label">
         <span class="badge-date">2025/09/21</span>
@@ -1153,7 +1232,7 @@
     // 更新日（対象要素がある場合のみ）
     const lastModEl = document.getElementById("last-modified");
     if (lastModEl){
-      const lastMod = new Date("2025-09-21");
+      const lastMod = new Date("2025-09-23");
       lastModEl.textContent = lastMod.toLocaleDateString("ja-JP",{year:"numeric",month:"2-digit",day:"2-digit"});
     }
   </script>
