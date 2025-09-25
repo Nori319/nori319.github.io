@@ -290,7 +290,7 @@ pre code {
   <div class="feature-card">
     <i class="fas fa-save"></i>
     <h3>設定保存機能</h3>
-    <p>プロファイルとして設定を保存・呼び出し。複数パターンも一括管理。</p>
+    <p>プロファイルとして設定を保存・呼び出し。複数パターンも一括管理。ファイルにエクスポート/インポートも可能</p>
   </div>
 </section>
 
@@ -310,128 +310,15 @@ pre code {
     2.自動リロード停止後に指定したボタンをタップ<br>
     3.自動リロード停止後にAutopilot機能を実行</p>
     <p> 例えば、大阪・関西万博（EXPO 2025）のパビリオン予約ページでは「予約可能な時間帯がありません」のメッセージ消失を検知した時に自動リロード停止に加えて予約するボタンをタップするような設定が可能です。</p>
-
-    <table class="settings-table" style="width:100%; border-collapse: collapse;">
-  <thead>
-    <tr>
-      <th style="text-align:left; padding:8px; border-bottom:2px solid #ddd;">項目</th>
-      <th style="text-align:left; padding:8px; border-bottom:2px solid #ddd;">値</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td style="padding:8px; border-bottom:1px solid #eee;">検知キーワード</td>
-      <td style="padding:8px; border-bottom:1px solid #eee;">
-        <code id="keyword-ticket">予約可能な時間帯がありません</code>
-        <button class="copy-btn" data-target="keyword-ticket">コピー</button>
-        <span class="copy-feedback" aria-live="polite"></span>
-      </td>
-    </tr>
-    <tr>
-      <td style="padding:8px; border-bottom:1px solid #eee;">検知モード</td>
-      <td style="padding:8px; border-bottom:1px solid #eee;">消失時</td>
-    </tr>
-    <tr>
-      <td style="padding:8px; border-bottom:1px solid #eee;">検知ディレイ</td>
-      <td style="padding:8px; border-bottom:1px solid #eee;">5秒（誤検知する場合は値を大きくする）</td>
-    </tr>
-    <tr>
-      <td style="padding:8px; border-bottom:1px solid #eee;">検知時のアクション</td>
-      <td style="padding:8px; border-bottom:1px solid #eee;">＋ボタン</td>
-    </tr>
-    <tr>
-      <td style="padding:8px; border-bottom:1px solid #eee;">タップするボタンの CSS セレクタ</td>
-      <td style="padding:8px; border-bottom:1px solid #eee;">
-        <code id="css-ticket">[data-message-code=SW_GP_DL_124_0047]</code>
-        <button class="copy-btn" data-target="css-ticket">コピー</button>
-        <span class="copy-feedback" aria-live="polite"></span>
-      </td>
-    </tr>
-  </tbody>
-</table>
-<p>※Autopilot機能と組み合わせると、さらに高度な処理を実現できます。</p>
-    <div class="detection-sample" style="text-align:center; margin-top:1rem;">
-      <img
-        src="Detection.PNG"
-        alt="検知設定サンプル"
-        style="max-width:100%; height:auto; border:1px solid #ddd; border-radius:4px; box-shadow:0 2px 6px rgba(0,0,0,0.1);"
-      >
-    </div>
+    <p>※Autopilot機能と組み合わせると、さらに高度な処理を実現できます。</p>
 
   </details>
   <details>
     <summary>オートパイロット機能の使用例を教えてください。<!--span class="badge-new">NEW</span--></summary>
     <p>オートパイロットは予め設定した、ボタンのタップ操作を条件を満たすまで繰り返す機能となります。</p>
-    <p> 例えば、大阪・関西万博（EXPO 2025）の来場日時設定ページでは、来場希望時間を選択して来場日時を設定します。この時のボタンタップ操作を、予約が完了するまで繰り返す設定を行うことが可能です。
-      以下の設定で実際の動きを動画で撮影していますので参考にしてください。</p>
+    <p> 例えば、大阪・関西万博（EXPO 2025）の来場日時設定ページでは、来場希望時間を選択して来場日時を設定します。この時のボタンタップ操作を、予約が完了するまで繰り返す設定を行うことが可能です。</p>
     </p>
 
-    <table class="settings-table" style="width:100%; border-collapse: collapse;">
-  <thead>
-    <tr>
-      <th style="text-align:left; padding:8px; border-bottom:2px solid #ddd;">項目</th>
-      <th style="text-align:left; padding:8px; border-bottom:2px solid #ddd;">値</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td style="padding:8px; border-bottom:1px solid #eee;">STEP1：CSSセレクタ</td>
-      <td style="padding:8px; border-bottom:1px solid #eee;">
-        <code id="step1-ticket">[data-message-code=SW_GP_DL_101_0118]</code>
-        <button class="copy-btn" data-target="step1-ticket">コピー</button>
-        <span class="copy-feedback" aria-live="polite"></span>
-      </td>
-    </tr>
-    <tr>
-      <td style="padding:8px; border-bottom:1px solid #eee;">STEP1：タップ後の待機</td>
-      <td style="padding:8px; border-bottom:1px solid #eee;">0秒</td>
-    </tr>
-    <tr>
-      <td style="padding:8px; border-bottom:1px solid #eee;">STEP2を有効にする</td>
-      <td style="padding:8px; border-bottom:1px solid #eee;">ON</td>
-    </tr>
-    <tr>
-      <td style="padding:8px; border-bottom:1px solid #eee;">STEP2：CSSセレクタ</td>
-      <td style="padding:8px; border-bottom:1px solid #eee;">
-        <code id="step2-ticket">[data-message-code=SW_GP_DL_117_0413]</code>
-        <button class="copy-btn" data-target="step2-ticket">コピー</button>
-        <span class="copy-feedback" aria-live="polite"></span>
-      </td>
-    </tr>
-    <tr>
-      <td style="padding:8px; border-bottom:1px solid #eee;">STEP2：タップ後の待機</td>
-      <td style="padding:8px; border-bottom:1px solid #eee;">5秒(誤検知する場合は値を大きくする）</td>
-    </tr>
-    <tr>
-      <td style="padding:8px; border-bottom:1px solid #eee;">STEP3を有効にする</td>
-      <td style="padding:8px; border-bottom:1px solid #eee;">ON</td>
-    </tr>
-    <tr>
-      <td style="padding:8px; border-bottom:1px solid #eee;">STEP3：CSSセレクタ</td>
-      <td style="padding:8px; border-bottom:1px solid #eee;">
-        <code id="step3-ticket">[data-message-code=SW_GP_DL_101_0140]</code>
-        <button class="copy-btn" data-target="step3-ticket">コピー</button>
-        <span class="copy-feedback" aria-live="polite"></span>
-      </td>
-    </tr>
-    <tr>
-      <td style="padding:8px; border-bottom:1px solid #eee;">STEP3：タップ後の待機</td>
-      <td style="padding:8px; border-bottom:1px solid #eee;">0秒</td>
-    </tr>
-    <tr>
-      <td style="padding:8px; border-bottom:1px solid #eee;">検知キーワード</td>
-      <td style="padding:8px; border-bottom:1px solid #eee;">
-        <code id="keyword2-ticket">設定されました</code>
-        <button class="copy-btn" data-target="keyword2-ticket">コピー</button>
-        <span class="copy-feedback" aria-live="polite"></span>
-      </td>
-    </tr>
-    <tr>
-      <td style="padding:8px; border-bottom:1px solid #eee;">検知時の動作</td>
-      <td style="padding:8px; border-bottom:1px solid #eee;">停止する</td>
-    </tr>
-  </tbody>
-</table>
   </details>
 
     <details>
@@ -455,11 +342,6 @@ pre code {
   </details>
 
 </section>
-
- <div class="video-wrap">
-  <iframe src="https://www.youtube.com/embed/JUIcVOz-Ee8" allowfullscreen
-          title="YouTube video player"></iframe>
-</div>
 
 <style>
 .compare-wrap{
@@ -586,6 +468,11 @@ pre code {
           <td class="check">○</td>
         </tr>
         <tr>
+          <td>設定エクスポート/インポート機能 (v1.9)<span class="badge-new">NEW</span></td>
+          <td class="cross">×</td>
+          <td class="check">○</td>
+        </tr>
+        <tr>
           <td>縦画面固定機能（iPhone端末のみ）</td>
           <td class="cross">×</td>
           <td class="check">○</td>
@@ -638,7 +525,7 @@ document.querySelectorAll('.copy-btn').forEach(btn => {
 });
 // 更新日を表示（HTMLファイルの最終更新日時）
 //const lastMod = new Date(document.lastModified);
-const lastMod = new Date("2025-08-06");
+const lastMod = new Date("2025-09-25");
 document.getElementById("last-modified").textContent =
   lastMod.toLocaleDateString("ja-JP", {
     year: "numeric",

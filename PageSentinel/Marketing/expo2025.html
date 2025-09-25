@@ -21,6 +21,9 @@
 <style>
   /* ===== 全体：横スクロールの発生を根絶 ===== */
   html, body { max-width:100%; overflow-x:hidden; overscroll-behavior-x:none; -webkit-text-size-adjust:100%; }
+  html {
+  scroll-behavior: smooth;
+}
   body { margin:0; background:#0f111a; color:#f0f5ff; font-family:"Inter",system-ui,-apple-system,BlinkMacSystemFont,sans-serif; line-height:1.45; touch-action:pan-y; }
   * { box-sizing:border-box; }
   img, video, iframe, svg, canvas { max-width:100%; height:auto; display:block; }
@@ -290,7 +293,16 @@
   flex:0 0 auto; font-size:1rem; opacity:.9; transform:translateX(0); transition:transform .18s;
 }
 .ref-link:hover .icon{ transform:translateX(2px); }
-
+.download-link {
+  display: inline-block;
+  padding: 10px 14px;
+  border-radius: 6px;
+  background: #1e90ff;
+  color: #fff;
+  text-decoration: none;
+  font-weight: 600;
+}
+.download-link:hover { opacity: 0.9; }
 </style>
 </head>
 <body>
@@ -337,8 +349,10 @@
         <div class="card"><h3><div class="icon-wrapper">④</div>当日予約の空き通知</h3><p>自動リロードの検知モードで「狙いのパビリオンの空き」を監視。空きが出たら即座に<b>音と振動</b>でお知らせ。チャンスを逃さない。</p></div>
         <div class="card"><h3><div class="icon-wrapper">⑤</div>当日予約の空き自動予約★</h3><p>自動リロードの検知モードで「狙いのパビリオンの空き」を監視。空きが出たら自動で予約ボタンをタップ！さらに予約成功率をアップ！！</p></div>
         <div class="card"><h3><div class="icon-wrapper">⑥</div>設定保存でいつでも万博設定を呼び出し★</h3><p>プロファイルとして設定を保存・呼び出し。複数パターンも一括管理。</p></div>
-        <div class="card"><h3><div class="icon-wrapper">⑦</div>当日予約の空き自動予約&リトライ★<span class="badge-new">NEW</span></h3><p>自動リロードの検知モードで「狙いのパビリオンの空き」を監視。空きが出たら自動で予約ボタンをタップ！
+        <div class="card"><h3><div class="icon-wrapper">⑦</div>当日予約の空き自動予約&リトライ★</h3><p>自動リロードの検知モードで「狙いのパビリオンの空き」を監視。空きが出たら自動で予約ボタンをタップ！
           予約が確保できるまでリトライします。　</p></div>
+          <div class="card"><h3><div class="icon-wrapper">⑧</div>設定のエクスポート＆インポート★<span class="badge-new">NEW</span></h3><p>プロファイル機能に加え、設定情報をファイルとしてエクスポート・インポート可能に。バックアップや他端末への移行もスムーズに。</p></div>
+
       </div>
       <div style="text-align:center; margin-top:40px;">
   <p class="subtle-premium"><a href="../premium.html" class="premium-link">★ プレミアム機能(Plus版)を利用</a></p></div>
@@ -364,6 +378,16 @@
         </div>
       </div>
     </section>
+<hr>
+    <h2>EXPO2025設定ファイル (9/25追加)<span class="badge-new">NEW</span></h2>
+    下記①〜⑦の設定ファイル。プレミアム機能ご利用の方はファイルをダウンロードしてインポート機能で読み込んでください。
+    <br><br>
+<a href="PageSentinelPlus_EXPO2025.json"
+   download="PageSentinelPlus_EXPO2025.json"
+   class="download-link">PageSentinelPlus_EXPO2025.json をダウンロード</a>
+    <br><br>
+<a href="#dousa-kakunin">動作確認へジャンプ</a>
+<hr>
 
     <h2>①-1 EXPO2025・来場日時設定：新規 (9/23追加)<span class="badge-new">NEW</span></h2>
     来場日時設定を行っていない未予約状態のチケットの場合<br><br>
@@ -655,7 +679,7 @@
   <h3>再読み込み間隔(s)</h3>
   <table class="settings-table onecol">
     <tbody>
-      <tr><td>6秒（Standard版は10秒）</td></tr>
+      <tr><td>5秒（Standard版は10秒）</td></tr>
     </tbody>
   </table>
 </div>
@@ -742,7 +766,7 @@
   <h3>再読み込み間隔(s)</h3>
   <table class="settings-table onecol">
     <tbody>
-      <tr><td>6秒</td></tr>
+      <tr><td>5秒</td></tr>
     </tbody>
   </table>
 </div>
@@ -829,9 +853,8 @@
       <iframe loading="lazy" src="https://www.youtube.com/embed/gjrsGsGMjgM" allowfullscreen
           title="YouTube video player"></iframe>
     </div>
-
 <hr>
-    <h2>動作確認</h2>
+<h2 id="dousa-kakunin">動作確認</h2>
 
     <div class="settings-section">
       <h3>④⑤⑦の設定が正しく行えたかを確認するページ</h3>
@@ -1248,7 +1271,7 @@
     // 更新日（対象要素がある場合のみ）
     const lastModEl = document.getElementById("last-modified");
     if (lastModEl){
-      const lastMod = new Date("2025-09-23");
+      const lastMod = new Date("2025-09-25");
       lastModEl.textContent = lastMod.toLocaleDateString("ja-JP",{year:"numeric",month:"2-digit",day:"2-digit"});
     }
   </script>
