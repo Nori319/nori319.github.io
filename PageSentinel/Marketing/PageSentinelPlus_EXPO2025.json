@@ -27,7 +27,7 @@
       "monitorURLs" : [
         "https:\/\/ticket.expo2025.or.jp\/myticket\/"
       ],
-      "name" : "EXPO2025・来場日時設定（新規）",
+      "name" : "EXPO2025・来場日時設定（未予約チケット用）",
       "scrollDelay" : 0,
       "selectedURL" : "https:\/\/ticket.expo2025.or.jp\/myticket\/",
       "snapshotDelay" : 0,
