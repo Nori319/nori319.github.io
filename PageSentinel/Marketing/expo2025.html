@@ -1077,7 +1077,7 @@
     </section>
 
 <section class="ref-min" aria-label="参考情報リンク">
-  <h2>参考情報：時間帯毎の空き発生頻度　(10/1更新)<span class="badge-new">NEW</span></h2>
+  <h2>参考情報：時間帯毎の空き発生頻度　(10/2更新)<span class="badge-new">NEW</span></h2>
     <div class="ref-list">
     <a class="ref-link" href="./data/heatmap_20250930.html" target="_blank" rel="noopener">
       <span class="label">
@@ -1086,10 +1086,24 @@
       </span>
       <span class="icon">↗</span>
     </a>
+    <a class="ref-link" href="./data/openslot_20250930.html" target="_blank" rel="noopener">
+      <span class="label">
+        <span class="badge-date">2025/09/30</span>
+        <span class="text">時間帯別の空き(○)発生回数（9/30）</span>
+      </span>
+      <span class="icon">↗</span>
+    </a>
     <a class="ref-link" href="./data/heatmap_20250927.html" target="_blank" rel="noopener">
       <span class="label">
         <span class="badge-date">2025/09/27</span>
         <span class="text">空き発生状況（9/27）</span>
+      </span>
+      <span class="icon">↗</span>
+    </a>
+    <a class="ref-link" href="./data/openslot_20250927.html" target="_blank" rel="noopener">
+      <span class="label">
+        <span class="badge-date">2025/09/27</span>
+        <span class="text">時間帯別の空き(○)発生回数（9/27）</span>
       </span>
       <span class="icon">↗</span>
     </a>
@@ -1298,7 +1312,7 @@
     // 更新日（対象要素がある場合のみ）
     const lastModEl = document.getElementById("last-modified");
     if (lastModEl){
-      const lastMod = new Date("2025-10-01");
+      const lastMod = new Date("2025-10-02");
       lastModEl.textContent = lastMod.toLocaleDateString("ja-JP",{year:"numeric",month:"2-digit",day:"2-digit"});
     }
   </script>
