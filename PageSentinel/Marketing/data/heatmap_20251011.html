@@ -111,6 +111,31 @@
   tbody tr:hover td { outline: 2px solid rgba(37, 99, 235, .25); outline-offset: -2px; }
 
   .note { font-size: 12px; color: var(--muted); padding-top: 10px; }
+  /* --- smartphone fix: widen the first (sticky) column like 2025-10-10 --- */
+@media (max-width: 640px) {
+  /* 先頭列を画面の約2/3幅まで確保。横スクロール時も見やすい */
+  th:first-child, td:first-child {
+    max-width: 70vw !important;
+    min-width: 66vw !important;
+    width: 66vw !important;
+    white-space: normal !important;      /* 折り返し許可 */
+    word-break: break-word !important;
+    overflow-wrap: anywhere !important;
+  }
+  /* ラベルを3行まで表示（従来2行で省略していた場合の改善） */
+  .label {
+    -webkit-line-clamp: 3 !important;
+  }
+}
+
+/* タブレット相当でも少し広めに（10/10版の感覚に寄せる） */
+@media (max-width: 1024px) and (min-width: 641px) {
+  th:first-child, td:first-child {
+    max-width: 360px !important;
+    min-width: 260px !important;
+    width: 260px !important;
+  }
+}
 </style>
 </head>
 <body>
