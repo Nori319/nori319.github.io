@@ -351,7 +351,7 @@
         <div class="card"><h3><div class="icon-wrapper">⑥</div>設定保存でいつでも万博設定を呼び出し★</h3><p>プロファイルとして設定を保存・呼び出し。複数パターンも一括管理。</p></div>
         <div class="card"><h3><div class="icon-wrapper">⑦</div>当日予約の空き自動予約&リトライ★</h3><p>自動リロードの検知モードで「狙いのパビリオンの空き」を監視。空きが出たら自動で予約ボタンをタップ！
           予約が確保できるまでリトライします。　</p></div>
-          <div class="card"><h3><div class="icon-wrapper">⑧</div>設定のエクスポート＆インポート★<span class="badge-new">NEW</span></h3><p>プロファイル機能に加え、設定情報をファイルとしてエクスポート・インポート可能に。バックアップや他端末への移行もスムーズに。</p></div>
+          <div class="card"><h3><div class="icon-wrapper">⑧</div>設定のエクスポート＆インポート★</h3><p>プロファイル機能に加え、設定情報をファイルとしてエクスポート・インポート可能に。バックアップや他端末への移行もスムーズに。</p></div>
 
       </div>
       <div style="text-align:center; margin-top:40px;">
@@ -751,7 +751,7 @@
 <hr>
 
     <!-- ⑦ 当日予約・自動リトライ -->
-    <h2>⑦EXPO2025・当日予約（自動リトライ）★Plus版のみ (9/8追加)<span class="badge-new">NEW</span></h2>
+    <h2>⑦EXPO2025・当日予約（自動リトライ）★Plus版のみ (9/8追加)</h2>
     <div>
       <code id="profile4-ticket">EXPO2025・当日予約（自動リトライ）</code>
       <button class="copy-btn" data-target="profile4-ticket">コピー</button>
@@ -934,7 +934,7 @@
         <h2>よくあるご質問</h2>
         <div class="faq-item">
           <button class="faq-question" aria-expanded="false">
-            来場日時設定のオートパイロットが１回動作して停止します。（9/23更新)<span class="badge-new">NEW</span>
+            来場日時設定のオートパイロットが１回動作して停止します。（9/23更新)
             <span aria-hidden="true">▾</span>
           </button>
           <div class="faq-answer">
@@ -1077,8 +1077,15 @@
     </section>
 
 <section class="ref-min" aria-label="参考情報リンク">
-  <h2>参考情報：時間帯毎の空き発生頻度　(10/12更新)<span class="badge-new">NEW</span></h2>
+  <h2>参考情報：時間帯毎の空き発生頻度　(10/13更新)<span class="badge-new">NEW</span></h2>
     <div class="ref-list">
+    <a class="ref-link" href="./data/heatmap_20251013.html" target="_blank" rel="noopener">
+      <span class="label">
+        <span class="badge-date">2025/10/13</span>
+        <span class="text">空き発生状況（10/13）</span>
+      </span>
+      <span class="icon">↗</span>
+    </a>
     <a class="ref-link" href="./data/heatmap_20251012.html" target="_blank" rel="noopener">
       <span class="label">
         <span class="badge-date">2025/10/12</span>
@@ -1361,7 +1368,7 @@
     // 更新日（対象要素がある場合のみ）
     const lastModEl = document.getElementById("last-modified");
     if (lastModEl){
-      const lastMod = new Date("2025-10-12");
+      const lastMod = new Date("2025-10-13");
       lastModEl.textContent = lastMod.toLocaleDateString("ja-JP",{year:"numeric",month:"2-digit",day:"2-digit"});
     }
   </script>
