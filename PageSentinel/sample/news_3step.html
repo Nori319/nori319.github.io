@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>ダミーニュース AUTO PILOT test</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    :root {
+      --bg: #ffffff;
+      --ink: #111827;
+      --muted: #4b5563;
+      --line: #e5e7eb;
+      --brand: #1e3a8a;
+      --navbg: #f3f4f6;
+      --ok: #16a34a;
+      --ok-bg: #ecfdf5;
+      --ng: #dc2626;
+      --ng-bg: #fef2f2;
+      --warn: #f59e0b;
+      --shadow: 0 8px 30px rgba(0,0,0,.12);
+    }
+    * { box-sizing: border-box; }
+    body { font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; margin:0; color:var(--ink); background:var(--bg); }
+
+    header { background:var(--brand); color:#fff; padding:16px; text-align:center; font-size:1.2rem; letter-spacing:.02em; }
+    nav { display:flex; overflow-x:auto; background:var(--navbg); }
+    nav a {
+      flex:1; padding:12px; text-align:center; color:#374151;
+      text-decoration:none; border-right:1px solid #ddd; white-space:nowrap;
+    }
+    nav a:last-child { border-right:none; }
+
+    .toolbar {
+      display:flex; align-items:center; gap:16px; padding:16px;
+      border-bottom:1px solid var(--line); background:#fff;
+    }
+    .toolbar button {
+      padding:10px 16px; font-size:1rem; border-radius:999px; border:1px solid var(--brand);
+      background:linear-gradient(180deg,#fff, #f3f6ff); color:var(--brand); cursor:pointer;
+      transition: box-shadow .2s ease, transform .05s ease;
+    }
+    .toolbar button:hover { box-shadow: var(--shadow); }
+    .toolbar button:active { transform: translateY(1px); }
+    #lastUpdated { font-weight:bold; }
+    #lastUpdated.badge {
+      padding:6px 10px; border-radius:8px; display:inline-flex; align-items:center; gap:8px;
+      border:1px solid var(--line); background:#fff;
+    }
+    #lastUpdated.badge.ok { color:var(--ok); border-color: color-mix(in srgb, var(--ok) 40%, #ffffff); background:var(--ok-bg); }
+    #lastUpdated.badge.ng { color:var(--ng); border-color: color-mix(in srgb, var(--ng) 40%, #ffffff); background:var(--ng-bg); }
+    #lastUpdated.badge.pending { color:var(--warn); border-color: color-mix(in srgb, var(--warn) 40%, #ffffff); background:#fffbeb; }
+
+    main { padding:16px; }
+    .article { margin-bottom:24px; border-bottom:1px solid #eee; padding-bottom:16px; }
+    .article h3 { margin:0 0 8px; font-size:1.1rem; color:var(--ink); }
+    .article p { margin:0 0 4px; color:var(--muted); font-size:0.95rem; }
+    .article .meta { font-size:0.85rem; color:#9ca3af; }
+
+    /* Dialog (modal) */
+    .dialog-backdrop {
+      position:fixed; inset:0; background:rgba(0,0,0,.35); display:none; z-index:999;
+    }
+    .dialog {
+      position: fixed; top: 50%; left: 50%;
+      transform: translate(-50%, -50%) scale(.98);
+      background: #fff; border: 1px solid var(--line);
+      padding: 20px 20px 16px; display: none; box-shadow: var(--shadow);
+      z-index: 1000; width:min(560px, 92vw); border-radius:14px;
+      transition: transform .15s ease, opacity .15s ease;
+      opacity:0;
+    }
+    .dialog.show { display:block; opacity:1; transform: translate(-50%, -50%) scale(1); }
+    .dialog h4 { margin:0 0 8px; font-size:1.05rem; }
+    .dialog p { margin:0 0 16px; color:var(--muted); }
+    .dialog .row { display:flex; gap:8px; justify-content:flex-end; }
+    .dialog button {
+      padding:10px 14px; border-radius:10px; border:1px solid var(--line); background:#fff; cursor:pointer;
+    }
+    .dialog button.primary { background:var(--brand); color:#fff; border-color:var(--brand); }
+    .dialog.success { border-color: color-mix(in srgb, var(--ok) 40%, #ffffff); }
+    .dialog.error   { border-color: color-mix(in srgb, var(--ng) 40%, #ffffff); }
+    .dialog .status {
+      display:flex; align-items:center; gap:10px; margin-bottom:12px; font-weight:600;
+    }
+    .status.ok { color:var(--ok); }
+    .status.ng { color:var(--ng); }
+    .status .icon { font-size:1.2rem; }
+
+    /* Little pulse for status icon */
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.08); }
+      100% { transform: scale(1); }
+    }
+    .status .icon { animation: pulse 1.2s ease-in-out infinite; }
+
+    /* Accessibility helpers */
+    .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); border: 0; }
+  </style>
+</head>
+<body>
+  <header>ダミーニュース</header>
+  <nav>
+    <a href="#">トップ</a>
+    <a href="#">国内</a>
+    <a href="#">国際</a>
+    <a href="#">経済</a>
+    <a href="#">エンタメ</a>
+  </nav>
+
+  <div class="toolbar">
+    <button id="btn1" aria-haspopup="dialog" aria-controls="confirmDialog">Fetch Latest News（#btn1）</button>
+    <p id="lastUpdated" class="badge">Last Updated: —</p>
+  </div>
+
+  <main>
+    <div class="article">
+      <h3>新型スマホ、AI機能を大幅強化</h3>
+      <p>AIを活用した次世代スマートフォンが発表されました。</p>
+      <p class="meta">2025/06/09 11:00</p>
+    </div>
+    <div class="article">
+      <h3>宇宙探査ミッション、月面着陸成功</h3>
+      <p>民間プロジェクトによる月面着陸が世界初で達成。</p>
+      <p class="meta">2025/06/09 09:45</p>
+    </div>
+    <div class="article">
+      <h3>国内株式市場、大幅反発</h3>
+      <p>好業績企業の決算発表を受け、日経平均が上昇。</p>
+      <p class="meta">2025/06/09 08:30</p>
+    </div>
+    <div class="article">
+      <h3>気象庁、梅雨入りを正式に発表</h3>
+      <p>今年の梅雨入りは平年より3日早い模様。</p>
+      <p class="meta">2025/06/09 07:15</p>
+    </div>
+    <div class="article">
+      <h3>EVメーカー、次世代バッテリー開発に成功</h3>
+      <p>航続距離が従来比2倍に。</p>
+      <p class="meta">2025/06/09 06:50</p>
+    </div>
+    <div class="article">
+      <h3>サイバーセキュリティ、新たな脅威検出技術公開</h3>
+      <p>企業向けソリューションが注目を集める。</p>
+      <p class="meta">2025/06/09 06:00</p>
+    </div>
+    <div class="article">
+      <h3>国内旅行、夏季予約が急増</h3>
+      <p>ホテル・交通機関の早期予約がトレンドに。</p>
+      <p class="meta">2025/06/09 05:30</p>
+    </div>
+    <div class="article">
+      <h3>スポーツ速報：サッカー日本代表、初戦白星</h3>
+      <p>大会初戦で見事な逆転勝利を収める。</p>
+      <p class="meta">2025/06/09 05:00</p>
+    </div>
+    <div class="article">
+      <h3>テクノロジー：量子コンピュータが新記録達成</h3>
+      <p>演算速度で過去最高を大きく更新。</p>
+      <p class="meta">2025/06/09 04:20</p>
+    </div>
+    <div class="article">
+      <h3>文化：人気作家の新作小説、発売前重版決定</h3>
+      <p>期待度の高さを裏付ける売上予測。</p>
+      <p class="meta">2025/06/09 03:45</p>
+    </div>
+  </main>
+
+  <!-- Backdrops -->
+  <div id="backdrop" class="dialog-backdrop" aria-hidden="true"></div>
+
+  <!-- Confirm Dialog -->
+  <div id="confirmDialog" class="dialog" role="dialog" aria-modal="true" aria-labelledby="confirmTitle">
+    <h4 id="confirmTitle">最新情報を取得しますか？</h4>
+    <p>通信テストを行い、最新データの取得を試みます（成功率 80%）。</p>
+    <div class="row">
+      <button id="noBtn" aria-label="いいえ">いいえ</button>
+      <button id="btn2" class="primary" aria-label="はい（取得）">はい（#btn2）</button>
+    </div>
+  </div>
+
+  <!-- Result Dialog -->
+  <div id="resultDialog" class="dialog" role="dialog" aria-modal="true" aria-labelledby="resultTitle">
+    <div class="status" id="resultStatus">
+      <span class="icon" id="statusIcon" aria-hidden="true">⏳</span>
+      <span id="resultTitle">処理中…</span>
+    </div>
+    <p id="resultMessage">最新データの取得を試行しています。</p>
+    <div class="row">
+      <button id="btn3" class="primary" aria-label="閉じる">OK（#btn3）</button>
+    </div>
+  </div>
+
+  <script>
+    // Elements
+    const btn1 = document.querySelector('#btn1');
+    const confirmDialog = document.querySelector('#confirmDialog');
+    const resultDialog = document.querySelector('#resultDialog');
+    const btn2 = document.querySelector('#btn2');
+    const noBtn = document.querySelector('#noBtn');
+    const btn3 = document.querySelector('#btn3');
+    const lastUpdated = document.querySelector('#lastUpdated');
+    const resultStatus = document.querySelector('#resultStatus');
+    const resultTitle = document.querySelector('#resultTitle');
+    const resultMessage = document.querySelector('#resultMessage');
+    const statusIcon = document.querySelector('#statusIcon');
+    const backdrop = document.querySelector('#backdrop');
+
+    // Utility: modal open/close with backdrop + focus
+    function openModal(el) {
+      backdrop.style.display = 'block';
+      backdrop.setAttribute('aria-hidden', 'false');
+      el.classList.add('show');
+      el.style.display = 'block';
+      // Focus first button inside
+      const focusable = el.querySelector('button, [href], [tabindex="0"]');
+      if (focusable) focusable.focus();
+    }
+    function closeModal(el) {
+      el.classList.remove('show');
+      el.style.display = 'none';
+      // Hide backdrop only if no other dialog is shown
+      const anyOpen = [...document.querySelectorAll('.dialog')].some(d => d.classList.contains('show'));
+      if (!anyOpen) {
+        backdrop.style.display = 'none';
+        backdrop.setAttribute('aria-hidden', 'true');
+      }
+    }
+
+    // Reset result dialog visual state
+    function setPending() {
+      resultDialog.classList.remove('success','error');
+      resultStatus.classList.remove('ok','ng');
+      statusIcon.textContent = '⏳';
+      resultTitle.textContent = '処理中…';
+      resultMessage.textContent = '最新データの取得を試行しています。';
+      lastUpdated.classList.remove('ok','ng','pending');
+      lastUpdated.classList.add('badge','pending');
+      lastUpdated.textContent = 'Last Updated: 試行中…';
+    }
+    function setSuccess(timeText) {
+      resultDialog.classList.add('success');
+      resultStatus.classList.add('ok');
+      statusIcon.textContent = '✅';
+      resultTitle.textContent = '最新データを取得しました。';
+      resultMessage.textContent = '更新が完了しました。最新の時刻を反映しています。';
+      lastUpdated.classList.remove('pending','ng');
+      lastUpdated.classList.add('ok','badge');
+      lastUpdated.textContent = 'Last Updated: ' + timeText;
+    }
+    function setError() {
+      resultDialog.classList.add('error');
+      resultStatus.classList.add('ng');
+      statusIcon.textContent = '❌';
+      resultTitle.textContent = '最新データが取得できませんでした。';
+      resultMessage.innerHTML = 'ネットワーク混雑または一時的なエラーが発生しました。<br>数秒後にもう一度お試しください。';
+      lastUpdated.classList.remove('pending','ok');
+      lastUpdated.classList.add('ng','badge');
+      lastUpdated.textContent = 'Last Updated: 取得に失敗しました';
+    }
+
+    // Events
+    btn1.addEventListener('click', () => {
+  const titleEl = document.getElementById('confirmTitle');
+  const isAlt = Math.random() < 0.2; // 20%の確率
+  titleEl.textContent = isAlt ? '最新情報2を取得しますか？' : '最新情報を取得しますか？';
+  openModal(confirmDialog);
+});
+    noBtn.addEventListener('click', () => {
+      closeModal(confirmDialog);
+      // Clear pending badge if it was left
+      if (lastUpdated.classList.contains('pending')) {
+        lastUpdated.classList.remove('pending');
+        lastUpdated.textContent = 'Last Updated: —';
+      }
+    });
+    btn2.addEventListener('click', () => {
+  closeModal(confirmDialog);
+
+  // 0.5秒後に結果だけを表示（途中の「処理中」は出さない）
+  setTimeout(() => {
+    const fail = Math.random() < 0.2; // 5回に1回失敗
+    if (fail) {
+      setError();
+    } else {
+      const now = new Date();
+      const timeText = now.toLocaleString();
+      setSuccess(timeText);
+    }
+    openModal(resultDialog); // 結果を作ってから開く
+  }, 500);
+});
+    btn3.addEventListener('click', () => {
+      closeModal(resultDialog);
+    });
+
+    // Escapeでダイアログを閉じる（簡易）
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        if (resultDialog.classList.contains('show')) closeModal(resultDialog);
+        else if (confirmDialog.classList.contains('show')) closeModal(confirmDialog);
+      }
+    });
+  </script>
+</body>
+</html>

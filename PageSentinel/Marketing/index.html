@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-BKZS61KWVF"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-BKZS61KWVF');
+</script>
+
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5879758729873663"
+     crossorigin="anonymous"></script>
+     
+    <meta charset="UTF-8">
+    <meta name="description" content="PageSentinelは、自動リロードやキーワード検知、オートパイロット機能で大事なページ更新を見逃しません。EXPO 2025パビリオン予約の空きチェックやボタン操作も自動化します。">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="canonical" href="https://nori319.github.io/PageSentinel/Marketing/index.html">
+
+    <title>PageSentinel - ウェブページ監視アプリ</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+       /* テーマ変数（ボタン用グラデ追加） */
+        :root{
+          --grad: linear-gradient(135deg, #007AFF, #0051A8);
+        }
+
+        /* ページ全体 */
+        body {
+            margin: 0;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            background: #f4f6f8;
+            color: #333;
+        }
+        a { text-decoration: none; color: inherit; }
+        /* ヘッダー */
+        header {
+            background: linear-gradient(135deg, #007AFF, #0051A8);
+            color: white;
+            text-align: center;
+            padding: 3rem 1rem 2rem;
+            position: relative;
+        }
+        header img.icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 20%;
+            background: white;
+            padding: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            margin-bottom: 1rem;
+        }
+        header h1 {
+            margin: 0;
+            font-size: 2.5rem;
+            letter-spacing: 1px;
+        }
+        header p {
+            margin: 0.5rem 0 0;
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        /* セクション */
+        section {
+            max-width: 900px;
+            margin: 2.5rem auto;
+            padding: 0 1rem;
+        }
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.5rem;
+        }
+        .feature {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            transition: transform 0.3s;
+        }
+        .feature:hover { transform: translateY(-4px); }
+        .feature h3 {
+            margin-top: 0;
+            color: #007AFF;
+        }
+        .feature p { margin: 0.5rem 0 0; line-height: 1.5; }
+        /* 使い方 */
+        .hero img,
+        .usage img {
+            display: block;
+            max-width: 280px;
+            width: 100%;
+            margin: 1rem auto;
+            border-radius: 12px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+        }
+        /* CTA */
+        .cta {
+            text-align: center;
+            margin: 3rem auto;
+        }
+        .cta a {
+            background: #FF9500;
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 30px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            box-shadow: 0 4px 12px rgba(255,149,0,0.4);
+            transition: background 0.3s;
+        }
+        .cta a:hover { background: #E08A00; }
+        /* フッター */
+footer {
+    text-align: center;
+    padding: 1.5rem 1rem;
+    background: #fff;
+    font-size: 0.9rem;
+    color: #666;
+}
+        footer a {
+    color: inherit;              /* 親要素の色(#666)を引き継ぐ */
+    text-decoration: none;       /* 下線を消す */
+    font-weight: 500;            /* 少し太めでシャープに */
+    transition: color 0.2s ease;
+}
+
+footer a:hover {
+    color: #000;                 /* ホバー時だけ濃くしてシャープに */
+    text-decoration: underline;  /* 下線を付けるとリンク感が出る */
+}
+        
+        .appstore-link {
+  text-align: center;
+  margin: 20px 0;
+}
+
+.faq-section {
+    max-width: 900px;
+    margin: 3rem auto;
+    padding: 0 1rem;
+}
+
+.faq-section h2 {
+    font-size: 1.8rem;
+    text-align: center;
+    margin-bottom: 2rem;
+    color: #0051A8;
+}
+
+.faq-item {
+    margin-bottom: 1rem;
+    border-radius: 8px;
+    background: white;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    overflow: hidden;
+}
+
+.faq-question {
+    width: 100%;
+    text-align: left;
+    background: #f0f4fb;
+    border: none;
+    padding: 1rem;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.faq-question:hover {
+    background: #e1ecf9;
+}
+
+.faq-answer {
+    display: none;
+    padding: 1rem;
+    border-top: 1px solid #ddd;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: #444;
+}
+pre code {
+  background-color: #f6f8fa;
+  color: #2d2d2d;
+  padding: 1rem;
+  display: block;
+  border-radius: 8px;
+  overflow-x: auto;
+  font-family: Consolas, Menlo, Monaco, "Courier New", monospace;
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+.video-wrap{
+  width:100%;
+  max-width:560px;   /* 任意。中央寄せしたいなら */
+  margin:0 auto 16px;
+}
+.video-wrap iframe{
+  width:100%;
+  aspect-ratio:16/9;
+  height:auto;       /* aspect-ratio対応ブラウザなら高さ自動 */
+  border:0;
+}
+.subtle-premium{
+  font-size:.85rem;
+  color:#007AFF;
+  opacity:.75;
+  text-align:center;
+  margin:32px 0 12px;
+  transition:opacity .2s;
+}
+.subtle-premium a{ color:inherit; }
+.subtle-premium:hover{ opacity:1; text-decoration:underline; }
+.last-updated {
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.85);
+  background: rgba(0, 0, 0, 0.2);
+  padding: 4px 8px;
+  border-radius: 6px;
+}
+/* expoボタン（白背景にならないようテーマのグラデを適用） */
+        .feature-cta{ margin:36px auto 16px;text-align:center; }
+        .feature-cta a{
+          display:inline-block;
+          background: var(--grad);
+          color:#fff;
+          padding:14px 32px;
+          border-radius:32px;
+          font-size:1rem;
+          font-weight:600;
+          text-decoration:none;
+          box-shadow:0 6px 14px rgba(0,0,0,.15);
+          transition:transform .2s, box-shadow .2s, filter .2s;
+        }
+        .feature-cta a + a{ margin-left:12px; }
+        .feature-cta a:hover{
+          transform:translateY(-2px);
+          box-shadow:0 8px 18px rgba(0,0,0,.2);
+          filter:brightness(1.05);
+        }
+    </style>
+</head>
+<body>
+    <header>
+      <div class="last-updated">最終更新日: <span id="last-modified"></span></div>
+
+      
+        <img src="PageSentinel.png" alt="PageSentinel Icon" class="icon">
+        <h1>PageSentinel</h1>
+        <p>大事なウェブページの更新を自動でキャッチ</p>
+    </header>
+
+    <!--section class="hero">
+        <img src="screenshot-hero.png" alt="PageSentinel 設定画面" class="screenshot">
+    </section-->
+
+    <section>
+        <h2>主な機能</h2>
+        <div class="features">
+            <div class="feature">
+                <h3>シンプル管理</h3>
+                <p>URLの追加・削除はタップだけ。選択履歴は自動保存で、次回起動からすぐに利用可能。</p>
+            </div>
+            <div class="feature">
+                <h3>自動リロード</h3>
+                <p>指定した間隔でページを自動でリロードし、最新情報を見逃しません。</p>
+            </div>
+            <div class="feature">
+                <h3>キーワード検知</h3>
+                <p>指定したキーワードの出現・消失を検知して自動でリロードを停止。予約サイトの空きや在庫復活を即座にお知らせ。</p>
+            </div>
+            <div class="feature">
+                <h3>アンチフリッカー</h3>
+                <p>スナップショット表示と遅延スクロールでチラつきを大幅に軽減し、スムーズな監視を提供。</p>
+            </div>
+            <div class="feature">
+                <h3>オートパイロット</h3>
+                <p>最新情報の取得にボタン操作が必要な場合でも、設定した順番にボタン操作を自動で繰り返します。</p>
+            </div>
+            <div class="feature">
+                <h3>カスタムCSS</h3>
+                <p>ユーザーが指定したCSSを適用し、ページの見た目をカスタマイズできます。</p>
+            </div>
+        </div>
+    </section>
+
+    <p class="subtle-premium">
+    <a href="../premium.html">プレミアム機能の詳細はこちら</a>
+    </p>
+    <section>
+        <h2>使い方は簡単</h2>
+        <p>設定画面で監視したいURL、キーワード、再読み込み間隔を選択し、「ページを開く」をタップするだけ。</p>
+        <!--img src="screenshot-usage.png" alt="使い方イメージ" class="screenshot"-->
+    </section>
+
+    <section class="faq-section">
+  <h2>よくあるご質問（FAQ）</h2>
+  <div class="faq-item">
+    <button class="faq-question">PageSentinelはどのようなページを監視できますか？</button>
+    <div class="faq-answer">
+      <p>基本的にはインターネット上で公開されているすべてのWebページが対象です。ただし、ログインが必要なページや動的に内容が変わるページでは、監視に制限がある場合があります。
+        大阪・関西万博（EXPO 2025）Webページの監視も可能ですが、ログイン手順に制約がありますので「大阪・関西万博特設ページ」を参照ください。</p>
+    </div>
+  </div>
+  <div class="faq-item">
+    <button class="faq-question">キーワード検知はどのように機能しますか？</button>
+    <div class="faq-answer">
+      <p>指定したキーワードがページ内に出現または消失した場合に、自動的にリロードを停止し、音とバイブレーションでお知らせします。予約サイトや販売サイトなどでの活用に便利です。
+        例えば、大阪・関西万博（EXPO 2025）のパビリオン予約ページでは「予約可能な時間帯がありません」のメッセージが消えた場合に自動リロードを停止するように設定すれば、予約の空きを検知する事ができます。</p>
+      </p>
+    </div>
+  </div>
+  <div class="faq-item">
+    <button class="faq-question">アプリは無料で利用できますか？</button>
+    <div class="faq-answer">
+      <p>基本機能は無料で利用できますが、<a href="../premium.html" style="color: #007AFF; font-weight: bold;">プレミアム機能</a>は買い切り型（継続して利用料は発生しません）のサービスになります。</a></p>
+    </div>
+  </div>
+    <div class="faq-item">
+    <button class="faq-question">カスタムCSSはどのように利用できますか？</button>
+    <div class="faq-answer">
+      <p>Webページの表示をカスタマイズするために、ユーザーが独自のCSSを指定できます。これにより、ページの見た目を変更したり、特定の要素を非表示にすることが可能です。
+        例えば、大阪・関西万博（EXPO 2025）のパビリオン予約ページでは、満員の予約及び満員の時間帯を表示させないようにする事ができます。詳しくは「大阪・関西万博特設ページ」をご覧ください。</p>
+    </div>
+  </div>
+</section>
+
+    <!-- section>
+        <h2>詳細情報</h2>
+        <p>オートパイロットの設定やサンプルページは　<a href="details.html">こちら</a>　をご覧ください。</p>
+    </section -->
+<!-- 幅560×高さ315 の埋め込み例 -->
+ <div class="video-wrap">
+  <iframe src="https://www.youtube.com/embed/RTfnuAr3iAE" allowfullscreen
+          title="YouTube video player"></iframe>
+</div>
+<div class="video-wrap">
+  <iframe src="https://www.youtube.com/embed/6X6FOzBekaM" allowfullscreen
+          title="YouTube video player"></iframe>
+</div>
+
+        <div class="appstore-link">
+            <a href="https://apps.apple.com/jp/app/id6746980444" target="_blank" rel="noopener">
+              <img src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg" 
+                   alt="Download on the App Store" 
+                   style="height: 50px;">
+            </a>
+          </div>
+           <p class="subtle-premium">
+      アーカイブ：<a href="./expo2025.html" aria-label="関西万博 特設ページ（EXPO2025）へ">大阪・関西万博（EXPO2025）🏟️ 特設ページ</a>
+    </p>
+
+<footer>
+  <a href="../index.html" style="color:inherit; text-decoration:none;">
+    &copy; 2025 PageSentinel. All rights reserved.
+  </a>
+</footer>
+
+    <script>
+  document.querySelectorAll('.faq-question').forEach(button => {
+    button.addEventListener('click', () => {
+      const answer = button.nextElementSibling;
+      const isOpen = answer.style.display === 'block';
+      document.querySelectorAll('.faq-answer').forEach(a => a.style.display = 'none');
+      answer.style.display = isOpen ? 'none' : 'block';
+    });
+  });
+
+document.querySelectorAll('.copy-btn').forEach(btn => {
+  btn.addEventListener('click', async () => {
+    const targetId = btn.dataset.target;
+    const code = document.getElementById(targetId);
+    const text = code.innerText.trim();
+    const feedback = btn.nextElementSibling;
+
+    try {
+      await navigator.clipboard.writeText(text);
+      if (feedback) {
+        feedback.textContent = 'コピーしました！';
+        setTimeout(() => feedback.textContent = '', 2000);
+      }
+    } catch (e) {
+      // フォールバック（古いブラウザ向け）
+      const textarea = document.createElement('textarea');
+      textarea.value = text;
+      document.body.appendChild(textarea);
+      textarea.select();
+      document.execCommand('copy');
+      document.body.removeChild(textarea);
+      if (feedback) {
+        feedback.textContent = 'コピーしました！';
+        setTimeout(() => feedback.textContent = '', 2000);
+      }
+    }
+  });
+});
+// 更新日を表示（HTMLファイルの最終更新日時）
+//const lastMod = new Date(document.lastModified);
+const lastMod = new Date("2025-10-24");
+document.getElementById("last-modified").textContent =
+  lastMod.toLocaleDateString("ja-JP", {
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit"
+  });
+</script>
+</body>
+</html>

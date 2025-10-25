@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+      <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-BKZS61KWVF"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-BKZS61KWVF');
+</script>
+
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>PageSentinel プライバシーポリシー</title>
+  <meta name="description" content="PageSentinel のプライバシーポリシーです。広告機能は削除済みで、情報は原則として端末内に保存され、外部サーバーへ送信しません。">
+  <style>
+    :root{
+      --bg: #ffffff;
+      --fg: #1f2937;
+      --fg-sub: #4b5563;
+      --line: #e5e7eb;
+      --link: #0ea5e9;
+      --card: #ffffff;
+      --shadow: 0 8px 24px rgba(0,0,0,0.06);
+    }
+    @media (prefers-color-scheme: dark) {
+      :root{
+        --bg: #0b1220;
+        --fg: #e5e7eb;
+        --fg-sub: #cbd5e1;
+        --line: #1f2937;
+        --link: #38bdf8;
+        --card: #0f172a;
+        --shadow: none;
+      }
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--fg);
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans JP", "Hiragino Kaku Gothic ProN", "Yu Gothic", Arial, sans-serif;
+      line-height: 1.7;
+    }
+    .wrap {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: clamp(16px, 4vw, 32px);
+    }
+    header {
+      padding: 24px 0 12px;
+      border-bottom: 1px solid var(--line);
+      margin-bottom: 16px;
+    }
+    h1 {
+      margin: 0 0 6px;
+      font-size: clamp(22px, 2.6vw, 30px);
+      letter-spacing: .2px;
+    }
+    .meta {
+      margin: 0;
+      color: var(--fg-sub);
+      font-size: .95rem;
+    }
+    section {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: clamp(16px, 3vw, 24px);
+      margin: 16px 0;
+      box-shadow: var(--shadow);
+    }
+    h2 {
+      font-size: clamp(18px, 2.2vw, 22px);
+      margin: 0 0 10px;
+    }
+    ul, ol { padding-left: 1.25rem; margin: .25rem 0 0; }
+    li { margin: .4rem 0; }
+    p { margin: .6rem 0; }
+    a { color: var(--link); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    code, pre {
+      background: rgba(148,163,184,.15);
+      padding: .1rem .35rem;
+      border-radius: 6px;
+    }
+    pre { padding: .75rem; overflow-x: auto; }
+    footer {
+      color: var(--fg-sub);
+      text-align: center;
+      padding: 24px 0 8px;
+      font-size: .9rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <h1>PageSentinel プライバシーポリシー</h1>
+      <p class="meta">制定日：2025年6月9日<br>最終改定日：2025年9月25日 <!-- ADDED --></p>
+    </header>
+
+    <section>
+      <p>
+        本プライバシーポリシー（以下「本方針」）は、スマートフォンアプリ「<strong>PageSentinel</strong>」（以下「本アプリ」）を提供する個人開発者（以下「開発者」）が、ユーザーのプライバシーを尊重し、情報の収集・利用・管理について定めるものです。ユーザーは本方針に同意の上、本アプリをご利用ください。
+      </p>
+    </section>
+
+    <section id="collect">
+      <h2>第1条（収集する情報）</h2>
+      <p>本アプリは、広告配信機能を搭載していないため、広告識別子（IDFA/ADID）や広告配信に必要な情報は収集しません。収集する情報は以下の通りです。</p>
+      <ol>
+        <li><strong>ユーザー入力データ</strong><br>監視対象のURL、リロード間隔、検知キーワード、CSSセレクタなど、ユーザーが本アプリに入力または設定した情報。</li>
+        <li><strong>アプリ内設定情報</strong><br>Anti-Flickerレベル、スクロール遅延、ステップごとの待機時間、検知時の動作などUI/UXに関する設定情報。</li>
+        <li><strong>端末メタデータ</strong><br>OSバージョン、デバイス種別（iPhone/iPad）、アプリバージョン等、動作確認や改善に必要な技術情報。※UUIDなど個人を特定できる情報は取得しません。</li>
+        <li><strong>サポート問い合わせ情報（任意）</strong><br>メールによるお問い合わせ時にユーザーが記載する内容（不具合報告・要望等）。必要に応じて設定や端末情報を含む場合があります。</li>
+      </ol>
+    </section>
+
+    <section id="purpose">
+      <h2>第2条（情報の利用目的）</h2>
+      <ul>
+        <li>ユーザー設定に基づくページ監視・自動操作の実行</li>
+        <li>自動リロードやチラつき防止機能などの制御</li>
+        <li>アプリ設定の保存と再起動後の復元</li>
+        <li>機能改善やバグ修正のための匿名化技術情報の分析</li>
+        <li>サポート対応（メール問い合わせ時のみ）</li>
+      </ul>
+    </section>
+
+    <section id="third-party">
+      <h2>第3条（第三者提供の禁止）</h2>
+      <p>開発者は、ユーザーの同意なく第1条に定める情報を第三者に提供しません。ただし、以下の場合を除きます。</p>
+      <ul>
+        <li>法令に基づき開示を求められた場合</li>
+        <li>サポート対応において、ユーザーの同意のもと必要情報を送信する場合</li>
+      </ul>
+    </section>
+
+    <section id="cookie">
+      <h2>第4条（Cookie等の利用）</h2>
+      <p>本アプリはWebViewを利用してウェブページを表示しますが、CookieやlocalStorage等のウェブ側データは表示先サイトの仕様に従います。本アプリ自体がこれらの情報を独自に収集・保存することはありません。</p>
+    </section>
+
+    <section id="retention">
+      <h2>第5条（情報の保存期間）</h2>
+      <ul>
+        <li>ユーザー入力データ・設定情報は、ユーザーが本アプリをアンインストールするまで端末内に保存されます。</li>
+        <li>サポートメールに含まれる情報は、対応完了後に適切な期間内で削除します。</li>
+        <li><!-- ADDED -->ユーザーは設定データをファイルとしてエクスポート／インポートできます。これらのファイルはユーザーの管理下（端末内やユーザーが選択したクラウドストレージ等）に保存され、開発者が収集・保存・送信することはありません。</li>
+      </ul>
+    </section>
+
+    <section id="security">
+      <h2>第6条（データセキュリティ）</h2>
+      <ul>
+        <li>アプリ内データは暗号化せず端末ローカルに保存されますが、第三者が直接アクセスすることを想定していません。</li>
+        <li>バージョンアップ時のデータ保持のため、マイグレーション処理を実装しています。</li>
+        <li>外部通信を行う機能はサポート問い合わせ時など必要最小限に限られます。</li>
+      </ul>
+    </section>
+
+    <section id="rights">
+      <h2>第7条（ユーザーの権利）</h2>
+      <ul>
+        <li>アプリ設定の削除または変更</li>
+        <li>本アプリのアンインストールによるすべてのデータ削除</li>
+        <li>サポート問い合わせの拒否（任意送信のみ）</li>
+        <li><!-- ADDED -->設定データのエクスポート／インポートの実行と、その保存先の選択・管理</li>
+      </ul>
+    </section>
+
+    <section id="disclaimer">
+      <h2>第8条（免責事項）</h2>
+      <ol>
+        <li>本アプリは現状有姿で提供され、特定目的への適合性や動作保証を行いません。</li>
+        <li>ウェブページ構造やJavaScript仕様の変更により、一部機能が動作しない場合があります。</li>
+        <li>ユーザー入力データの消失・破損について、開発者は責任を負いません。</li>
+      </ol>
+    </section>
+
+    <section id="changes">
+      <h2>第9条（方針の変更）</h2>
+      <p>開発者は必要に応じて本方針を変更できます。変更後は本アプリ内または開発者ウェブサイト上に掲載した時点から効力を生じます。</p>
+    </section>
+
+    <!-- ADDED -->
+    <section id="export-import">
+      <h2>第10条（エクスポート／インポート機能）</h2>
+      <ul>
+        <li>本アプリは、ユーザー設定データ（プロファイル）をユーザーの操作によりファイルとしてエクスポート／インポートできます。</li>
+        <li>当該処理はユーザー主導で行われ、開発者のサーバーを経由せず、開発者がデータを受領・保管することはありません。</li>
+        <li>ユーザーが選択する保存先（例：ファイルアプリ、iCloud Drive、その他クラウドストレージ等）の管理・保護は各サービスのポリシーに従います。保存・共有設定はユーザーの責任においてご管理ください。</li>
+      </ul>
+    </section>
+
+    <section id="contact">
+      <h2>第11条（お問い合わせ）</h2>
+      <p>本プライバシーポリシーに関するご質問・ご意見は、下記までご連絡ください。</p>
+      <pre>開発者：Atsunori Iwamoto
+Email：nori.319pro@gmail.com</pre>
+      <p>以上</p>
+    </section>
+
+
+    <footer>
+      © 2025 PageSentinel
+    </footer>
+  </div>
+</body>
+</html>

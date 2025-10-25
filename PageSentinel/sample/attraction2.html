@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5879758729873663"
+     crossorigin="anonymous"></script>
+     
+  <meta charset="UTF-8">
+  <title>アトラクション予約</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body { font-family: sans-serif; margin:0; padding:0; background:#f0f0f0; }
+    header { background:#005f99; color:white; padding:16px; text-align:center; font-size:1.4rem; }
+    main { padding:16px; max-width:400px; margin:0 auto; }
+    .message { text-align:center; margin:24px 0; font-size:1.1rem; color:#333; }
+    .slots { list-style:none; padding:0; margin:0; }
+    .slots li { margin:8px 0; }
+    .slots button {
+      width:100%; padding:12px;
+      font-size:1rem;
+      border:1px solid #888; border-radius:4px;
+      background:#fff; cursor:not-allowed;
+    }
+    .slots button.available {
+      border-color:#006600; background:#e0ffe0; cursor:pointer;
+    }
+    .slots button.available:hover {
+      background:#ccffcc;
+    }
+    /* 予約するボタン */
+    #btn1 {
+      display: none;
+      margin: 16px auto 0;
+      padding: 12px 24px;
+      font-size: 1rem;
+      background: #007AFF;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    #btn1:hover { background: #005FCC; }
+
+    /* 共通モーダル */
+    .modal-backdrop {
+      position: fixed; top:0; left:0; right:0; bottom:0;
+      background: rgba(0,0,0,0.4);
+      display: none; align-items: center; justify-content: center;
+      z-index: 10;
+    }
+    .modal {
+      background: white; border-radius:8px;
+      padding:20px; max-width: 90%; width: 300px;
+      text-align: center;
+    }
+    .modal button {
+      margin: 8px 4px 0; padding: 8px 16px;
+      font-size:1rem; border:none; border-radius:4px;
+      cursor: pointer;
+    }
+    .modal .btn-confirm { background: #007AFF; color:white; }
+    .modal .btn-cancel { background: #CCC; }
+    .modal .btn-close { background: #007AFF; color:white; }
+  </style>
+</head>
+<body>
+  <header>アトラクション予約</header>
+  <main>
+    <div id="statusMessage" class="message">予約可能な時間帯はありません。</div>
+    <ul id="slotList" class="slots">
+      <li><button disabled>9:00～10:00</button></li>
+      <li><button disabled>10:30～11:30</button></li>
+      <li><button disabled>12:00～13:00</button></li>
+      <li><button disabled>13:30～14:30</button></li>
+      <li><button disabled>15:00～16:00</button></li>
+    </ul>
+    <!-- 予約するボタン -->
+    <button id="btn1" data-message-code="SW_GP_DL_124_0047">予約する（#btn1）</button>
+  </main>
+
+  <!-- 確認ダイアログ -->
+  <div id="confirmBackdrop" class="modal-backdrop">
+    <div class="modal">
+      <p>本当にこの時間帯を予約しますか？</p>
+      <button id="btn2" class="btn-confirm" data-message-code="SW_GP_DL_117_0413">予約する（#btn2）</button>
+      <button id="confirmNo" class="btn-cancel">キャンセル</button>
+    </div>
+  </div>
+
+  <!-- 結果ダイアログ -->
+  <div id="resultBackdrop" class="modal-backdrop">
+    <div class="modal">
+      <p id="resultText"></p>
+      <button id="btn3" class="btn-close" data-message-code="SW_GP_DL_101_0140">OK（#btn3）</button>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const status    = document.getElementById('statusMessage');
+      const slots     = Array.from(document.querySelectorAll('#slotList button'));
+      const reserve   = document.getElementById('btn1');
+      const confBd    = document.getElementById('confirmBackdrop');
+      const resBd     = document.getElementById('resultBackdrop');
+      const yesBtn    = document.getElementById('btn2');
+      const noBtn     = document.getElementById('confirmNo');
+      const closeBtn  = document.getElementById('btn3');
+      const resultTxt = document.getElementById('resultText');
+      let selectedIdx = -1;
+
+      // 稀に空き発生（20%）
+      if (Math.random() < 0.2) {
+        const idx = Math.floor(Math.random() * slots.length);
+        slots[idx].disabled = false;
+        slots[idx].classList.add('available');
+        status.textContent = '予約したい時間帯を選択してください。';
+        // 自動選択して予約ボタンを表示
+        selectedIdx = idx;
+        reserve.style.display = 'block';
+        reserve.setAttribute('data-message-code', 'SW_GP_DL_124_0018'); 
+      }
+
+      // 時間帯選択で予約ボタン表示
+      slots.forEach((btn, idx) => {
+        btn.addEventListener('click', () => {
+          if (btn.disabled) return;
+          selectedIdx = idx;
+          reserve.style.display = 'block';
+          reserve.setAttribute('data-message-code', 'SW_GP_DL_124_0018');
+        });
+      });
+
+// 「予約する」クリック → すぐに結果表示（確認ダイアログはスキップ）
+reserve.addEventListener('click', () => {
+  // 成功20%・失敗80%
+  if (Math.random() < 0.2) {
+    resultTxt.textContent = '予約できました。';
+    status.textContent = '予約完了しました。';
+  } else {
+    resultTxt.textContent = 'この時間帯に空きはありません。';
+    status.textContent = '他の時間帯をお試しください。';
+  }
+  resBd.style.display = 'flex';
+});
+      // 確認ダイアログ: キャンセル
+      noBtn.addEventListener('click', () => {
+        confBd.style.display = 'none';
+      });
+
+      // 確認ダイアログ: 予約確定
+      yesBtn.addEventListener('click', () => {
+        confBd.style.display = 'none';
+        // 成功20%・失敗80%
+        if (Math.random() < 0.2) {
+          resultTxt.textContent = '予約できました。';
+          status.textContent = '予約完了しました。';
+        } else {
+          resultTxt.textContent = 'この時間帯に空きはありません。';
+          status.textContent = '他の時間帯をお試しください。';
+        }
+        resBd.style.display = 'flex';
+      });
+
+      // 結果ダイアログ: 閉じる
+      // 結果ダイアログ: 閉じる → ページをリロード
+closeBtn.addEventListener('click', () => {
+  resBd.style.display = 'none';
+  reserve.setAttribute('data-message-code', originalCode);
+  reserve.style.display = 'none';
+  location.reload();  // 自動リロード
+});
+
+    });
+  </script>
+</body>
+</html>

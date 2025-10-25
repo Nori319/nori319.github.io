@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-BKZS61KWVF"></script>
+  <script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-BKZS61KWVF');
+  </script>
+
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AIdeaWorks Lab | AI×アプリ開発</title>
+  <meta name="description" content="AIdeaWorks Labは、AI技術を活用したスマートフォンアプリおよびWebサービスの企画・開発・運用を行う開発ラボです。" />
+  <meta name="format-detection" content="telephone=no" />
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="AIdeaWorks Lab | AI×アプリ開発" />
+  <meta property="og:description" content="AIとアイデアで価値をつくる。AI技術を活用したアプリ・Webの企画、開発、運用。" />
+  <meta property="og:image" content="/ogp.png" />
+  <meta property="og:locale" content="ja_JP" />
+  <meta name="theme-color" content="#0A5BAA" />
+  <link rel="icon" href="/favicon.ico" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --brand:#0A5BAA;         /* コーポレートカラー（深めブルー） */
+      --ink:#0f172a;           /* 文字メイン */
+      --muted:#475569;         /* 補助テキスト */
+      --bg:#f8fafc;            /* 背景 */
+      --card:#ffffff;          /* カード */
+      --accent:#00C2FF;        /* 差し色 */
+      --ok:#16a34a;            /* 強調（OK） */
+      --shadow:0 10px 25px rgba(2,6,23,.08);
+      --radius:18px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{margin:0;font-family:"Inter","Noto Sans JP",system-ui,-apple-system,Segoe UI,Roboto,'Helvetica Neue',Arial,'Noto Sans',sans-serif;color:var(--ink);background:var(--bg);}
+    a{color:var(--brand);text-decoration:none}
+    a:hover{text-decoration:underline}
+    .container{max-width:1060px;margin-inline:auto;padding:24px}
+    header{position:sticky;top:0;background:rgba(248,250,252,.8);backdrop-filter:blur(8px);border-bottom:1px solid #e2e8f0;z-index:50}
+    .nav{display:flex;align-items:center;gap:20px;justify-content:space-between}
+    .logo{display:flex;align-items:baseline;gap:10px;font-weight:800;letter-spacing:.3px}
+    .logo .ai{font-size:28px;line-height:1;font-weight:900;color:#0b1324;background:linear-gradient(90deg,var(--ink),#334155);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+    .logo .tail{font-size:18px;color:#334155}
+    .cta{display:flex;gap:10px}
+    .btn{display:inline-flex;align-items:center;gap:8px;padding:12px 16px;border-radius:12px;border:1px solid #e2e8f0;background:#fff;color:#0b1324;font-weight:600;box-shadow:var(--shadow)}
+    .btn.primary{background:var(--brand);border-color:var(--brand);color:#fff}
+    .btn:hover{transform:translateY(-1px)}
+
+    .hero{padding:72px 0;}
+    .hero .wrap{display:grid;grid-template-columns:1.1fr .9fr;gap:32px;align-items:center}
+    .badge{display:inline-flex;align-items:center;gap:8px;padding:6px 10px;border-radius:999px;background:#e6f0fb;color:#0A5BAA;font-weight:700;font-size:12px}
+    h1{font-size:40px;line-height:1.2;margin:.4em 0 .3em}
+    .lead{font-size:18px;color:var(--muted);max-width:52ch}
+    .panel{background:var(--card);border:1px solid #e2e8f0;border-radius:var(--radius);box-shadow:var(--shadow);padding:22px}
+    .kv{aspect-ratio:1/1;background:linear-gradient(140deg,#0A5BAA 0%, #0E7BD0 50%, #00C2FF 100%);border-radius:24px;position:relative}
+    .kv::after{content:"AIdea\A Works\A Lab";white-space:pre;position:absolute;inset:16px;display:block;color:#fff;font-weight:800;line-height:1.05;font-size:60px;opacity:.12}
+
+    section{padding:42px 0}
+    h2{font-size:26px;margin:0 0 16px}
+    .grid{display:grid;gap:18px}
+    .grid.cols-3{grid-template-columns:repeat(3,minmax(0,1fr))}
+    .grid.cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}
+    .card{background:var(--card);border:1px solid #e2e8f0;border-radius:var(--radius);padding:22px;box-shadow:var(--shadow)}
+    .kvs{display:flex;gap:10px;flex-wrap:wrap}
+    .kvs .chip{font-size:12px;background:#f1f5f9;padding:6px 10px;border-radius:999px;border:1px solid #e2e8f0}
+
+    .table{width:100%;border-collapse:separate;border-spacing:0;border:1px solid #e2e8f0;border-radius:12px;overflow:hidden;background:var(--card);box-shadow:var(--shadow)}
+    .table th,.table td{padding:14px 16px;border-bottom:1px solid #e2e8f0;text-align:left}
+    .table th{width:160px;background:#f8fafc;color:#334155}
+    .table tr:last-child td{border-bottom:none}
+
+    .compliance li{margin:6px 0}
+    .muted{color:var(--muted)}
+
+    footer{margin-top:40px;padding:28px 0;border-top:1px solid #e2e8f0;color:#475569;background:#fff}
+    .footgrid{display:grid;gap:18px;grid-template-columns:1fr auto}
+    small{color:#64748b}
+    .logo-switcher{display:flex;justify-content:center;gap:12px;margin-top:12px;}
+    .logo-switcher img{height:50px;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,.08);}
+
+    @media (max-width: 900px){
+      .hero .wrap{grid-template-columns:1fr}
+      .grid.cols-3{grid-template-columns:1fr}
+      .grid.cols-2{grid-template-columns:1fr}
+      h1{font-size:34px}
+      .kv::after{font-size:48px}
+    }
+  </style>
+  <!-- 構造化データ（Organization） -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "AIdeaWorks Lab",
+    "alternateName": "アイディアワークス ラボ",
+    "url": "https://aideaworkslab.com/",
+    "logo": "https://aideaworkslab.com/Logo_AIWL_1.png",
+    "email": "nori.319pro@gmail.com"
+  }
+  </script>
+</head>
+<body>
+  <header>
+    <div class="container nav">
+      <div class="logo" aria-label="AIdeaWorks Lab ロゴ">
+        <span class="ai">AI</span><span class="tail">deaWorks&nbsp;Lab</span>
+      </div>
+      <nav class="cta" aria-label="主要リンク">
+        <a class="btn" href="#about">会社概要</a>
+        <a class="btn" href="#services">事業内容</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- Hero -->
+    <section class="hero">
+      <div class="container wrap">
+        <div>
+          <span class="badge">AI × アプリ開発 × ものづくり</span>
+          <h1>AIの力で、<br/>アイデアをプロダクトに。</h1>
+                <p class="lead">AIdeaWorks Labは、AI技術を活用して自社アプリやWebサービスを企画・開発・運用する開発ラボです。私たちは、アイデアを形にし、ユーザーの生活をより便利で豊かにするプロダクトを生み出しています。</p>
+      <div class="logo-switcher">
+        <img src="./PageSentinel/PageSentinel.png" alt="PageSentinel" />
+        <!-- img src="./ExpoVisitLog/ExpoLogView.png" alt="万博訪問ログ" /-->
+        <img src="./Logo_AIWL_1.png" alt="Logo1" />
+        <img src="./Logo_AIWL_3.png" alt="Logo3" />
+        <img src="./Logo_AIWL_2.png" alt="Logo2" />
+      </div>
+        </div>
+        <div class="kv" role="img" aria-label="コーポレートキービジュアル"></div>
+      </div>
+    </section>
+
+    <!-- Services -->
+    <section id="services">
+      <div class="container">
+        <h2>事業内容</h2>
+        <div class="grid cols-3">
+          <article class="card">
+            <h3>アプリ開発</h3>
+            <p class="muted">iOS/Android向けのネイティブアプリを企画から運用まで一気通貫で対応。Swift/SwiftUIを中心に、安定した品質と継続改善を重視します。</p>
+          </article>
+          <article class="card">
+            <h3>Webサービス開発</h3>
+            <p class="muted">管理画面・API・バックエンドの設計/構築。Firebase/GCP連携、課金や通知などの周辺実装も含め、開発効率と拡張性の両立を図ります。</p>
+          </article>
+          <article class="card">
+            <h3>AI技術の研究・実装</h3>
+            <p class="muted">自然言語処理や画像認識などのAI技術を実際のアプリに実装し、価値検証を行います。</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- About / Company -->
+    <section id="about">
+      <div class="container">
+        <h2>会社概要（屋号）</h2>
+        <table class="table" aria-describedby="会社情報">
+          <tbody>
+            <tr><th>屋号</th><td>AIdeaWorks Lab（アイディアワークス ラボ）</td></tr>
+            <tr><th>代表</th><td>岩本 篤典（Atsunori Iwamoto）</td></tr>
+            <tr><th>設立</th><td>2025年5月</td></tr>
+            <tr><th>事業内容</th><td>AI技術を活用したスマートフォンアプリおよびWebサービスの企画・開発・運用</td></tr>
+            <tr><th>主要取引／利用サービス</th><td>Apple、Google、GitHub、OpenAI ほか</td></tr>
+            <tr><th>連絡先</th><td><a href="mailto:nori.319pro@gmail.com">nori.319pro@gmail.com</a></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="container footgrid">
+      <small>© <span id="y"></span> AIdeaWorks Lab</small>
+      <small><span class="muted">本サイトは事業実体の告知を目的とした公式ページです。</span></small>
+    </div>
+  </footer>
+
+  <script>
+    // 年号自動更新
+    document.getElementById('y').textContent = new Date().getFullYear();
+    // デモ用送信ハンドラ
+    function handleSubmit(e){
+      e.preventDefault();
+      const form = new FormData(e.target);
+      const mailto = new URL('mailto:info@aideaworkslab.com');
+      const subject = `【お問い合わせ】${form.get('name')}様`;
+      const body = `お名前: ${form.get('name')}\nメール: ${form.get('email')}\n\n内容:\n${form.get('message')}`;
+      mailto.searchParams.set('subject', subject);
+      mailto.searchParams.set('body', body);
+      window.location.href = mailto.toString();
+    }
+  </script>
+</body>
+</html>

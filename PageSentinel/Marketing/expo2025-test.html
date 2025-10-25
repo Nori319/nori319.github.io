@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+      <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-BKZS61KWVF"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-BKZS61KWVF');
+</script>
+
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>今すぐ予約する（デモ）</title>
+  <style>
+    :root {
+      --bg: #f8f8fb;
+      --ink: #1f2937;
+      --muted: #6b7280;
+      --brand: #e11d48; 
+      --panel: #ffe9ef; 
+      --card: #ffffff;
+      --ok: #16a34a;
+      --ng: #111827;
+      --radius-xl: 20px;
+      --radius-lg: 16px;
+      --shadow-1: 0 6px 18px rgba(17, 24, 39, .08);
+    }
+
+    html, body { height: 100%; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Helvetica Neue", Arial, "Noto Sans JP", sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+    }
+
+    .appbar {
+      position: sticky; top: 0; z-index: 3;
+      padding: env(safe-area-inset-top) 16px 12px;
+      background: linear-gradient(180deg, #fff, #fff 75%, rgba(255,255,255,0));
+      border-bottom: 1px solid #eef0f4;
+    }
+    .title {
+      margin: 10px 4px 0; 
+      font-weight: 800; letter-spacing: .03em;
+      font-size: clamp(22px, 5vw, 28px);
+    }
+
+    main { padding: 8px 16px 88px; }
+
+    .panel {
+      background: var(--panel);
+      border-radius: var(--radius-xl);
+      padding: 18px;
+      box-shadow: var(--shadow-1);
+      border: 1px solid #ffd6e0;
+    }
+    .lead {
+      line-height: 1.75; font-size: 15px; color: var(--ink);
+    }
+
+    .slot-card {
+      margin: 14px auto 4px;
+      background: var(--card);
+      border-radius: calc(var(--radius-xl) - 4px);
+      padding: 18px 16px 12px;
+      box-shadow: inset 0 0 0 1px #f0f0f3, 0 10px 20px rgba(0,0,0,.04);
+      text-align: center;
+    }
+    .slot-h {
+      font-weight: 700; letter-spacing: .02em; color: var(--ink);
+      margin: 2px 0 8px; font-size: 18px;
+    }
+    .slot-time {
+      font-variant-numeric: tabular-nums; font-size: 24px; font-weight: 800;
+      margin: 8px 0 14px; letter-spacing: .04em;
+    }
+
+    [data-message-code="SW_GP_DL_124_0047"] {
+      display: block; width: 100%;
+      border: none; border-radius: 14px;
+      padding: 14px 16px; font-size: 16px; font-weight: 700;
+      box-shadow: 0 6px 14px rgba(225, 29, 72, .25);
+      transition: transform .05s ease, filter .15s ease, opacity .2s ease;
+      cursor: pointer;
+    }
+    [data-message-code="SW_GP_DL_124_0047"].active {
+      background: var(--brand); color: #fff;
+    }
+    [data-message-code="SW_GP_DL_124_0047"].inactive {
+      background: #6e7681; color: #fff; opacity: .72;
+      box-shadow: none; cursor: not-allowed;
+    }
+    [data-message-code="SW_GP_DL_124_0047"].active:active { transform: translateY(1px) scale(.997); }
+
+    .hint { color: var(--muted); font-size: 14px; line-height: 1.7; margin: 18px 4px 0; }
+
+    .bottom-nav {
+      position: fixed; left: 0; right: 0; bottom: 0; z-index: 2;
+      padding: 10px 12px calc(10px + env(safe-area-inset-bottom));
+      background: #fff; border-top: 1px solid #eff0f3; box-shadow: 0 -6px 16px rgba(0,0,0,.06);
+      display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px;
+      font-size: 11px; color: #0f172a; text-align: center;
+    }
+    .nav-item { display: grid; place-items: center; gap: 6px; }
+    .icon {
+      width: 28px; height: 28px; border-radius: 8px; background: linear-gradient(135deg,#e6f4ff,#d3ffe6);
+      box-shadow: inset 0 0 0 1px #e5e7eb;
+    }
+
+    .modal-backdrop {
+      position: fixed; inset: 0; background: rgba(0,0,0,.45); display: none; place-items: center; z-index: 10;
+      padding: 24px; backdrop-filter: blur(1.5px);
+    }
+    .modal-backdrop.show { display: grid; }
+    .modal {
+      width: min(480px, 100%);
+      background: #fff; border-radius: 18px; box-shadow: var(--shadow-1);
+      padding: 20px 18px; text-align: center;
+      border: 2px solid #111827;
+    }
+    .modal h3 { font-size: 18px; margin: 2px 0 18px; }
+    .modal .stamp { font-size: 14px; color: var(--muted); margin-bottom: 10px; }
+    .modal .ok { color: var(--ok); font-weight: 800; }
+    .modal .ng { color: #ef4444; font-weight: 800; }
+    .modal .time { font-variant-numeric: tabular-nums; margin-top: 6px; font-weight: 700; }
+    [data-message-code="SW_GP_DL_101_0140"] {
+      margin-top: 16px; padding: 12px 16px; border-radius: 12px; border: 1px solid #d1d5db; background: #fff;
+      font-weight: 700; width: clamp(180px, 60vw, 280px);
+      cursor: pointer;
+    }
+
+    .spacer { height: 18px; }
+  </style>
+</head>
+<body>
+  <header class="appbar">
+    <div class="title">今すぐ予約する</div>
+  </header>
+
+  <main>
+    <section class="panel" id="instantPanel" aria-live="polite">
+      <p class="lead">『今すぐ予約する』は以下に表示している時間帯で予約することができます。</p>
+      <div class="slot-card" id="slotCard">
+        <div class="slot-h" id="slotHeading">直近の予約可能時間</div>
+        <div class="slot-time" id="slotTime">予約可能な時間帯がありません。</div>
+        <button id="reserveBtn" data-message-code="SW_GP_DL_124_0047" class="inactive" disabled>
+          この内容で予約する
+        </button>
+      </div>
+    </section>
+
+    <p class="hint">リロードを行う事に1/5の確率で予約可能になり、予約するボタンをタップすると1/3の確率で予約が成功するように設定しています。<br>
+        この環境ではリロード間隔や検知ディレイを小さくしても誤検知に繋がりませんが、実際のサイトは色々な内部処理が行われている為、まずは当ホームページで指定した設定値でお試しください。
+        正しく動作することを確認してからチューニングを行う事をお勧めします。
+    </p>
+    <div class="spacer"></div>
+    <a href="./expo2025.html" class="hint" aria-label="関西万博の特設ページへ">関西万博の特設ページはこちら</a>
+  </main>
+
+  <div class="modal-backdrop" id="modalRoot" role="dialog" aria-modal="true" aria-labelledby="modalTitle" aria-hidden="true">
+    <div class="modal">
+      <h3 id="modalTitle"></h3>
+      <div class="stamp" id="modalStamp"></div>
+      <div class="time" id="modalTime"></div>
+      <button data-message-code="SW_GP_DL_101_0140" id="closeModal">とじる</button>
+    </div>
+  </div>
+
+  <script>
+    const slotTimeEl = document.getElementById('slotTime');
+    const reserveBtn = document.getElementById('reserveBtn');
+
+    function two(n){ return ('0' + n).slice(-2); }
+    function rand(min, max){ return Math.floor(Math.random() * (max - min + 1)) + min; }
+
+    function makeRandomSlot() {
+      const now = new Date();
+      const startShiftMin = rand(10, 45);
+      const start = new Date(now.getTime() + startShiftMin * 60000);
+      const end = new Date(start.getTime() + 20 * 60000);
+      return `${two(start.getHours())}:${two(start.getMinutes())}-${two(end.getHours())}:${two(end.getMinutes())}`;
+    }
+
+    const hasSlot = Math.random() < 0.20;
+    let chosenSlot = '';
+
+    if (hasSlot) {
+      chosenSlot = makeRandomSlot();
+      slotTimeEl.textContent = chosenSlot;
+      reserveBtn.classList.remove('inactive');
+      reserveBtn.classList.add('active');
+      reserveBtn.disabled = false;
+    } else {
+      slotTimeEl.textContent = '予約可能な時間帯がありません。';
+      reserveBtn.classList.remove('active');
+      reserveBtn.classList.add('inactive');
+      reserveBtn.disabled = true;
+    }
+
+    const modalRoot = document.getElementById('modalRoot');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalStamp = document.getElementById('modalStamp');
+    const modalTime = document.getElementById('modalTime');
+    const closeModal = document.getElementById('closeModal');
+
+    function openModal(type) {
+      modalRoot.classList.add('show');
+      modalRoot.setAttribute('aria-hidden', 'false');
+      if (type === 'ok') {
+        modalTitle.innerHTML = '＜ 当日登録 ＞<br><span class="ok">パビリオン/イベントが予約されました</span>';
+        modalStamp.textContent = 'レッドオーシャンドーム';
+        modalTime.textContent = chosenSlot ? `${chosenSlot.replace('-', '〜')}` : '';
+      } else {
+        modalTitle.innerHTML = '＜ 当日登録 ＞<br><span class="ng">パビリオン/イベントの予約が確保できませんでした</span>';
+        modalStamp.textContent = 'お手数ですが、パビリオン/催事を再度選択してください';
+        modalTime.textContent = '';
+      }
+    }
+    function closeModalFn(){
+      modalRoot.classList.remove('show');
+      modalRoot.setAttribute('aria-hidden', 'true');
+      location.reload();
+    }
+
+    reserveBtn.addEventListener('click', () => {
+      if (reserveBtn.disabled) return;
+      const success = Math.random() < 0.33;
+      openModal(success ? 'ok' : 'ng');
+    });
+    closeModal.addEventListener('click', closeModalFn);
+    modalRoot.addEventListener('click', (e) => { if (e.target === modalRoot) closeModalFn(); });
+  </script>
+</body>
+</html>

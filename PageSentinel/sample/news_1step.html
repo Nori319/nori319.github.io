@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>ダミーニュース AUTO PILOT test</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body { font-family: sans-serif; margin:0; padding:0; background:#fff; }
+    header { background:#1e3a8a; color:white; padding:16px; text-align:center; font-size:1.2rem; }
+    nav { display:flex; overflow-x:auto; background:#f3f4f6; }
+    nav a {
+      flex:1; padding:12px; text-align:center; color:#374151;
+      text-decoration:none; border-right:1px solid #ddd;
+    }
+    nav a:last-child { border-right:none; }
+    main { padding:16px; }
+    .article { margin-bottom:24px; border-bottom:1px solid #eee; padding-bottom:16px; }
+    .article h3 { margin:0 0 8px; font-size:1.1rem; color:#111827; }
+    .article p { margin:0 0 4px; color:#4b5563; font-size:0.95rem; }
+    .article .meta { font-size:0.85rem; color:#9ca3af; }
+    .toolbar {
+      display: flex;
+      align-items: center;
+      padding: 16px;
+      gap: 16px;
+    }
+    .toolbar button { padding: 10px 20px; font-size:1rem; }
+    .dialog {
+      position: fixed;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      background: #fff;
+      border: 1px solid #333;
+      padding: 20px;
+      display: none;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+      z-index: 1000;
+    }
+    .dialog button { margin: 5px; }
+    #lastUpdated { font-weight: bold; }
+  </style>
+</head>
+<body>
+  <header>ダミーニュース</header>
+  <nav>
+    <a href="#">トップ</a>
+    <a href="#">国内</a>
+    <a href="#">国際</a>
+    <a href="#">経済</a>
+    <a href="#">エンタメ</a>
+  </nav>
+  <div class="toolbar">
+    <button id="btn1">Fetch Latest News（#btn1）</button>
+    <p id="lastUpdated">Last Updated: —</p>
+  </div>
+  <main>
+    <div class="article">
+      <h3>新型スマホ、AI機能を大幅強化</h3>
+      <p>AIを活用した次世代スマートフォンが発表されました。</p>
+      <p class="meta">2025/06/09 11:00</p>
+    </div>
+<div class="article">
+      <h3>宇宙探査ミッション、月面着陸成功</h3>
+      <p>民間プロジェクトによる月面着陸が世界初で達成。</p>
+      <p class="meta">2025/06/09 09:45</p>
+    </div>
+    <div class="article">
+      <h3>国内株式市場、大幅反発</h3>
+      <p>好業績企業の決算発表を受け、日経平均が上昇。</p>
+      <p class="meta">2025/06/09 08:30</p>
+    </div>
+    <div class="article">
+      <h3>気象庁、梅雨入りを正式に発表</h3>
+      <p>今年の梅雨入りは平年より3日早い模様。</p>
+      <p class="meta">2025/06/09 07:15</p>
+    </div>
+    <div class="article">
+      <h3>EVメーカー、次世代バッテリー開発に成功</h3>
+      <p>航続距離が従来比2倍に。</p>
+      <p class="meta">2025/06/09 06:50</p>
+    </div>
+    <div class="article">
+      <h3>サイバーセキュリティ、新たな脅威検出技術公開</h3>
+      <p>企業向けソリューションが注目を集める。</p>
+      <p class="meta">2025/06/09 06:00</p>
+    </div>
+    <div class="article">
+      <h3>国内旅行、夏季予約が急増</h3>
+      <p>ホテル・交通機関の早期予約がトレンドに。</p>
+      <p class="meta">2025/06/09 05:30</p>
+    </div>
+    <div class="article">
+      <h3>スポーツ速報：サッカー日本代表、初戦白星</h3>
+      <p>大会初戦で見事な逆転勝利を収める。</p>
+      <p class="meta">2025/06/09 05:00</p>
+    </div>
+    <div class="article">
+      <h3>テクノロジー：量子コンピュータが新記録達成</h3>
+      <p>演算速度で過去最高を大きく更新。</p>
+      <p class="meta">2025/06/09 04:20</p>
+    </div>
+    <div class="article">
+      <h3>文化：人気作家の新作小説、発売前重版決定</h3>
+      <p>期待度の高さを裏付ける売上予測。</p>
+      <p class="meta">2025/06/09 03:45</p>
+    </div>
+  </main>
+
+  <div id="confirmDialog" class="dialog">
+    <p>最新情報を取得しますか？</p>
+    <button id="yesBtn">はい</button>
+    <button id="noBtn">いいえ</button>
+  </div>
+
+  <div id="resultDialog" class="dialog">
+    <p>最新データを取得しました。</p>
+    <button id="okBtn">OK</button>
+  </div>
+
+  <script>
+    const btn1 = document.querySelector('#btn1');
+    const confirmDialog = document.querySelector('#confirmDialog');
+    const resultDialog = document.querySelector('#resultDialog');
+    const yesBtn = document.querySelector('#yesBtn');
+    const noBtn = document.querySelector('#noBtn');
+    const okBtn = document.querySelector('#okBtn');
+    const lastUpdated = document.querySelector('#lastUpdated');
+
+    btn1.addEventListener('click', () => {
+      setTimeout(() => {
+        const now = new Date();
+        lastUpdated.textContent = 'Last Updated: ' + now.toLocaleString();
+      }, 500);
+    });
+  </script>
+</body>
+</html>
+
